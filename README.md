@@ -1,6 +1,6 @@
 # Auro
 
-> Auro Private Journeys
+> Auro Private Trips
 
 ## Build Setup
 
