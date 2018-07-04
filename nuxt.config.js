@@ -1,5 +1,6 @@
 const pkg = require('./package')
 const nodeExternals = require('webpack-node-externals')
+require('dotenv').config()
 
 module.exports = {
   mode: 'universal',
@@ -48,7 +49,8 @@ module.exports = {
     // Doc: https://github.com/nuxt-community/axios-module#usage
     '@nuxtjs/axios',
     '@nuxtjs/auth',
-    '@nuxtjs/toast'
+    '@nuxtjs/toast',
+    '@nuxtjs/dotenv'
   ],
 
   /*
@@ -56,7 +58,7 @@ module.exports = {
   */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
-    baseURL: 'http://127.0.0.1:8000'
+    baseURL: process.env.API_URL
   },
 
   /*
