@@ -118,13 +118,13 @@
       },
       addTrip (trip) {
         this.$store.dispatch('addTrip', trip) 
-          .then(() => {
+          .then(response => {
             this.$store.commit('snackbar/setSnack', {
               message: 'El viaje ha sido reservado',
               color: 'success'
             })
 
-            this.$router.push({ name: 'app-trips' })
+            this.$router.push({ name: 'app-trips-id', params: {id: response.id} })
           })
           .catch(e => {
             // todo snack
