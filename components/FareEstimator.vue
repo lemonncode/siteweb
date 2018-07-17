@@ -12,14 +12,16 @@
       <v-stepper-step :complete="currentStep > 2" step="2">Seleccione una fecha</v-stepper-step>
       <v-stepper-content step="2">        
         <date-field :value="date" @dateUpdated="date = $event"></date-field>
-        <time-field :value="time" @timeUpdated="time = $event"></time-field>
+        <time-field :value="time" :date="date" @timeUpdated="time = $event"></time-field>
         <v-btn color="primary" @click.native="currentStep = 3" :disabled="!isValidStep2">Continue</v-btn>
         <v-btn flat @click.native="currentStep = 1">Cancel</v-btn>
       </v-stepper-content>
       <v-stepper-step step="3">Confirmar la reserva</v-stepper-step>
       <v-stepper-content step="3">
         <v-textarea v-model="notes" label="Comentario" outline></v-textarea>
-        <v-card>Precio {{ price }} €</v-card>
+          <!--
+          <v-card>Precio {{ price }} €</v-card>
+          -->
           <v-btn color="primary" @click.native="complete">Reservar</v-btn>
           <v-btn flat @click.native="currentStep = 2">Cancel</v-btn>
       </v-stepper-content>
@@ -78,9 +80,11 @@
     },
     methods: {
       setPickupPlace (place) {
+        console.log(place)
         this.pickupPlace = 'id' in place ? place : null;
       },
       setDestinationPlace (place) {
+        console.log(place)
         this.destinationPlace = 'id' in place ? place : null;
       },
       cancelStep1 () {
@@ -90,29 +94,38 @@
         var directionsService = new google.maps.DirectionsService;
 
         directionsService.route({
-          origin: this.pickupPlace.formatted_address,
-          destination: this.destinationPlace.formatted_address,
-          travelMode: google.maps.TravelMode['DRIVING'],
-          optimizeWaypoints: true
+            origin: { placeId: this.pickupPlace.place_id },
+            destination: { placeId: this.destinationPlace.place_id },
+            travelMode: google.maps.TravelMode['DRIVING'],
+            optimizeWaypoints: true,
+            avoidTolls: true,
+            avoidFerries: true,
+            region: 'es',
+            provideRouteAlternatives: true
           }, (response, status) => {
+
             if (response.status !== 'OK') {
               this.alert = true;
               return;
             }
 
-            this.route = response.routes[0].legs[0];
+            let shortestRoute = this.getShortestRoute(response.routes)
+            this.route = shortestRoute.legs[0]
             this.price = ((this.route.distance.value/1000) * 1.5).toFixed(2);
             this.currentStep = 2;
+            
+            response.routes = [shortestRoute]
 
-            this.$emit('fareEstimatorRouteSet', response);
+            this.$emit('fareEstimatorRouteSet', response)
           }
         );
       },
-      complete () {        
+      complete () {
+        console.log(`${this.date} ${this.time}`);
         this.addTrip({
-          origin: this.pickupPlace.formatted_address,
-          destination: this.destinationPlace.formatted_address,
-          departureTime: `${this.date}T${this.time}:00Z`,
+          origin: this.pickupPlace.place_id,
+          destination: this.destinationPlace.place_id,
+          date: `${this.date} ${this.time}`,
           notes: this.notes  
         })
       },
@@ -129,6 +142,16 @@
           .catch(e => {
             // todo snack
           })
+      },
+      getShortestRoute(routes) {
+        let shortestRoute = routes[0]
+        for (let i = 0; i < routes.length; i++) {
+          if (routes[i].legs[0].distance.value < shortestRoute.legs[0].distance.value) {
+            shortestRoute = routes[i]
+          }
+        }
+
+        return shortestRoute
       }
     }
   }

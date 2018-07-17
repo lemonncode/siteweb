@@ -24,8 +24,8 @@
       <template slot="items" slot-scope="props">
         <tr @click="viewTrip(props.item.id)" :style="{ cursor: 'pointer'}">
           <td>{{ formatedDate(props.item.date) }}</td>
-          <td>{{ props.item.origin }}</td>
-          <td>{{ props.item.destination }}</td>
+          <td>{{ props.item.origin.autocomplete }}</td>
+          <td>{{ props.item.destination.autocomplete }}</td>
           <td class="text-xs-center">
             <trip-status-label :status="props.item.status"></trip-status-label>
           </td>

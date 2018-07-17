@@ -72,11 +72,13 @@ module.exports = {
     strategies: {
       local: {
         endpoints: {
+          home: '/app',
           login: { url: '/login', method: 'post', propertyName: 'token' },
           logout: { url: '/logout', method: 'post' },
           user: { url: '/user', method: 'get', propertyName: 'user' },
         },
-        tokenType: 'Jwt'
+        tokenType: 'Jwt',
+        rewriteRedirects: true
       }
     }
   },

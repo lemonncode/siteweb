@@ -44,7 +44,7 @@
       }
     },
     methods: {
-      allowedDates: val =>  new Date(val) >= new Date(),
+      allowedDates: val => new Date(val) >= (new Date()).setHours(0,0,0,0),
       formatDate (date) {
         if (!date) {
           return null;
@@ -52,7 +52,7 @@
 
         const [year, month, day] = date.split('-');
 
-        return `${month}/${day}/${year}`;
+        return `${day}/${month}/${year}`;
       },
       parseDate (date) {
         if (!date) {
