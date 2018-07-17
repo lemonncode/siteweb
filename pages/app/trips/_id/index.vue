@@ -68,7 +68,7 @@
               <v-icon>credit_card</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>
-              <v-list-tile-title>{{ trip.fare }} €</v-list-tile-title>
+              <v-list-tile-title>{{ trip.price }} €</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>    
         </v-list>
@@ -122,8 +122,8 @@
         var directionsService = new google.maps.DirectionsService
 
         directionsService.route({
-          origin: this.trip.origin,
-          destination: this.trip.destination,
+          origin: { placeId: this.trip.origin.google_id },
+          destination: { placeId: this.trip.destination.google_id },
           travelMode: google.maps.TravelMode['DRIVING'],
           optimizeWaypoints: true
           }, (response, status) => {

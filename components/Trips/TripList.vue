@@ -29,7 +29,7 @@
           <td class="text-xs-center">
             <trip-status-label :status="props.item.status"></trip-status-label>
           </td>
-          <td class="text-xs-right">{{ props.item.fare }} €</td>
+          <td class="text-xs-right">{{ props.item.price }} €</td>
           <td class="text-xs-right">
             <v-icon
               color="red" 
@@ -81,7 +81,7 @@
           },
           { 
             text: 'Precio', 
-            value: 'fare',
+            value: 'price',
             align: 'right',
           },
           { 
