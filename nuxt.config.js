@@ -75,10 +75,12 @@ module.exports = {
           home: '/app',
           login: { url: '/login', method: 'post', propertyName: 'token' },
           logout: { url: '/logout', method: 'post' },
+          //user: false,
           user: { url: '/user', method: 'get', propertyName: 'user' },
         },
-        tokenType: 'Jwt',
-        rewriteRedirects: true
+        //tokenType: 'Jwt',
+        resetOnError: true,
+        rewriteRedirects: false
       }
     }
   },
