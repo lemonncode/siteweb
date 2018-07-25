@@ -59,8 +59,19 @@
             <v-list-tile-content>
               <v-list-tile-title>{{ trip.driver_name }}</v-list-tile-title>
             </v-list-tile-content>
-          </v-list-tile>         
+          </v-list-tile>   
+
+          <v-divider inset></v-divider>      
           
+          <v-list-tile v-if="trip.driver_name">
+            <v-list-tile-action>
+              <v-icon>phone_iphone</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>{{ trip.phone_number }}</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>   
+
           <v-divider inset></v-divider>
 
           <v-list-tile>
