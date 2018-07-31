@@ -66,16 +66,16 @@ module.exports = {
    */
   auth: {
     // See https://auth.nuxtjs.org/options.html
-    redirect: {
-      callback: '/callback'
-    },
+    //redirect: {
+    //  callback: '/callback'
+    //},
     strategies: {
       local: {
         endpoints: {
           home: '/app',
           login: { url: '/login', method: 'post', propertyName: 'token' },
-          logout: { url: '/logout', method: 'post' },
-          //user: false,
+          logout: false,
+          //logout: { url: '/logout', method: 'post' },
           user: { url: '/user', method: 'get', propertyName: 'user' },
         },
         //tokenType: 'Jwt',

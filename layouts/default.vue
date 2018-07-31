@@ -20,12 +20,21 @@
         <v-btn :to="{ name: 'app' }" icon color="secondary">
           <v-icon>add</v-icon>
         </v-btn>
-        <v-btn :to="{ name: 'app' }" icon>
-          <v-icon>apps</v-icon>
-        </v-btn>
-        <v-btn icon>
-          <v-icon>more_vert</v-icon>
-        </v-btn>
+        <v-menu offset-y>
+          <v-btn slot="activator" icon>
+            <v-icon>more_vert</v-icon>
+          </v-btn>
+          <v-list>
+            <v-list-tile @click="$auth.logout()">
+              <v-list-tile-action>
+                <v-icon color="primary">exit_to_app</v-icon>
+              </v-list-tile-action>
+              <v-list-tile-content>
+                <v-list-tile-title >Cerrar sesión</v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
+          </v-list>
+        </v-menu>
       </template>
     </v-toolbar>
     <v-content>
