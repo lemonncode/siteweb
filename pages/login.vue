@@ -58,7 +58,7 @@
           })
 
           this.showLoginSuccess({message: `Bienvenido ${this.$auth.user.first_name}`})
-          this.$auth.redirect({ name: 'app' })
+          this.$router.push({ name: 'app' })
         } catch(e) {
           this.showLoginError(e.response !== undefined ? { message: e.response.data.message } : {})
         }
