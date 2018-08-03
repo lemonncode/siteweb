@@ -35,7 +35,7 @@
               color="red" 
               small
               @click="cancelTrip(props.item)"
-              v-if="props.item.status !== 'done' || props.item.status !== 'canceled'"
+              v-if="props.item.status !== 'done' && props.item.status !== 'canceled'"
             >
               cancel
             </v-icon>
@@ -112,8 +112,18 @@
         if (!confirmation) {
           return
         }
+        
+        await this.$store.dispatch('cancelTrip', trip)
+          .then(() => { 
+            this.showCanceledTripSuccessMessage();
+          })
+          .catch(e => {
 
-        this.$store.dispatch('cancelTrip', trip)
+          })
+        ;
+
+
+        /*this.$store.dispatch('cancelTrip', trip)
           .then(() => {
             trip.status = 'canceled'
 
@@ -123,14 +133,22 @@
             })
           })
           .catch(e => {
+            this.$auth.redirect('app');
+
             this.$store.commit('snackbar/setSnack', {
               message: 'El viaje no se pudo cancelar',
               color: 'error'
             })
-          })
+          })*/
       },
       formatedDate (date) {
         return moment(date).locale('es').format('LLL')
+      }
+    },
+    notifications: {
+      showCanceledTripSuccessMessage: {
+        message: 'Viaje privado cancelado',
+        type: 'success' 
       }
     }
   }

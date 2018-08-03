@@ -24,22 +24,29 @@ module.exports = {
   /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#000000' },
+  loading: {
+    name: 'chasing-dots',
+    color: '#ff5638',
+    //color: '#000000'
+    background: 'white',
+    height: '4px'
+ },  
 
   /*
   ** Global CSS
   */
   css: [
     'vuetify/src/stylus/main.styl',
-    '~/assets/styles/main.css'
+    '~/assets/styles/main.styl'
   ],
 
   /*
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '@/plugins/vuetify',
-    '~/plugins/map'
+    { src: '@plugins/vue-notifications.js', ssr: false },
+    '@plugins/vuetify',
+    '@plugins/map'
   ],
 
   /*
@@ -68,14 +75,12 @@ module.exports = {
     // See https://auth.nuxtjs.org/options.html
     redirect: {
       home: '/app'
-      //  callback: '/callback'
     },
     strategies: {
       local: {
         endpoints: {
           login: { url: '/login', method: 'post', propertyName: 'token' },
           logout: false,
-          //logout: { url: '/logout', method: 'post' },
           user: { url: '/user', method: 'get', propertyName: 'user' },
         },
         //tokenType: 'Jwt',
@@ -89,13 +94,15 @@ module.exports = {
    ** Toast module configuration
    */
   toast: {
-    position: 'top-center'
+    position: 'bottom-left'
   },  
 
   /*
   ** Build configuration
   */
   build: {
+    vendor: ['axios', 'vue-notifications'],
+
     /*
     ** You can extend webpack config here
     */

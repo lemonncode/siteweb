@@ -7,14 +7,14 @@
 
         <v-alert :value="alert" type="error" transition="scale-transition">Trayecto inválido</v-alert>
 
-        <v-btn color="primary" @click.native="handleRoute" :disabled="!isValidStep1">Continue</v-btn>
+        <v-btn color="primary" @click.native="handleRoute" :disabled="!isValidStep1">Continuar</v-btn>
       </v-stepper-content>
       <v-stepper-step :complete="currentStep > 2" step="2">Seleccione una fecha</v-stepper-step>
       <v-stepper-content step="2">        
         <date-field :value="date" @dateUpdated="date = $event"></date-field>
         <time-field :value="time" :date="date" @timeUpdated="time = $event"></time-field>
-        <v-btn color="primary" @click.native="currentStep = 3" :disabled="!isValidStep2">Continue</v-btn>
-        <v-btn flat @click.native="currentStep = 1">Cancel</v-btn>
+        <v-btn color="primary" @click.native="currentStep = 3" :disabled="!isValidStep2">Continuar</v-btn>
+        <v-btn flat @click.native="currentStep = 1">Cancelar</v-btn>
       </v-stepper-content>
       <v-stepper-step step="3">Confirmar la reserva</v-stepper-step>
       <v-stepper-content step="3">
@@ -23,7 +23,7 @@
           <v-card>Precio {{ price }} €</v-card>
           -->
           <v-btn color="primary" @click.native="complete">Reservar</v-btn>
-          <v-btn flat @click.native="currentStep = 2">Cancel</v-btn>
+          <v-btn flat @click.native="currentStep = 2">Cancelar</v-btn>
       </v-stepper-content>
   </v-stepper>
 </template>
@@ -121,7 +121,6 @@
         );
       },
       complete () {
-        console.log(`${this.date} ${this.time}`);
         this.addTrip({
           origin: this.pickupPlace.place_id,
           destination: this.destinationPlace.place_id,
@@ -129,19 +128,15 @@
           notes: this.notes  
         })
       },
-      addTrip (trip) {
-        this.$store.dispatch('addTrip', trip) 
-          .then(response => {
-            this.$store.commit('snackbar/setSnack', {
-              message: 'El viaje ha sido reservado',
-              color: 'success'
-            })
+      async addTrip (trip) {
+        try {
+          let response = await this.$store.dispatch('addTrip', trip);
+          this.showTripSuccess();
+          this.$router.push({ name: 'app-trips-id', params: {id: response.id} })
+        } catch(e) {
+          this.showError();
+        }
 
-            this.$router.push({ name: 'app-trips-id', params: {id: response.id} })
-          })
-          .catch(e => {
-            // todo snack
-          })
       },
       getShortestRoute(routes) {
         let shortestRoute = routes[0]
@@ -152,6 +147,16 @@
         }
 
         return shortestRoute
+      }
+    },
+    notifications: {
+      showError: {
+        message: 'Error de connexión',
+        type: 'error' 
+      },
+      showTripSuccess: {
+        message: 'Viaje privado añadido con éxito',
+        type: 'success' 
       }
     }
   }

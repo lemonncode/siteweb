@@ -6,7 +6,13 @@ export const state = () => ({
 })
 
 export const mutations = {
-  setSnack (state, snack) {
+  setSnack(state, snack) {
     state.snack = snack
+  }
+}
+
+export const actions = {
+  setSnack({ commit }, snack) {
+    commit('setSnack', snack)
   }
 }

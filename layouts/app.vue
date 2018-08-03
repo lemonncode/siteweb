@@ -150,12 +150,12 @@
             text: 'Viajes', 
             to: '/app/trips'
           },
-          { icon: 'credit_card', text: 'Facturación', to: '/inspire' },
-          { icon: 'settings', text: 'Parámetros', to: '/inspire' },
+          { icon: 'credit_card', text: 'Facturación' },
+          { icon: 'settings', text: 'Parámetros' },
           { divider: true },
-          { icon: 'feedback', text: 'Enviar un feedback', to: '/inspire' },
-          { icon: 'history', text: 'Preguntas frecuentes', to: '/inspire' },
-          { icon: 'help', text: 'Ayuda', to: '/inspire', to: '/inspire' },
+          { icon: 'feedback', text: 'Enviar un feedback' },
+          { icon: 'history', text: 'Preguntas frecuentes' },
+          { icon: 'help', text: 'Ayuda' },
         ],
         drawer: null,
       }

@@ -12,7 +12,7 @@
           <v-layout row wrap>
               <v-flex xs12>
                 <div class="headline gray--text text-lg-left">
-                  Résumen del viaje
+                  Resumen del viaje
                   <trip-status-label :status="trip.status" style="float: right"></trip-status-label>
                 </div>
                 <span class="grey--text text-lg-left">{{ formatedDated }}</span>

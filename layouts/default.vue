@@ -1,5 +1,6 @@
 <template>
    <v-app>
+    <Snackbar />
     <v-toolbar fixed>
       <v-toolbar-title class="ml-0 pl-3">
         <nuxt-link :to="{ name: 'index' }">
@@ -54,7 +55,12 @@
 </template>
 
 <script>
+  import Snackbar from '~/components/Snackbar'
+
   export default {
+    components: {
+      Snackbar
+    },
     middleware: 'login',
     data() {
       return {
