@@ -157,10 +157,10 @@
 
         priceCalculator () {
             this.tripDetail({
-                origin: this.pickupPlace.place_id,
-                destination: this.destinationPlace.place_id,
-                date: `${this.date} ${this.time}`,
-                notes: this.notes
+                params: {
+                    origin: this.pickupPlace.place_id,
+                    destination: this.destinationPlace.place_id
+                }
             })
         },
 
@@ -172,7 +172,6 @@
                 this.showError();
             }
         },
-
     },
     notifications: {
       showError: {

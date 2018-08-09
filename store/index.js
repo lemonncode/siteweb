@@ -15,6 +15,6 @@ export const actions = {
     return this.$axios.$patch(`/user/trips/${trip.id}/cancel`)
   },
   async tripDetail ({ commit }, trip) {
-      return this.$axios.$post('/user/trips/detail', trip)
+      return this.$axios.$get('/user/trips/detail', trip)
   }
 }
