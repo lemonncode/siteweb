@@ -19,7 +19,7 @@
       <v-stepper-step step="3">Confirmar la reserva</v-stepper-step>
       <v-stepper-content step="3">
         <v-textarea v-model="notes" label="Comentario" outline></v-textarea>
-          <v-card-title>El precio de la reserva es de {{ price }} €</v-card-title>
+          <v-card-title>El precio de la reserva es de {{ price.toFixed(2) }} €</v-card-title>
           <v-btn color="primary" @click.native="complete">Reservar</v-btn>
           <v-btn flat @click.native="currentStep = 2">Cancelar</v-btn>
       </v-stepper-content>
