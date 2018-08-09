@@ -13,15 +13,13 @@
       <v-stepper-content step="2">        
         <date-field :value="date" @dateUpdated="date = $event"></date-field>
         <time-field :value="time" :date="date" @timeUpdated="time = $event"></time-field>
-        <v-btn color="primary" @click.native="currentStep = 3" :disabled="!isValidStep2">Continuar</v-btn>
+        <v-btn color="primary" @click="tripDetail" @click.native="currentStep = 3" :disabled="!isValidStep2">Continuar</v-btn>
         <v-btn flat @click.native="currentStep = 1">Cancelar</v-btn>
       </v-stepper-content>
       <v-stepper-step step="3">Confirmar la reserva</v-stepper-step>
       <v-stepper-content step="3">
         <v-textarea v-model="notes" label="Comentario" outline></v-textarea>
-          <!--
-          <v-card>Precio {{ price }} €</v-card>
-          -->
+          <v-card-title>El precio de la reserva es de {{ price }} €</v-card-title>
           <v-btn color="primary" @click.native="complete">Reservar</v-btn>
           <v-btn flat @click.native="currentStep = 2">Cancelar</v-btn>
       </v-stepper-content>
@@ -111,7 +109,7 @@
 
             let shortestRoute = this.getShortestRoute(response.routes)
             this.route = shortestRoute.legs[0]
-            this.price = ((this.route.distance.value/1000) * 1.5).toFixed(2);
+            //this.price = ((this.route.distance.value/1000) * 1.5).toFixed(2);
             this.currentStep = 2;
             
             response.routes = [shortestRoute]
@@ -147,7 +145,24 @@
         }
 
         return shortestRoute
-      }
+      },
+        tripDetail () {
+            this.tripDetail({
+                origin: this.pickupPlace.place_id,
+                destination: this.destinationPlace.place_id,
+                date: `${this.date} ${this.time}`,
+                notes: this.notes
+            })
+        },
+        async tripDetail (trip) {
+            try {
+                let response = await this.$store.dispatch('tripDetail', trip);
+                this.price = response.price;
+            } catch(e) {
+                this.showError();
+            }
+
+        },
     },
     notifications: {
       showError: {
