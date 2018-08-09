@@ -19,7 +19,7 @@
       <v-stepper-step step="3">Confirmar la reserva</v-stepper-step>
       <v-stepper-content step="3">
         <v-textarea v-model="notes" label="Comentario" outline></v-textarea>
-          <v-card-title>El precio de la reserva es de {{ price.toFixed(2) }} €</v-card-title>
+          <v-card-title>El precio de la reserva es de {{ priceFormat(price) }} €</v-card-title>
           <v-btn color="primary" @click.native="complete">Reservar</v-btn>
           <v-btn flat @click.native="currentStep = 2">Cancelar</v-btn>
       </v-stepper-content>
@@ -87,6 +87,12 @@
       },
       cancelStep1 () {
         this.pickupPlace = this.destinationPlace = null;
+      },
+      priceFormat(value) {
+        if (value) {
+          let val = (value/1).toFixed(2).replace('.', ',')
+          return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+        }
       },
       handleRoute () {
         var directionsService = new google.maps.DirectionsService;
