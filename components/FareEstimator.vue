@@ -13,7 +13,7 @@
       <v-stepper-content step="2">        
         <date-field :value="date" @dateUpdated="date = $event"></date-field>
         <time-field :value="time" :date="date" @timeUpdated="time = $event"></time-field>
-        <v-btn color="primary" @click="tripDetail" @click.native="currentStep = 3" :disabled="!isValidStep2">Continuar</v-btn>
+        <v-btn color="primary" @click="priceCalculator" @click.native="currentStep = 3" :disabled="!isValidStep2">Continuar</v-btn>
         <v-btn flat @click.native="currentStep = 1">Cancelar</v-btn>
       </v-stepper-content>
       <v-stepper-step step="3">Confirmar la reserva</v-stepper-step>
@@ -126,6 +126,7 @@
           notes: this.notes  
         })
       },
+      
       async addTrip (trip) {
         try {
           let response = await this.$store.dispatch('addTrip', trip);
@@ -135,7 +136,8 @@
           this.showError();
         }
 
-      },
+      },        
+      
       getShortestRoute(routes) {
         let shortestRoute = routes[0]
         for (let i = 0; i < routes.length; i++) {
@@ -146,7 +148,8 @@
 
         return shortestRoute
       },
-        tripDetail () {
+
+        priceCalculator () {
             this.tripDetail({
                 origin: this.pickupPlace.place_id,
                 destination: this.destinationPlace.place_id,
@@ -154,6 +157,7 @@
                 notes: this.notes
             })
         },
+
         async tripDetail (trip) {
             try {
                 let response = await this.$store.dispatch('tripDetail', trip);
@@ -161,8 +165,8 @@
             } catch(e) {
                 this.showError();
             }
-
         },
+
     },
     notifications: {
       showError: {
