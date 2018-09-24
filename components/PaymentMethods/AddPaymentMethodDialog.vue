@@ -11,8 +11,9 @@
                 ref='card'
                 class='stripe-card'
                 :class='{ complete }'
-                stripe='pk_test_baOn99iOj1squwCXg2x5kI5X'
+                :stripe='stripeApiPublicKey'
                 @change='complete = $event.complete'
+                v-if="stripeApiPublicKey !== null"
             />
           </v-layout>
         </v-container>
@@ -30,8 +31,12 @@
   import { Card, createToken } from 'vue-stripe-elements-plus'
 
   export default {
+    mounted() {
+      this.stripeApiPublicKey = process.env.STRIPE_API_PUBLIC_KEY
+    },
     data() {
       return {
+        stripeApiPublicKey: null,
         complete: false
       }
     },

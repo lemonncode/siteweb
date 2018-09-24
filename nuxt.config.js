@@ -98,7 +98,7 @@ module.exports = {
    */
   toast: {
     position: 'bottom-left'
-  },  
+  },
 
   /*
   ** Build configuration
