@@ -140,17 +140,9 @@
       return {
         title: 'Auro',
         items: [
-          { 
-            icon: 'commute', 
-            text: 'Planificar un viaje', 
-            to: { name: 'app' } 
-          },
-          { 
-            icon: 'local_taxi', 
-            text: 'Viajes', 
-            to: '/app/trips'
-          },
-          { icon: 'credit_card', text: 'Facturación' },
+          { icon: 'commute', text: 'Planificar un viaje', to: { name: 'app' } },
+          { icon: 'local_taxi', text: 'Viajes', to: { name: 'app-trips' } },
+          { icon: 'credit_card', text: 'Métodos de pago', to: { name: 'app-payment-methods' } },
           { icon: 'settings', text: 'Parámetros' },
           { divider: true },
           { icon: 'feedback', text: 'Enviar un feedback' },
