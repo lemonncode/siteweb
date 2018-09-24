@@ -13,15 +13,13 @@
       <v-stepper-content step="2">        
         <date-field :value="date" @dateUpdated="date = $event"></date-field>
         <time-field :value="time" :date="date" @timeUpdated="time = $event"></time-field>
-        <v-btn color="primary" @click.native="currentStep = 3" :disabled="!isValidStep2">Continuar</v-btn>
+        <v-btn color="primary" @click="priceCalculator" @click.native="currentStep = 3" :disabled="!isValidStep2">Continuar</v-btn>
         <v-btn flat @click.native="currentStep = 1">Cancelar</v-btn>
       </v-stepper-content>
       <v-stepper-step step="3">Confirmar la reserva</v-stepper-step>
       <v-stepper-content step="3">
         <v-textarea v-model="notes" label="Comentario" outline></v-textarea>
-          <!--
-          <v-card>Precio {{ price }} €</v-card>
-          -->
+          <v-card-title>El precio de la reserva es de {{ priceFormat(price) }} €</v-card-title>
           <v-btn color="primary" @click.native="complete">Reservar</v-btn>
           <v-btn flat @click.native="currentStep = 2">Cancelar</v-btn>
       </v-stepper-content>
@@ -90,6 +88,12 @@
       cancelStep1 () {
         this.pickupPlace = this.destinationPlace = null;
       },
+      priceFormat(value) {
+        if (value) {
+          let val = (value/1).toFixed(2).replace('.', ',')
+          return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+        }
+      },
       handleRoute () {
         var directionsService = new google.maps.DirectionsService;
 
@@ -111,7 +115,7 @@
 
             let shortestRoute = this.getShortestRoute(response.routes)
             this.route = shortestRoute.legs[0]
-            this.price = ((this.route.distance.value/1000) * 1.5).toFixed(2);
+            //this.price = ((this.route.distance.value/1000) * 1.5).toFixed(2);
             this.currentStep = 2;
             
             response.routes = [shortestRoute]
@@ -128,6 +132,7 @@
           notes: this.notes  
         })
       },
+      
       async addTrip (trip) {
         try {
           let response = await this.$store.dispatch('addTrip', trip);
@@ -137,7 +142,8 @@
           this.showError();
         }
 
-      },
+      },        
+      
       getShortestRoute(routes) {
         let shortestRoute = routes[0]
         for (let i = 0; i < routes.length; i++) {
@@ -147,7 +153,25 @@
         }
 
         return shortestRoute
-      }
+      },
+
+        priceCalculator () {
+            this.tripDetail({
+                params: {
+                    origin: this.pickupPlace.place_id,
+                    destination: this.destinationPlace.place_id
+                }
+            })
+        },
+
+        async tripDetail (trip) {
+            try {
+                let response = await this.$store.dispatch('tripDetail', trip);
+                this.price = response.price;
+            } catch(e) {
+                this.showError();
+            }
+        },
     },
     notifications: {
       showError: {
