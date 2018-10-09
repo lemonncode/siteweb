@@ -16,7 +16,7 @@
               <strong>{{ card.brand }}</strong> <span class="gray"> que termina en {{ card.last_four_digits }}</span>
             </v-list-tile-title>
             <v-list-tile-sub-title>
-              Julien Kirsch - Fecha caducidad: {{ card.expiration_month }}/{{ card.expiration_year }}
+              Fecha caducidad: {{ card.expiration_month }}/{{ card.expiration_year }}
             </v-list-tile-sub-title>
           </v-list-tile-content>
 
@@ -40,7 +40,7 @@
     <v-list v-else>
       <v-list-tile>
         <v-list-tile-content>
-          No has añadido una tarjeta de pago todavía.
+          No has añadido una tarjeta todavía.
         </v-list-tile-content>
       </v-list-tile>
     </v-list>

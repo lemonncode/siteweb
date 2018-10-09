@@ -13,7 +13,7 @@
       <v-spacer></v-spacer>
       <template v-if="!$auth.$state.loggedIn">
         <v-toolbar-items class="hidden-sm-and-down">
-          <v-btn flat>Crear una cuenta</v-btn>
+          <v-btn flat :to="{ name: 'signup' }">Registrarse</v-btn>
           <v-btn flat :to="{ name: 'login' }">Iniciar sesión</v-btn>
         </v-toolbar-items>
       </template>

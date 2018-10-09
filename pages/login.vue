@@ -10,15 +10,19 @@
             <v-toolbar-title>Iniciar sesión</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <v-form @keydown.enter="login">        
-              <v-text-field v-model="username" label="Usuario / Correo electrónico" type="text" prepend-icon="person" ref="username"></v-text-field>
+            <v-form @keydown.enter="login">
+              <v-text-field v-model="email" label="Correo electrónico" type="text" prepend-icon="person"
+                            ref="email"></v-text-field>
               <v-text-field v-model="password" label="Contraseña" type="password" prepend-icon="lock"></v-text-field>
             </v-form>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="" @click="cancel">Cancelar</v-btn>
-            <v-btn color="secondary" @click="login"><busy-overlay /> Iniciar sesión</v-btn>
+            <v-btn color="secondary" @click="login">
+              <busy-overlay/>
+              Iniciar sesión
+            </v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -26,59 +30,49 @@
   </v-container>
 </template>
 
-<script> 
+<script>
   import busyOverlay from '~/components/busy-overlay'
 
   export default {
-    components: { busyOverlay },
-    mounted () {
-      this.$refs.username.focus()
+    components: {busyOverlay},
+    mounted() {
+      this.$refs.email.focus()
     },
-    data () {
+    data() {
       return {
-        username: '',
+        email: '',
         password: ''
       };
     },
-    watch: {
-      $route() {
-        console.log('hola');
-      }
-    },
     methods: {
-      async login () {
-        try {
-          this.showLoginInfo()
+      login() {
+        this.showLoginInfo()
 
-          await this.$auth.loginWith('local', {
-            data: {
-                username: this.username,
-                password: this.password
-              }
+        this.$store.dispatch('user/login', { email: this.email, password: this.password })
+          .then(() => {
+            this.showLoginSuccess({ message: `Bienvenido ${this.$auth.user.first_name}` })
+            //this.$router.push({ name: 'app' })
           })
-
-          this.showLoginSuccess({message: `Bienvenido ${this.$auth.user.first_name}`})
-          this.$router.push({ name: 'app' })
-        } catch(e) {
-          this.showLoginError(e.response !== undefined ? { message: e.response.data.message } : {})
-        }
-      }, 
-      cancel () {
+          .catch(error => {
+            this.showLoginError(error.response !== undefined ? { message: error.response.data.message } : {})
+          })
+      },
+      cancel() {
         this.$router.push({ name: 'index' })
       }
     },
     notifications: {
       showLoginInfo: {
         message: 'Iniciando sesión',
-        type: 'info' 
+        type: 'info'
       },
       showLoginSuccess: {
         message: 'sesión iniciada con éxito',
-        type: 'success' 
+        type: 'success'
       },
       showLoginError: {
         message: 'Error de connexión',
-        type: 'error' 
+        type: 'error'
       }
     }
   }
