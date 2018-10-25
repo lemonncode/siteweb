@@ -20,13 +20,9 @@
             </v-list-tile-sub-title>
           </v-list-tile-content>
 
-          <!--
           <v-list-tile-action>
-            <v-btn flat icon color="gray">
-              <v-icon>done_outline</v-icon>
-            </v-btn>
+            <a v-if="!isDefaultPaymentCard(card)" @click="updateDefaultPaymentCard(card)">definir como predeterminada</a>
           </v-list-tile-action>
-          -->
 
           <v-list-tile-action>
             <v-btn flat icon color="red" @click="deletePaymentCard(card)">
@@ -67,6 +63,14 @@
       }
     },
     methods: {
+      isDefaultPaymentCard(paymentCard) {
+        return this.$auth.user.default_payment_card !== null && this.$auth.user.default_payment_card.uuid === paymentCard.uuid
+      },
+      updateDefaultPaymentCard(paymentCard) {
+        this.$store.dispatch('paymentMethod/updateDefaultPaymentCard', paymentCard).then(() => {
+          this.showUpdatedDefaultPaymentCardSuccessMessage()
+        });
+      },
       deletePaymentCard(paymentCard) {
         this.$store.dispatch('paymentMethod/deletePaymentCard', paymentCard).then(() => {
           this.showDeletedPaymentCardSuccessMessage()
@@ -74,8 +78,12 @@
       }
     },
     notifications: {
+      showUpdatedDefaultPaymentCardSuccessMessage : {
+        message: 'Tarjeta predeterminada actualizada',
+        type: 'success'
+      },
       showDeletedPaymentCardSuccessMessage: {
-        message: 'Tarjeta de pago borrada',
+        message: 'Tarjeta borrada',
         type: 'success'
       }
     },

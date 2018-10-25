@@ -133,15 +133,16 @@
         })
       },
       
-      async addTrip (trip) {
-        try {
-          let response = await this.$store.dispatch('addTrip', trip);
-          this.showTripSuccess();
-          this.$router.push({ name: 'app-trips-id', params: {id: response.id} })
-        } catch(e) {
-          this.showError();
-        }
-
+      addTrip (trip) {
+        this.$store.dispatch('addTrip', trip)
+          .then(response => {
+            this.$router.push({ name: 'app-trips-id', params: {id: response.id} })
+            this.showTripSuccess()
+          })
+          .catch(error => {
+            console.log(error)
+            this.showAddTripError(error.response !== undefined ? { message: error.response.data.message } : {})
+          })
       },        
       
       getShortestRoute(routes) {
@@ -174,7 +175,7 @@
         },
     },
     notifications: {
-      showError: {
+      showAddTripError: {
         message: 'Error de connexión',
         type: 'error' 
       },

@@ -59,14 +59,22 @@
         });
       },
       addCard(token) {
-        this.$store.dispatch('paymentMethod/addPaymentCard', token.id).then(data => {
-          this.$refs.card.clear()
-          this.closeDialog()
-          this.showAddPaymentCardSuccessMessage()
-        })
+        this.$store.dispatch('paymentMethod/addPaymentCard', token.id)
+          .then(data => {
+            this.$refs.card.clear()
+            this.closeDialog()
+            this.showAddPaymentCardSuccessMessage()
+          })
+          .catch(error => {
+            this.showAddPaymentCardErrorMessage(error.response !== undefined ? { message: error.response.data.message } : {})
+          })
       }
     },
     notifications: {
+      showAddPaymentCardErrorMessage: {
+        message: 'Tarjeta inválida',
+        type: 'error'
+      },
       showAddPaymentCardSuccessMessage: {
         message: 'Tarjeta de pago añadida',
         type: 'success'

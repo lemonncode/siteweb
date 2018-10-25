@@ -23,6 +23,9 @@ export const mutations = {
   },
   removePaymentCard(state, paymentCard) {
     state.paymentCards.splice(state.paymentCards.indexOf(paymentCard), 1)
+  },
+  updateDefaultPaymentCard(state, paymentCard) {
+    this.$auth.user.default_payment_card = paymentCard
   }
 }
 
@@ -34,6 +37,11 @@ export const actions = {
   },
   async getPaymentCard({ commit }, id) {
     return this.$axios.$get(`/user/payment-cards/${id}`)
+  },
+  async updateDefaultPaymentCard({ commit, dispatch }, paymentCard) {
+    return this.$axios.patch(`/user/payment-cards/${paymentCard.id}/default`).then(() => {
+      return commit('updateDefaultPaymentCard', paymentCard)
+    })
   },
   async addPaymentCard({ commit, dispatch }, token) {
     return this.$axios.$post('/user/payment-cards', { token: token })
