@@ -166,15 +166,22 @@
         },
 
         async tripDetail (trip) {
-            try {
-                let response = await this.$store.dispatch('tripDetail', trip);
-                this.price = response.price;
-            } catch(e) {
-                this.showError();
-            }
+          this.$store.dispatch('tripDetail', trip)
+            .then(data => {
+              this.price = data.price;
+            })
+            .catch(error => {
+              this.currentStep = 1
+              //this.showTripDetailErrorMessage(error.response !== undefined ? { message: error.response.data.message } : {})
+              this.showTripDetailErrorMessage({})
+            })
         },
     },
     notifications: {
+      showTripDetailErrorMessage: {
+        message: 'Lo sentimos, el precio del viaje solicitado no se puede calcular, por favor pongáse en contacto con nosotros',
+        type: 'error'
+      },
       showAddTripError: {
         message: 'Error de connexión',
         type: 'error' 
