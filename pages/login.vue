@@ -3,7 +3,7 @@
     <v-layout align-center justify-center>
       <v-flex xs12 sm8 md4>
         <v-alert :value="$auth.$state.redirect" type="info">
-          Tienes que conectarte para acceder a <strong>{{ $auth.$state.redirect }}</strong>
+          Tiene que iniciar sesión para acceder al servicio
         </v-alert>
         <v-card class="elevation-6">
           <v-toolbar dark color="secondary">
@@ -11,10 +11,13 @@
           </v-toolbar>
           <v-card-text>
             <v-form @keydown.enter="login">
-              <v-text-field v-model="email" label="Correo electrónico" type="text" prepend-icon="person"
-                            ref="email"></v-text-field>
+              <v-text-field v-model="email" label="Correo electrónico" type="text" prepend-icon="person" ref="email"></v-text-field>
               <v-text-field v-model="password" label="Contraseña" type="password" prepend-icon="lock"></v-text-field>
             </v-form>
+            <p class="text-xs-right text--secondary">
+              ¿No tiene cuenta de acceso?
+              <nuxt-link :to="{ name: 'signup' }" class="secondary--text font-weight-medium">Crear cuenta</nuxt-link>
+            </p>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
