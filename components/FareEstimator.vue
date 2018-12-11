@@ -9,10 +9,16 @@
 
         <v-btn color="primary" @click.native="handleRoute" :disabled="!isValidStep1">Continuar</v-btn>
       </v-stepper-content>
-      <v-stepper-step :complete="currentStep > 2" step="2">Seleccione una fecha</v-stepper-step>
-      <v-stepper-content step="2">        
-        <date-field :value="date" @dateUpdated="date = $event"></date-field>
-        <time-field :value="time" :date="date" @timeUpdated="time = $event"></time-field>
+      <v-stepper-step :complete="currentStep > 2" step="2">
+          Seleccione una fecha
+      </v-stepper-step>
+      <v-stepper-content step="2">
+        <v-radio-group v-model="serviceType" row>
+          <v-radio label="Ahora" value="asap"></v-radio>
+          <v-radio label="Reserva" value="reservation"></v-radio>
+        </v-radio-group>
+        <date-field v-if="serviceType != 'asap'" :value="date" @dateUpdated="date = $event"></date-field>
+        <time-field v-if="serviceType != 'asap'" :value="time" :date="date" @timeUpdated="time = $event"></time-field>
         <v-btn color="primary" @click="priceCalculator" @click.native="currentStep = 3" :disabled="!isValidStep2">Continuar</v-btn>
         <v-btn flat @click.native="currentStep = 1">Cancelar</v-btn>
       </v-stepper-content>
@@ -50,16 +56,17 @@
         price: null,
         alert: false,
         notes: null,
+        serviceType: 'asap'
       };
     },
     mounted () {
       /*this.pickupPlaceAutocomplete = new google.maps.places.Autocomplete(
-        this.$refs.pickupAutocomplete.$el.querySelector('input'), 
+        this.$refs.pickupAutocomplete.$el.querySelector('input'),
         {types: ['geocode'] }
       );
 
       this.destinationPlaceAutocomplete = new google.maps.places.Autocomplete(
-        this.$refs.destinationAutocomplete.$el.querySelector('input'), 
+        this.$refs.destinationAutocomplete.$el.querySelector('input'),
         {types: ['geocode']}
       );
 
@@ -73,7 +80,7 @@
         return this.pickupPlace !== null && this.destinationPlace !== null;
       },
       isValidStep2 () {
-        return this.date !== null && this.time !== null;
+        return (this.serviceType == 'asap' || (this.date !== null && this.time !== null));
       }
     },
     methods: {
@@ -117,7 +124,7 @@
             this.route = shortestRoute.legs[0]
             //this.price = ((this.route.distance.value/1000) * 1.5).toFixed(2);
             this.currentStep = 2;
-            
+
             response.routes = [shortestRoute]
 
             this.$emit('fareEstimatorRouteSet', response)
@@ -128,11 +135,12 @@
         this.addTrip({
           origin: this.pickupPlace.place_id,
           destination: this.destinationPlace.place_id,
-          date: `${this.date} ${this.time}`,
-          notes: this.notes  
+          date: this.date && this.time ? `${this.date} ${this.time}` : null,
+          notes: this.notes,
+          serviceType: this.serviceType
         })
       },
-      
+
       addTrip (trip) {
         this.$store.dispatch('addTrip', trip)
           .then(response => {
@@ -143,8 +151,8 @@
             console.log(error)
             this.showAddTripError(error.response !== undefined ? { message: error.response.data.message } : {})
           })
-      },        
-      
+      },
+
       getShortestRoute(routes) {
         let shortestRoute = routes[0]
         for (let i = 0; i < routes.length; i++) {
@@ -184,11 +192,11 @@
       },
       showAddTripError: {
         message: 'Error de connexión',
-        type: 'error' 
+        type: 'error'
       },
       showTripSuccess: {
         message: 'Viaje privado añadido con éxito',
-        type: 'success' 
+        type: 'success'
       }
     }
   }
