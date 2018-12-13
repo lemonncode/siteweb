@@ -13,12 +13,14 @@
               <v-flex xs12>
                 <div class="headline gray--text text-lg-left">
                   Resumen del viaje
-                  <trip-status-label :status="trip.status" style="float: right"></trip-status-label>
+                  <trip-status-label v-if="firestoreTrip" :status="firestoreTrip.status" style="float: right"></trip-status-label>
+                  <trip-status-label v-else :status="trip.status" style="float: right"></trip-status-label>
                 </div>
                 <span class="grey--text text-lg-left">{{ formatedDated }}</span>
               </v-flex>
               <v-flex xs12>
-                <trip-progress-bar :status="trip.status"></trip-progress-bar>
+                <trip-progress-bar v-if="firestoreTrip" :status="firestoreTrip.status"></trip-progress-bar>
+                <trip-progress-bar v-else :status="trip.status"></trip-progress-bar>
               </v-flex>
           </v-layout>
         </v-card-title>
@@ -43,32 +45,35 @@
 
           <v-divider inset></v-divider>
 
-           <v-list-tile v-if="trip.vehicle_plate">
+           <v-list-tile v-if="(trip && trip.vehicle_plate) || (firestoreTrip && firestoreTrip.vehicle_plate)">
             <v-list-tile-action>
               <v-icon>local_taxi</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>
-              <v-list-tile-title>{{ trip.vehicle_plate }}</v-list-tile-title>
+              <v-list-tile-title v-if="firestoreTrip && firestoreTrip.vehicle_plate">{{ firestoreTrip.vehicle_plate }}</v-list-tile-title>
+              <v-list-tile-title v-else>{{ trip.vehicle_plate }}</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>   
 
-          <v-list-tile v-if="trip.driver_name">
+          <v-list-tile v-if="(trip && trip.driver_name) || (firestoreTrip && firestoreTrip.driver_name)">
             <v-list-tile-action>
               <v-icon>person_outline</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>
-              <v-list-tile-title>{{ trip.driver_name }}</v-list-tile-title>
+              <v-list-tile-title v-if="firestoreTrip && firestoreTrip.driver_name">{{ firestoreTrip.driver_name }}</v-list-tile-title>
+              <v-list-tile-title v-else>{{ trip.driver_name }}</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>   
 
           <v-divider inset></v-divider>      
           
-          <v-list-tile v-if="trip.driver_name">
+          <v-list-tile v-if="(trip && trip.phone_number) || (firestoreTrip && firestoreTrip.phone_number)">
             <v-list-tile-action>
               <v-icon>phone_iphone</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>
-              <v-list-tile-title>{{ trip.phone_number }}</v-list-tile-title>
+              <v-list-tile-title v-if="firestoreTrip && firestoreTrip.phone_number">{{ firestoreTrip.phone_number }}</v-list-tile-title>
+              <v-list-tile-title v-else>{{ trip.phone_number }}</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>   
 
@@ -92,6 +97,7 @@
   import moment from 'moment'
   import TripStatusLabel from '~/components/Trips/TripStatusLabel'
   import TripProgressBar from '~/components/Trips/TripProgressBar'
+  import { firestore } from '~/plugins/firebase.js'
 
   export default {
     components: {
@@ -113,7 +119,8 @@
           mapTypeControl: false,
           streetViewControl: false,
           fullscreenControl: false
-        }
+        },
+        firestoreTrip: null
       }
     },
     computed: {
@@ -127,6 +134,7 @@
           .then(response => {
             this.trip = response
             this.displayTripOnMap()
+            this.getTripFromFirestore(id)
           })
       },
       async displayTripOnMap () {
@@ -148,6 +156,13 @@
 
             directionsDisplay.setDirections(response);
           });
+        },
+        async getTripFromFirestore (id) {
+          firestore.collection('trips').doc(id).onSnapshot(docSnapshot  => {
+            if (docSnapshot) {
+              this.firestoreTrip = docSnapshot.data()
+            }
+          })
         }
       }
     }

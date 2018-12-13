@@ -49,7 +49,8 @@ module.exports = {
   plugins: [
     { src: '@plugins/vue-notifications.js', ssr: false },
     '@plugins/vuetify',
-    '@plugins/map'
+    '@plugins/map',
+    '@plugins/firebase'
   ],
 
   /*

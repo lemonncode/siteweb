@@ -86,7 +86,7 @@
             align: 'right',
           },
           { 
-            text: 'Actions', 
+            text: 'Acciones',
             value: false, 
             align: 'right' 
           }

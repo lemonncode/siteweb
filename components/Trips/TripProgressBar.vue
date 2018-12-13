@@ -7,12 +7,18 @@
     props: ['status'],
     computed: {
       progression () {
-        let progression = 25
+        let progression = 12.50
 
-        if (this.status === 'canceled' || this.status === 'done') {
+        if (this.status === 'canceled' || this.status === 'done' || this.status === 'finished' || this.status === 'finalized') {
           progression = 100
+        } else if (this.status === 'arrived') {
+          progression = 65
+        } else if (this.status === 'pickedup') {
+            progression = 80
+        } else if (this.status === 'started') {
+            progression = 50
         } else if (this.status === 'asigned') {
-          progression = 50
+            progression = 35
         }
 
         return progression
@@ -32,6 +38,23 @@
           case 'asigned':
             color = 'orange'
             break;
+
+          case 'finished':
+            case 'finalized':
+            color = 'red'
+            break;
+
+          case 'started':
+            color = 'lime'
+            break;
+
+          case 'arrived':
+            color = 'cyan'
+            break;
+
+          case 'pickedup':
+            color = 'blue'
+            break;
         }
 
         return color;
@@ -39,3 +62,4 @@
     }
   }
 </script>
+

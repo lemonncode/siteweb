@@ -11,7 +11,12 @@
           pending: { text: 'Pendiente de asignar', color: 'grey' },
           asigned: { text: 'Asignado', color: 'orange' },
           done: { text: 'Finalizado', color: 'green' },
-          canceled: { text: 'Cancelado', color: 'red' }
+          canceled: { text: 'Cancelado', color: 'red' },
+          finalized:  { text: 'Finalizado', color: 'red' },
+          finished:  { text: 'Finalizado', color: 'red' },
+          started:  { text: 'Iniciado', color: 'lime' },
+          arrived:  { text: 'En recogida', color: 'cyan' },
+          pickedup:  { text: 'En trayecto', color: 'blue' },
         }
       }
     },
