@@ -31,17 +31,14 @@
             color = 'red'
             break;
 
-          case 'done': 
+          case 'done':
+          case 'finished':
+          case 'finalized':
             color = 'green'
             break;
 
           case 'asigned':
             color = 'orange'
-            break;
-
-          case 'finished':
-            case 'finalized':
-            color = 'red'
             break;
 
           case 'started':

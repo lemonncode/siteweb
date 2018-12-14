@@ -10,10 +10,10 @@
         configuration: {
           pending: { text: 'Pendiente de asignar', color: 'grey' },
           asigned: { text: 'Asignado', color: 'orange' },
-          done: { text: 'Terminado', color: 'green' },
+          done: { text: 'Finalizado', color: 'green' },
           canceled: { text: 'Cancelado', color: 'red' },
-          finalized:  { text: 'Finalizado', color: 'red' },
-          finished:  { text: 'Finalizado', color: 'red' },
+          finalized:  { text: 'Finalizado', color: 'green' },
+          finished:  { text: 'Finalizado', color: 'green' },
           started:  { text: 'Iniciado', color: 'lime' },
           arrived:  { text: 'En recogida', color: 'cyan' },
           pickedup:  { text: 'En trayecto', color: 'blue' },
