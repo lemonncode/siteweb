@@ -10,7 +10,7 @@
         configuration: {
           pending: { text: 'Pendiente de asignar', color: 'grey' },
           asigned: { text: 'Asignado', color: 'orange' },
-          done: { text: 'Finalizado', color: 'green' },
+          done: { text: 'Terminado', color: 'green' },
           canceled: { text: 'Cancelado', color: 'red' },
           finalized:  { text: 'Finalizado', color: 'red' },
           finished:  { text: 'Finalizado', color: 'red' },
