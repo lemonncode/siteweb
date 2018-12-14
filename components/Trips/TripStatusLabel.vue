@@ -14,8 +14,8 @@
           canceled: { text: 'Cancelado', color: 'red' },
           finalized:  { text: 'Finalizado', color: 'green' },
           finished:  { text: 'Finalizado', color: 'green' },
-          started:  { text: 'Iniciado', color: 'lime' },
-          arrived:  { text: 'En recogida', color: 'cyan' },
+          started:  { text: 'Conductor en camino', color: 'lime' },
+          arrived:  { text: 'Conductor en punto de recogida', color: 'cyan' },
           pickedup:  { text: 'En trayecto', color: 'blue' },
         }
       }
