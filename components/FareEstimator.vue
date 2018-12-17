@@ -26,7 +26,11 @@
       <v-stepper-content step="3">
         <v-textarea v-model="notes" label="Comentario" outline></v-textarea>
           <v-card-title>El precio de la reserva es de {{ priceFormat(price) }} €</v-card-title>
-          <v-btn color="primary" @click.native="complete">Reservar</v-btn>
+          <v-btn v-if="!loading" color="primary" @click.native="complete">Reservar</v-btn>
+          <v-progress-circular v-if="loading"
+              indeterminate
+              color="primary"
+          ></v-progress-circular>
           <v-btn flat @click.native="currentStep = 2">Cancelar</v-btn>
       </v-stepper-content>
   </v-stepper>
@@ -56,7 +60,8 @@
         price: null,
         alert: false,
         notes: null,
-        serviceType: 'asap'
+        serviceType: 'asap',
+        loading: false
       };
     },
     mounted () {
@@ -132,6 +137,7 @@
         );
       },
       complete () {
+        this.loading = true;
         this.addTrip({
           origin: this.pickupPlace.place_id,
           destination: this.destinationPlace.place_id,
@@ -146,8 +152,10 @@
           .then(response => {
             this.$router.push({ name: 'app-trips-id', params: {id: response.id} })
             this.showTripSuccess()
+            this.loading = false;
           })
           .catch(error => {
+            this.loading = false;
             console.log(error)
             this.showAddTripError(error.response !== undefined ? { message: error.response.data.message } : {})
           })
