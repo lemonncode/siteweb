@@ -48,7 +48,8 @@
               <v-icon>local_taxi</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>
-              <v-list-tile-title>{{ trip.vehicle_plate }}</v-list-tile-title>
+              <v-list-tile-title v-if="trip.vehicle_model">{{ trip.vehicle_plate }} - {{ trip.vehicle_model }} - {{ trip.vehicle_color }}</v-list-tile-title>
+              <v-list-tile-title v-else>{{ trip.vehicle_plate }}</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>   
 
@@ -68,7 +69,7 @@
               <v-icon>phone_iphone</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>
-              <v-list-tile-title>{{ trip.phone_number }}</v-list-tile-title>
+              <v-list-tile-title><a :href="'tel:' + trip.phone_number">{{ trip.phone_number }}</a></v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>   
 

@@ -143,7 +143,7 @@
           { icon: 'commute', text: 'Planificar un viaje', to: { name: 'app' } },
           { icon: 'local_taxi', text: 'Viajes', to: { name: 'app-trips' } },
           { icon: 'credit_card', text: 'Métodos de pago', to: { name: 'app-payment-methods' } },
-          { icon: 'settings', text: 'Parámetros' },
+          { icon: 'settings', text: 'Configuración' },
           { divider: true },
           { icon: 'feedback', text: 'Enviar un feedback' },
           { icon: 'history', text: 'Preguntas frecuentes' },
