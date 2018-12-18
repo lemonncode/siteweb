@@ -120,7 +120,12 @@
     },
     computed: {
       formatedDated () {
-        return moment(this.trip.date).locale('es').format('LLL')
+        let date = this.trip.date;
+        if (typeof this.trip.date !== 'string') {
+            date = date.toDate()
+        }
+
+        return moment(date).locale('es').format('LLL')
       }
     },
     methods: {
@@ -153,7 +158,7 @@
           });
         },
         async getTripFromFirestore (id) {
-          firestore.collection('trips').doc(id).onSnapshot(docSnapshot  => {
+          firestore.collection('trips').doc(id.toString()).onSnapshot(docSnapshot  => {
             if (docSnapshot) {
               this.trip = docSnapshot.data()
             }
