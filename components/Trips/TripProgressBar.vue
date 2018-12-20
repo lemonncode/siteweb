@@ -1,5 +1,5 @@
 <template>
-  <v-progress-linear v-model="progression" :color="color"></v-progress-linear>
+  <v-progress-linear v-model="progression" :color="color" height="4"></v-progress-linear>
 </template>
 
 <script>
