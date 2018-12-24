@@ -1,7 +1,7 @@
 <template>
   <GmapMap
      ref="map"
-     :center="updateCenter"
+     :center="center ? center: updateCenter"
      :zoom="12"
      :options="options"
   >
@@ -43,7 +43,8 @@
           mapTypeControl: false,
           streetViewControl: false,
           fullscreenControl: false
-        }
+        },
+        center: { lat: 30.4169751, lng: -3.6924527 }
       }
     },
     components: {
@@ -52,7 +53,7 @@
     computed: {
       ...mapGetters({
         trip: 'trip/trip',
-        driver: 'map/driver'
+        driver: 'map/driver',
       }),
       updateCenter () {
         var center = { lat: 40.4169751, lng: -3.6924527 };
@@ -64,6 +65,10 @@
           }
         }
 
+        if (this.center) {
+            center = this.center;
+        }
+
         return center;
       }
     },
@@ -71,7 +76,8 @@
       trip:function(val) {
         if (val) {
           this.displayTripOnMap();
-          if (val.driver_uuid && (val.status == 'asigned' || val.status == 'started' || val.status == 'pickedup' || val.status == 'arrived')) {
+          if (val.driver_uuid && (val.status == 'pending' || val.status == 'asigned' || val.status == 'started' || val.status == 'pickedup' || val.status == 'arrived')) {
+              this.showMarkers = true;
               this.getDriver(val.driver_uuid);
           }
 
@@ -80,10 +86,19 @@
           }
         }
       },
+      driver:function(val) {
+        if (val) {
+
+            if (this.trip && this.trip.status == 'started') {
+                this.estimatedTime({'trip': this.trip, driver: val});
+            }
+        }
+      }
     },
     methods: {
       ...mapActions({
         getDriver: 'map/getDriver',
+        estimatedTime: 'map/estimatedTime'
       }),
       async displayTripOnMap () {
         var directionsService = new google.maps.DirectionsService
@@ -102,13 +117,15 @@
               map: this.$refs.map.$mapObject,
           });
 
-          directionsDisplay.setDirections(response);
+          if (response) {
+              directionsDisplay.setDirections(response);
+          }
+
         });
       },
       toggleDriverInfoWindow: function(marker) {
         var contentString = '<p>' + marker.fullName + '</p>' +
             '<p>' + marker.licensePlateNumber + '</p>';
-
         this.infoWindowPos = marker.position;
         this.infoContent = contentString;
         this.infoWinOpen = !this.infoWinOpen;

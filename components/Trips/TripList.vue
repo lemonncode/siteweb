@@ -35,8 +35,8 @@
               color="red" 
               small
               @click="cancelTrip(props.item)"
-              v-if="(props.item.status !== 'done' && props.item.status !== 'finalized')
-                && props.item.status !== 'canceled'"
+              v-if="props.item.status !== 'done' && props.item.status !== 'finalized'
+                && props.item.status !== 'canceled' && props.item.status !== 'pickedup'"
             >
               cancel
             </v-icon>

@@ -2,7 +2,7 @@
   <v-stepper v-model="currentStep" vertical>
       <v-stepper-step :complete="currentStep > 1" step="1">Seleccione un trayecto</v-stepper-step>
       <v-stepper-content step="1">
-        <place-autocomplete-field icon="trip_origin" placeholder="Elige un punto de partida" @placeChanged="setPickupPlace($event)"></place-autocomplete-field>
+        <place-autocomplete-field :geolocation="pickupPlaceAutocomplete" icon="trip_origin" placeholder="Elige un punto de partida" @placeChanged="setPickupPlace($event)"></place-autocomplete-field>
         <place-autocomplete-field icon="pin_drop" placeholder="Elige un destino" @placeChanged="setDestinationPlace($event)"></place-autocomplete-field>
 
         <v-alert :value="alert" type="error" transition="scale-transition">Trayecto inválido</v-alert>
@@ -61,7 +61,16 @@
         alert: false,
         notes: null,
         serviceType: 'asap',
-        loading: false
+        loading: false,
+        geolocation: {
+            geocoder: null,
+            loc: null,
+            position: null
+        },
+        geolocationOptions: {
+          type: Object,
+          default: null
+        }
       };
     },
     mounted () {
@@ -91,11 +100,10 @@
     methods: {
       setPickupPlace (place) {
         console.log(place)
-        this.pickupPlace = 'id' in place ? place : null;
+        this.pickupPlace = 'place_id' in place ? place : null;
       },
       setDestinationPlace (place) {
-        console.log(place)
-        this.destinationPlace = 'id' in place ? place : null;
+        this.destinationPlace = 'place_id' in place ? place : null;
       },
       cancelStep1 () {
         this.pickupPlace = this.destinationPlace = null;
@@ -172,26 +180,67 @@
         return shortestRoute
       },
 
-        priceCalculator () {
-            this.tripDetail({
-                params: {
-                    origin: this.pickupPlace.place_id,
-                    destination: this.destinationPlace.place_id
-                }
-            })
-        },
+      priceCalculator () {
+          this.tripDetail({
+              params: {
+                  origin: this.pickupPlace.place_id,
+                  destination: this.destinationPlace.place_id
+              }
+          })
+      },
 
-        async tripDetail (trip) {
-          this.$store.dispatch('tripDetail', trip)
-            .then(data => {
-              this.price = data.price;
-            })
-            .catch(error => {
-              this.currentStep = 1
-              //this.showTripDetailErrorMessage(error.response !== undefined ? { message: error.response.data.message } : {})
-              this.showTripDetailErrorMessage({})
-            })
-        },
+      async tripDetail (trip) {
+        this.$store.dispatch('tripDetail', trip)
+          .then(data => {
+            this.price = data.price;
+          })
+          .catch(error => {
+            this.currentStep = 1
+            //this.showTripDetailErrorMessage(error.response !== undefined ? { message: error.response.data.message } : {})
+            this.showTripDetailErrorMessage({})
+          })
+      },
+
+      getGeoposition() {
+        this.updateGeolocation ((geolocation, position) => {
+          this.updateCoordinates(geolocation)
+        })
+      },
+
+      updateCoordinates (value) {
+        if (!value && !(value.lat || value.lng)) return;
+        if (!this.geolocation.geocoder) this.geolocation.geocoder = new google.maps.Geocoder();
+        this.geolocation.geocoder.geocode({'location': value}, (results, status) => {
+          if (status === 'OK') {
+            if (results[0]) {
+                this.pickupPlaceAutocomplete = results[0].formatted_address;
+                this.setPickupPlace(results[0]);
+            } else {
+                this.showNoResultForGeolocation;
+            }
+          } else {
+            this.showErrorForGeolocation;
+          }
+        })
+      },
+
+      updateGeolocation (callback = null) {
+        if (navigator.geolocation) {
+          let options = {};
+          if(this.geolocationOptions) Object.assign(options, this.geolocationOptions);
+          navigator.geolocation.getCurrentPosition(position => {
+            let geolocation = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+            this.geolocation.loc = geolocation;
+            this.geolocation.position = position;
+            if (callback) callback(geolocation, position);
+          }, err => {
+            this.showNavigatorError;
+          }, options);
+        }
+      },
     },
     notifications: {
       showTripDetailErrorMessage: {
@@ -205,6 +254,18 @@
       showTripSuccess: {
         message: 'Viaje privado añadido con éxito',
         type: 'success'
+      },
+      showNoResultForGeolocation: {
+        message: 'No se han encontrado resultados para sus coordenadas',
+        type: 'error'
+      },
+      showErrorForGeolocation: {
+          message: 'Error al intentar obtener sus coordenadas',
+          type: 'error'
+      },
+      showNavigatorError: {
+          message: 'Debe activar el permiso de geolocalización de su navegador',
+          type: 'error'
       }
     }
   }

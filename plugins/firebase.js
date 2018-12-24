@@ -21,7 +21,7 @@ if (!firebase.apps.length) {
     firebase.auth().signInWithEmailAndPassword('"'+ user +'"', '"'+password+'"').catch(function(error) {
         var errorCode = error.code;
         var errorMessage = error.message;
-        console.log(errorCode, errorMessage);
+        //console.log(errorCode, errorMessage);
     });
 
     firebase.firestore().settings({timestampsInSnapshots: true})

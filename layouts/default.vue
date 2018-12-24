@@ -2,7 +2,7 @@
    <v-app>
     <Snackbar />
     <v-toolbar fixed>
-      <v-toolbar-title class="ml-0 pl-3">
+      <v-toolbar-title class="ml-0 pl-0">
         <nuxt-link :to="{ name: 'index' }">
           <v-avatar size="32px" >
             <img src="/logo-base-black.png" alt="Auro"/>
