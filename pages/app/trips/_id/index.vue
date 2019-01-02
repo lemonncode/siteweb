@@ -17,5 +17,11 @@
       TripSummary,
       TripMap
     },
+
+    async asyncData({app, params, error}) {
+      return app.$axios.$get(`/user/trips/${params.id}`).catch(e => {
+        error({ statusCode: 404 })
+      })
+    },
   }
 </script>

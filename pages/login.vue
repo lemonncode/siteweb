@@ -14,10 +14,13 @@
               <v-text-field v-model="email" label="Correo electrónico" type="text" prepend-icon="person" ref="email"></v-text-field>
               <v-text-field v-model="password" label="Contraseña" type="password" prepend-icon="lock"></v-text-field>
             </v-form>
-            <p class="text-xs-right text--secondary">
-              ¿No tiene cuenta de acceso?
-              <nuxt-link :to="{ name: 'signup' }" class="secondary--text font-weight-medium">Crear cuenta</nuxt-link>
-            </p>
+            <v-layout justify-space-between>
+              <nuxt-link :to="{ name: 'resetPassword' }" class="secondary--text font-weight-medium">¿Has olvidado la contraseña?</nuxt-link>
+              <p class="text-xs-right text--secondary">
+                ¿No tiene cuenta de acceso?
+                <nuxt-link :to="{ name: 'signup' }" class="secondary--text font-weight-medium">Crear cuenta</nuxt-link>
+              </p>
+            </v-layout>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>

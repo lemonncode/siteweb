@@ -16,7 +16,7 @@ export const mutations = {
 
 export const actions = {
     async loadTrip ({ commit, dispatch }, id) {
-        dispatch('getTrip', id, { root: true })
+        return dispatch('getTrip', id, { root: true })
             .then(response => {
                 commit('setTrip', response)
                 dispatch('getTripFromFirestore', id)
