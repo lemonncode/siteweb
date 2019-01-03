@@ -27,7 +27,10 @@
     "vue-notifications": "^0.9.0",
     "vue-stripe-elements-plus": "^0.2.9",
     "vue2-google-maps": "^0.9.7",
-    "vuetify": "^1.2.4"
+    "vuetify": "^1.2.4",
+    "style-loader": "^0.21.0",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.2"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.1",
@@ -38,9 +41,6 @@
     "eslint-loader": "^2.0.0",
     "eslint-plugin-vue": "^4.7.1",
     "jsonwebtoken": "^8.3.0",
-    "nodemon": "^1.11.0",
-    "style-loader": "^0.21.0",
-    "stylus": "^0.54.5",
-    "stylus-loader": "^3.0.2"
+    "nodemon": "^1.11.0"
   }
 }
