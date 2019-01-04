@@ -16,6 +16,10 @@
     props: ['placeholder', 'icon'],
     mounted () {
       this.$autocomplete = new google.maps.places.Autocomplete(this.$refs.input.$el.querySelector('input'));
+      this.$autocomplete.setFields(
+          ['address_component', 'adr_address',
+              'alt_id', 'formatted_address', 'geometry', 'icon', 'id', 'name', 'permanently_closed',
+              'photo', 'place_id', 'plus_code', 'scope', 'type', 'url', 'utc_offset', 'vicinity']);
       this.$autocomplete.setComponentRestrictions({'country': ['es']});
 
       this.$autocomplete.addListener('place_changed', () => {
