@@ -18,7 +18,8 @@ if (!firebase.apps.length) {
     const password = process.env.FIREBASE_USER_PASSWORD;
 
     firebase.initializeApp(config)
-    firebase.auth().signInWithEmailAndPassword('"'+ user +'"', '"'+password+'"').catch(function(error) {
+
+    firebase.auth().signInWithEmailAndPassword(user, password).catch(function(error) {
         var errorCode = error.code;
         var errorMessage = error.message;
         //console.log(errorCode, errorMessage);

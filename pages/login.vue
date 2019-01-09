@@ -18,7 +18,7 @@
               <nuxt-link :to="{ name: 'resetPassword' }" class="secondary--text font-weight-medium">¿Has olvidado la contraseña?</nuxt-link>
               <p class="text-xs-right text--secondary">
                 ¿No tiene cuenta de acceso?
-                <nuxt-link :to="{ name: 'signup' }" class="secondary--text font-weight-medium">Crear cuenta</nuxt-link>
+                <nuxt-link :to="{ name: 'registrarse' }" class="secondary--text font-weight-medium">Crear cuenta</nuxt-link>
               </p>
             </v-layout>
           </v-card-text>

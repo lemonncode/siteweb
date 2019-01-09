@@ -344,21 +344,35 @@
             </v-flex>
           </v-layout>
         </v-container>
-      </section>
+      </section><no-ssr>
+    <cookie-law theme="blood-orange" buttonText="Aceptar">
+      <div slot="message">
+        Utilizamos cookies propias y de terceros para mejorar nuestros servicios, elaborar información estadística,
+        analizar sus hábitos de navegación e inferir grupos de interés. Esto nos permite personalizar el contenido que ofrecemos y
+        mostrarle publicidad relacionada con sus preferencias. Al clicar en "Aceptar", ACEPTA SU USO.
+        <router-link to="politica-de-cookies" style="color: #ed6363">Pinche para ver nuestra política de cookies.</router-link>
+      </div>
+    </cookie-law>
+  </no-ssr>
   </div>
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        cards: [
-          { title: 'Madrid', src: '80002155_s.jpg', flex: 6 },
-          { title: 'Barcelona', src: '12886892_s.jpg', flex: 6 },
-          { title: 'Valencia', src: '26558901_s.jpg', flex: 6 },
-          { title: 'Málaga', src: '62647239_s.jpg', flex: 6 }
-      ]}
+    import CookieLaw from 'vue-cookie-law'
+
+    export default {
+        data () {
+            return {
+                cards: [
+                    { title: 'Madrid', src: '80002155_s.jpg', flex: 6 },
+                    { title: 'Barcelona', src: '12886892_s.jpg', flex: 6 },
+                    { title: 'Valencia', src: '26558901_s.jpg', flex: 6 },
+                    { title: 'Málaga', src: '62647239_s.jpg', flex: 6 }
+                ]}
+        },
+        components: {
+            CookieLaw
+        }
     }
-  }
 
 </script>
