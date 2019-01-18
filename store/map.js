@@ -21,7 +21,7 @@ export const mutations = {
 
 export const actions = {
     async getDriver ({ commit }, uuid) {
-        db.ref('driversAvailable/' + uuid).once('value').then(function(snapshot) {
+        db.ref('driversAvailable/' + uuid).on('value', function(snapshot) {
             let driver = snapshot.val();
             let smileIcon = "L_26.png";
 
