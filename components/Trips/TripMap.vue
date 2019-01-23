@@ -21,7 +21,7 @@
   </GmapMap>
 </template>
 <script>
-  import { mapGetters, mapActions, mapMutations } from 'vuex';
+  import { mapGetters, mapActions } from 'vuex';
   import TripSummary from '~/components/Trips/TripSummary'
 
   export default {

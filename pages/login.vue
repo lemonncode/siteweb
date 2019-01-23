@@ -11,7 +11,7 @@
           </v-toolbar>
           <v-card-text>
             <v-form @keydown.enter="login">
-              <v-text-field v-model="email" label="Correo electrónico" type="text" prepend-icon="person" ref="email"></v-text-field>
+              <v-text-field v-model="username" label="Correo electrónico, teléfono o documento de identidad" type="text" prepend-icon="person" ref="username"></v-text-field>
               <v-text-field v-model="password" label="Contraseña" type="password" prepend-icon="lock"></v-text-field>
             </v-form>
             <v-layout justify-space-between>
@@ -42,11 +42,11 @@
   export default {
     components: {busyOverlay},
     mounted() {
-      this.$refs.email.focus()
+      this.$refs.username.focus()
     },
     data() {
       return {
-        email: '',
+        username: '',
         password: ''
       };
     },
@@ -54,7 +54,7 @@
       login() {
         this.showLoginInfo()
 
-        this.$store.dispatch('user/login', { email: this.email, password: this.password })
+        this.$store.dispatch('user/login', { username: this.username, password: this.password })
           .then(() => {
             this.showLoginSuccess({ message: `Bienvenido ${this.$auth.user.first_name}` })
             //this.$router.push({ name: 'app' })

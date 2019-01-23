@@ -40,6 +40,7 @@ module.exports = {
   */
   css: [
     'vuetify/src/stylus/main.styl',
+    'vue-tel-input/dist/vue-tel-input.css',
     '~/assets/styles/main.styl'
   ],
 
@@ -50,7 +51,8 @@ module.exports = {
     { src: '@plugins/vue-notifications.js', ssr: false },
     '@plugins/vuetify',
     '@plugins/map',
-    '@plugins/firebase'
+    '@plugins/firebase',
+    { src: '@plugins/telephone', ssr: false }
   ],
 
   /*
