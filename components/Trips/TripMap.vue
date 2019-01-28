@@ -76,21 +76,22 @@
       trip:function(val) {
         if (val) {
           this.displayTripOnMap();
+          let interval = null;
           if (val.driver_uuid && (val.status == 'pending' || val.status == 'asigned' || val.status == 'started' || val.status == 'pickedup' || val.status == 'arrived')) {
               this.showMarkers = true;
-              this.getDriver(val.driver_uuid);
+              interval = setInterval(() => this.getDriver({'trip': val, 'driver': val.driver_uuid}), 500);
           }
 
           if (val && (val.status == 'done' || val.status == 'canceled' || val.status == 'finished' || val.status == 'finalized')) {
+              clearInterval(interval);
               this.showMarkers = false
           }
         }
       },
       driver:function(val) {
         if (val) {
-
             if (this.trip && this.trip.status == 'started') {
-                this.estimatedTime({'trip': this.trip, driver: val});
+                this.estimatedTime({'trip': this.trip, 'driver': val});
             }
         }
       }
