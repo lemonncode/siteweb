@@ -44,7 +44,9 @@
           streetViewControl: false,
           fullscreenControl: false
         },
-        center: { lat: 30.4169751, lng: -3.6924527 }
+        center: { lat: 30.4169751, lng: -3.6924527 },
+        interval: false,
+        estimated: false
       }
     },
     components: {
@@ -78,19 +80,24 @@
           this.displayTripOnMap();
           let interval = null;
           if (val.driver_uuid && (val.status == 'pending' || val.status == 'asigned' || val.status == 'started' || val.status == 'pickedup' || val.status == 'arrived')) {
-              this.showMarkers = true;
-              interval = setInterval(() => this.getDriver({'trip': val, 'driver': val.driver_uuid}), 500);
+            this.showMarkers = true;
+            if (!this.interval) {
+                interval = setInterval(() => this.getDriver({'trip': val, 'driver': val.driver_uuid}), 500);
+                this.interval = true;
+            }
           }
 
           if (val && (val.status == 'done' || val.status == 'canceled' || val.status == 'finished' || val.status == 'finalized')) {
               clearInterval(interval);
-              this.showMarkers = false
+              this.showMarkers = false;
+              this.interval = false;
           }
         }
       },
       driver:function(val) {
         if (val) {
-            if (this.trip && this.trip.status == 'started') {
+            if (!this.estimated && this.trip && this.trip.status == 'started') {
+                this.estimated = true;
                 this.estimatedTime({'trip': this.trip, 'driver': val});
             }
         }
