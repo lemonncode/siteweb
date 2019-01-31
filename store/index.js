@@ -16,5 +16,8 @@ export const actions = {
   },
   async tripDetail ({ commit }, trip) {
       return this.$axios.$get('/user/trips/detail', trip)
-  }
+  },
+  async reassignTrip ({ commit }, trip) {
+    return this.$axios.$patch(`/user/trips/${trip.id}/reassign`)
+  },
 }

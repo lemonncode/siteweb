@@ -61,6 +61,8 @@
             <v-list-tile-content>
               <v-list-tile-title>{{ trip.price }} €</v-list-tile-title>
             </v-list-tile-content>
+            <v-btn v-if="trip.status !== 'done' && trip.status !== 'finalized'
+                && trip.status !== 'canceled' && trip.status !== 'pickedup'" @click="cancelTrip(trip)" round small color="#ed6363" dark>Cancelar</v-btn>
           </v-list-tile>
         </v-card>
         <v-card flat v-if="number == 2">
@@ -125,6 +127,39 @@
         </v-card>
       </v-tab-item>
     </v-tabs>
+    <v-dialog
+        v-if="trip.status == 'no-assignment'"
+        v-model="dialog"
+        max-width="290"
+    >
+      <v-card>
+        <v-card-title class="headline">No ha sido posible encontrar conductor</v-card-title>
+
+        <v-card-text>
+          Lo sentimos, pero en estos momentos no tenemos conductores disponibles. Puede cancelar el viaje o volver a intentar la búsqueda.
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn
+              color="#ed6363"
+              flat="flat"
+              @click="cancelTrip(trip)"
+          >
+            Cancelar
+          </v-btn>
+
+          <v-btn
+              color="#ed6363"
+              flat="flat"
+              @click="reassignTrip(trip)"
+          >
+            Volver a intentar
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-card>
 </template>
 
@@ -136,6 +171,11 @@
 
     export default {
       name: "TripSummary",
+      data () {
+        return {
+          dialog: true
+        }
+      },
       components: {
         TripStatusLabel,
         TripProgressBar
@@ -175,7 +215,32 @@
           var scrollHeight = container.scrollHeight;
           container.scrollTop = scrollHeight;
         },
+        async cancelTrip (trip) {
+          this.dialog = false;
+          let confirmation = confirm('Estas seguro que quieres cancelar este viaje ?')
+          if (!confirmation) {
+            return
+          }
+          await this.$store.dispatch('cancelTrip', trip)
+            .then(() => {
+              this.showCanceledTripSuccessMessage();
+            })
+            .catch(e => {
+
+            })
+          ;
+        },
+        async reassignTrip (trip) {
+          this.dialog = false;
+          await this.$store.dispatch('reassignTrip', trip);
+        },
       },
+      notifications: {
+        showCanceledTripSuccessMessage: {
+            message: 'Viaje privado cancelado',
+            type: 'success'
+        }
+      }
     }
 </script>
 

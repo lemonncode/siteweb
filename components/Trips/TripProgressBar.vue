@@ -9,7 +9,7 @@
       progression () {
         let progression = 12.50
 
-        if (this.status === 'canceled' || this.status === 'done' || this.status === 'finished' || this.status === 'finalized') {
+        if (this.status === 'canceled' || this.status === 'done' || this.status === 'finished' || this.status === 'finalized' || this.status === 'no-assignment') {
           progression = 100
         } else if (this.status === 'arrived') {
           progression = 65
@@ -27,7 +27,8 @@
         let color = 'primary'
 
         switch (this.status) {
-          case 'canceled': 
+          case 'canceled':
+          case 'no-assignment':
             color = 'red'
             break;
 
