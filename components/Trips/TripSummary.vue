@@ -128,7 +128,7 @@
       </v-tab-item>
     </v-tabs>
     <v-dialog
-        v-if="trip.status == 'no-assignment'"
+        v-if="trip.status == 'no-assignment' && dialog"
         v-model="dialog"
         max-width="290"
     >
