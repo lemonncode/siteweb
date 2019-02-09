@@ -181,7 +181,7 @@
           documentType: 'nif',
           documentNumber: '',
           gender: '',
-          birthDate: '',
+          birthDate: ''
         },
         modal: false,
         valid: false,
@@ -250,6 +250,7 @@
 
         this.$store.dispatch('user/register', this.user)
           .then(() => {
+            this.user.username = this.user.email;
             this.$store.dispatch('user/login', this.user).then(() => {
               this.showLoginSuccess({ message: `Bienvenido ${this.$auth.user.first_name}` })
             })
