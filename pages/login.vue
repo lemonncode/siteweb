@@ -22,6 +22,11 @@
               </p>
             </v-layout>
           </v-card-text>
+          <v-card-text>
+            <vue-recaptcha
+                @verify="onVerify"
+                sitekey="6Lf-LIwUAAAAAAnh9gTNEEUV1VaCJkwLmChSUetg"></vue-recaptcha>
+          </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="" @click="cancel">Cancelar</v-btn>
@@ -38,34 +43,47 @@
 
 <script>
   import busyOverlay from '~/components/busy-overlay'
+  import VueRecaptcha from 'vue-recaptcha';
 
   export default {
-    components: {busyOverlay},
+    components: {
+      busyOverlay,
+      VueRecaptcha
+    },
     mounted() {
       this.$refs.username.focus()
     },
     data() {
       return {
         username: '',
-        password: ''
+        password: '',
+        verified: false
       };
     },
     methods: {
       login() {
-        this.showLoginInfo()
+        if (this.verified) {
+          this.showLoginInfo()
 
-        this.$store.dispatch('user/login', { username: this.username, password: this.password })
-          .then(() => {
-            this.showLoginSuccess({ message: `Bienvenido ${this.$auth.user.first_name}` })
-            //this.$router.push({ name: 'app' })
-          })
-          .catch(error => {
-            this.showLoginError(error.response !== undefined ? { message: error.response.data.message } : {})
-          })
+          this.$store.dispatch('user/login', { username: this.username, password: this.password })
+            .then(() => {
+                this.showLoginSuccess({ message: `Bienvenido ${this.$auth.user.first_name}` })
+                //this.$router.push({ name: 'app' })
+            })
+            .catch(error => {
+                this.showLoginError(error.response !== undefined ? { message: error.response.data.message } : {})
+            })
+        } else {
+          this.showCaptchaMessage()
+        }
+
       },
       cancel() {
         this.$router.push({ name: 'index' })
-      }
+      },
+      onVerify: function (response) {
+          this.verified = true;
+      },
     },
     notifications: {
       showLoginInfo: {
@@ -78,6 +96,10 @@
       },
       showLoginError: {
         message: 'Error de connexión',
+        type: 'error'
+      },
+      showCaptchaMessage: {
+        message: 'El captcha debe ser verificado',
         type: 'error'
       }
     }

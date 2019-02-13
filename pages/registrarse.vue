@@ -153,7 +153,11 @@
             </v-form>
             <privacy-policy></privacy-policy>
           </v-card-text>
-
+          <v-card-text>
+            <vue-recaptcha
+                @verify="onVerify"
+                sitekey="6Lf-LIwUAAAAAAnh9gTNEEUV1VaCJkwLmChSUetg"></vue-recaptcha>
+          </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="" @click="cancel">Cancelar</v-btn>
@@ -167,7 +171,8 @@
 
 <script>
   import countries from 'i18n-iso-countries';
-  import privacyPolicy from '../components/privacyPolicy'
+  import privacyPolicy from '../components/privacyPolicy';
+  import VueRecaptcha from 'vue-recaptcha';
 
   export default {
     data () {
@@ -188,6 +193,7 @@
         validPhoneNumber: false,
         dateFormatted: '',
         date: '',
+        validated: false,
         firstNameRules: [
           v => !!v || 'Introduce tu nombre',
         ],
@@ -244,20 +250,24 @@
     },
     methods: {
       submit() {
-        if (!this.$refs.form.validate()) {
-          return
-        }
+        if (this.verified) {
+          if (!this.$refs.form.validate()) {
+            return
+          }
 
-        this.$store.dispatch('user/register', this.user)
-          .then(() => {
-            this.user.username = this.user.email;
-            this.$store.dispatch('user/login', this.user).then(() => {
-              this.showLoginSuccess({ message: `Bienvenido ${this.$auth.user.first_name}` })
+          this.$store.dispatch('user/register', this.user)
+            .then(() => {
+                this.user.username = this.user.email;
+                this.$store.dispatch('user/login', this.user).then(() => {
+                    this.showLoginSuccess({message: `Bienvenido ${this.$auth.user.first_name}`})
+                })
             })
-          })
-          .catch(error => {
-            this.displayMessageError(error.response)
-          })
+            .catch(error => {
+                this.displayMessageError(error.response)
+            })
+        } else {
+          this.showCaptchaMessage()
+        }
       },
       cancel() {
         console.log(this.countries);
@@ -298,7 +308,10 @@
 
         const [day, month, year] = date.split('/')
         return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
-      }
+      },
+      onVerify: function (response) {
+        this.verified = true;
+      },
     },
     notifications: {
       showRegistrationError: {
@@ -308,10 +321,15 @@
       showLoginSuccess: {
         message: 'sesión iniciada con éxito',
         type: 'success'
+      },
+      showCaptchaMessage: {
+        message: 'El captcha debe ser verificado',
+        type: 'error'
       }
     },
     components: {
-        privacyPolicy
+        privacyPolicy,
+        VueRecaptcha
     }
   }
 </script>
