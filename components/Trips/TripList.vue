@@ -53,6 +53,7 @@
 <script>
   import moment from 'moment'
   import TripStatusLabel from './TripStatusLabel'
+  import { mapGetters } from 'vuex';
   
   export default {
     components: {
@@ -98,6 +99,16 @@
           'descending': true, 
           'rowsPerPage': -1
         }
+      }
+    },
+    computed: {
+      ...mapGetters({
+        current_account: 'user/current_account',
+      }),
+    },
+    watch: {
+      current_account: {
+        handler: 'loadTrips'
       }
     },
     methods: {

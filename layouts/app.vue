@@ -88,12 +88,24 @@
         </nuxt-link>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn flat>{{ $auth.user.first_name }}</v-btn>
+      <v-btn class="hidden-sm-and-down" v-if="typeof current_account.customer != 'undefined'" flat>{{ $auth.user.first_name }} - {{ current_account.customer.name }} </v-btn>
+      <v-btn class="hidden-sm-and-down" v-else flat>{{ $auth.user.first_name }} </v-btn>
       <v-menu offset-y>
         <v-btn slot="activator" icon>
           <v-icon>more_vert</v-icon>
         </v-btn>
         <v-list>
+          <v-list-tile v-for="account in $auth.user.accounts" :key="account.id" @click="setAccount(account)">
+            <v-list-tile-action>
+              <v-icon v-if="account.discriminator == 'personal'" color="primary">account_box</v-icon>
+              <v-icon v-else color="primary">assessment</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title v-bind:class="{ 'red--text': isCurrent(account) }" v-if="account.discriminator == 'personal'">Cuenta personal</v-list-tile-title>
+              <v-list-tile-title v-bind:class="{ 'red--text': isCurrent(account) }" v-else>{{ account.customer.name }}</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+          <v-divider inset></v-divider>
           <v-list-tile @click="$auth.logout()">
             <v-list-tile-action>
               <v-icon color="primary">exit_to_app</v-icon>
@@ -130,6 +142,7 @@
 
 <script>
   import Snackbar from '~/components/Snackbar'
+  import { mapGetters, mapActions } from 'vuex';
 
   export default {
     components: {
@@ -152,5 +165,24 @@
         drawer: null,
       }
     },
+    created: function () {
+      this.setAccount(null);
+    },
+    computed: {
+        ...mapGetters({
+            current_account: 'user/current_account',
+        }),
+    },
+    methods: {
+      ...mapActions({
+        refreshAccount: 'user/refreshAccount',
+      }),
+      setAccount: function(account) {
+        this.refreshAccount(account);
+      },
+      isCurrent(account) {
+          return this.current_account.id == account.id;
+      }
+    }
   }
 </script>

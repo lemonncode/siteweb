@@ -45,12 +45,11 @@
 
 <script>
   import CardImage from './CardImage'
+  import { mapGetters, mapActions } from 'vuex';
 
   export default {
     mounted() {
-      this.$store.dispatch('paymentMethod/getPaymentCards').then(() => {
-        this.loaded = true;
-      })
+      this.loadPaymentCards()
     },
     data() {
       return {
@@ -58,13 +57,24 @@
       }
     },
     computed: {
+      ...mapGetters({
+          current_account: 'user/current_account',
+      }),
       paymentCards() {
         return this.$store.state.paymentMethod.paymentCards
       }
     },
+    watch: {
+      current_account: {
+          handler: 'loadPaymentCards'
+      }
+    },
     methods: {
+      ...mapActions({
+          getPaymentCards: 'paymentMethod/getPaymentCards'
+      }),
       isDefaultPaymentCard(paymentCard) {
-        return this.$auth.user.default_payment_card !== null && this.$auth.user.default_payment_card.uuid === paymentCard.uuid
+        return this.$auth.user.current_account.default_payment_card !== null && this.$auth.user.current_account.default_payment_card.uuid === paymentCard.uuid
       },
       updateDefaultPaymentCard(paymentCard) {
         this.$store.dispatch('paymentMethod/updateDefaultPaymentCard', paymentCard).then(() => {
@@ -74,6 +84,12 @@
       deletePaymentCard(paymentCard) {
         this.$store.dispatch('paymentMethod/deletePaymentCard', paymentCard).then(() => {
           this.showDeletedPaymentCardSuccessMessage()
+        });
+      },
+      loadPaymentCards() {
+        this.loaded = false;
+        this.getPaymentCards().then(() => {
+            this.loaded = true;
         });
       }
     },

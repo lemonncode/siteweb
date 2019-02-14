@@ -154,9 +154,7 @@
             <privacy-policy></privacy-policy>
           </v-card-text>
           <v-card-text>
-            <vue-recaptcha
-                @verify="onVerify"
-                sitekey="6Lf-LIwUAAAAAAnh9gTNEEUV1VaCJkwLmChSUetg"></vue-recaptcha>
+            <captcha></captcha>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -172,7 +170,8 @@
 <script>
   import countries from 'i18n-iso-countries';
   import privacyPolicy from '../components/privacyPolicy';
-  import VueRecaptcha from 'vue-recaptcha';
+  import Captcha from '~/components/Captcha';
+  import { mapGetters } from 'vuex';
 
   export default {
     data () {
@@ -237,6 +236,11 @@
         passportNumber: ''
       };
     },
+    computed: {
+      ...mapGetters({
+          captchaValidation: 'user/validated'
+      })
+    },
     watch: {
       date (val) {
           this.dateFormatted = this.formatDate(this.date)
@@ -250,7 +254,7 @@
     },
     methods: {
       submit() {
-        if (this.verified) {
+        if (this.captchaValidation) {
           if (!this.$refs.form.validate()) {
             return
           }
@@ -329,7 +333,7 @@
     },
     components: {
         privacyPolicy,
-        VueRecaptcha
+        Captcha,
     }
   }
 </script>

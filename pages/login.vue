@@ -23,9 +23,7 @@
             </v-layout>
           </v-card-text>
           <v-card-text>
-            <vue-recaptcha
-                @verify="onVerify"
-                sitekey="6Lf-LIwUAAAAAAnh9gTNEEUV1VaCJkwLmChSUetg"></vue-recaptcha>
+            <captcha></captcha>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -43,26 +41,31 @@
 
 <script>
   import busyOverlay from '~/components/busy-overlay'
-  import VueRecaptcha from 'vue-recaptcha';
+  import Captcha from '~/components/Captcha';
+  import { mapGetters } from 'vuex';
 
   export default {
     components: {
-      busyOverlay,
-      VueRecaptcha
+        Captcha,
+        busyOverlay
     },
     mounted() {
       this.$refs.username.focus()
     },
+    computed: {
+        ...mapGetters({
+            captchaValidation: 'user/validated'
+        })
+    },
     data() {
       return {
         username: '',
-        password: '',
-        verified: false
+        password: ''
       };
     },
     methods: {
       login() {
-        if (this.verified) {
+        if (this.captchaValidation) {
           this.showLoginInfo()
 
           this.$store.dispatch('user/login', { username: this.username, password: this.password })
@@ -80,9 +83,6 @@
       },
       cancel() {
         this.$router.push({ name: 'index' })
-      },
-      onVerify: function (response) {
-          this.verified = true;
       },
     },
     notifications: {

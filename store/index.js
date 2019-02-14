@@ -2,22 +2,22 @@ export const state = () => ({
 })
 
 export const actions = {
-  async getTrips () {
-    return this.$axios.$get('/user/trips')
+  async getTrips ({ rootState }) {
+    return this.$axios.$get(`/accounts/${rootState.user.current_account.id}/trips`)
   },
-  async getTrip ({ commit }, id) {
-    return this.$axios.$get(`/user/trips/${id}`)
+  async getTrip ({ commit, rootState }, id) {
+    return this.$axios.$get(`/accounts/${rootState.user.current_account.id}/trips/${id}`)
   },
-  async addTrip ({ commit }, trip) {
-    return this.$axios.$post('/user/trips', trip)
+  async addTrip ({ commit, rootState }, trip) {
+    return this.$axios.$post(`/accounts/${rootState.user.current_account.id}/trips`, trip)
   },
-  async cancelTrip ({ commit }, trip) {
-    return this.$axios.$patch(`/user/trips/${trip.id}/cancel`)
+  async cancelTrip ({ commit, rootState }, trip) {
+    return this.$axios.$patch(`/accounts/${rootState.user.current_account.id}/trips/${trip.id}/cancel`)
   },
-  async tripDetail ({ commit }, trip) {
-      return this.$axios.$get('/user/trips/detail', trip)
+  async tripDetail ({ commit, rootState }, trip) {
+      return this.$axios.$get(`/accounts/${rootState.user.current_account.id}/trips/detail`, trip)
   },
-  async reassignTrip ({ commit }, trip) {
-    return this.$axios.$patch(`/user/trips/${trip.id}/reassign`)
+  async reassignTrip ({ commit, rootState }, trip) {
+    return this.$axios.$patch(`/accounts/${rootState.user.current_account.id}/trips/${trip.id}/reassign`)
   },
 }

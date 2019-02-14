@@ -25,26 +25,26 @@ export const mutations = {
     state.paymentCards.splice(state.paymentCards.indexOf(paymentCard), 1)
   },
   updateDefaultPaymentCard(state, paymentCard) {
-    this.$auth.user.default_payment_card = paymentCard
+    this.$auth.user.current_account.default_payment_card = paymentCard
   }
 }
 
 export const actions = {
-  async getPaymentCards({ commit }) {
-    return this.$axios.$get('/user/payment-cards').then(data => {
+  async getPaymentCards({ commit, rootState }) {
+    return this.$axios.$get(`/accounts/${rootState.user.current_account.id}/payment-cards`).then(data => {
       commit('setPaymentCards', data)
     })
   },
-  async getPaymentCard({ commit }, id) {
-    return this.$axios.$get(`/user/payment-cards/${id}`)
+  async getPaymentCard({ commit, rootState }, id) {
+    return this.$axios.$get(`/accounts/${rootState.user.current_account.id}/payment-cards/${id}`)
   },
-  async updateDefaultPaymentCard({ commit, dispatch }, paymentCard) {
-    return this.$axios.patch(`/user/payment-cards/${paymentCard.id}/default`).then(() => {
+  async updateDefaultPaymentCard({ commit, dispatch, rootState }, paymentCard) {
+    return this.$axios.patch(`/accounts/${rootState.user.current_account.id}/payment-cards/${paymentCard.id}/default`).then(() => {
       return commit('updateDefaultPaymentCard', paymentCard)
     })
   },
-  async addPaymentCard({ commit, dispatch }, token) {
-    return this.$axios.$post('/user/payment-cards', { token: token })
+  async addPaymentCard({ commit, dispatch, rootState }, token) {
+    return this.$axios.$post(`/accounts/${rootState.user.current_account.id}/payment-cards`, { token: token })
       .then(data => {
         return dispatch('getPaymentCard', data.id)
       })
@@ -52,8 +52,8 @@ export const actions = {
         return commit('addPaymentCard', data)
       })
   },
-  async deletePaymentCard({ commit }, paymentCard) {
-    return this.$axios.$delete(`/user/payment-cards/${paymentCard.id}`).then(() => {
+  async deletePaymentCard({ commit, rootState }, paymentCard) {
+    return this.$axios.$delete(`/accounts/${rootState.user.current_account.id}/payment-cards/${paymentCard.id}`).then(() => {
       commit('removePaymentCard', paymentCard)
     })
   }
