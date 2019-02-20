@@ -21,10 +21,10 @@
           </v-list-tile-content>
 
           <v-list-tile-action>
-            <a v-if="!isDefaultPaymentCard(card)" @click="updateDefaultPaymentCard(card)">definir como predeterminada</a>
+            <a v-if="!isDefaultPaymentCard(card) && isAuthorized()" @click="updateDefaultPaymentCard(card)">definir como predeterminada</a>
           </v-list-tile-action>
 
-          <v-list-tile-action>
+          <v-list-tile-action v-if="isAuthorized()" >
             <v-btn flat icon color="red" @click="deletePaymentCard(card)">
               <v-icon>delete</v-icon>
             </v-btn>
@@ -59,6 +59,7 @@
     computed: {
       ...mapGetters({
           current_account: 'userAccount/currentAccount',
+          userAccounts: 'userAccount/userAccounts'
       }),
       paymentCards() {
         return this.$store.state.paymentMethod.paymentCards
@@ -71,13 +72,19 @@
     },
     methods: {
       ...mapActions({
-          getPaymentCards: 'paymentMethod/getPaymentCards'
+          getPaymentCards: 'paymentMethod/getPaymentCards',
+          refreshAccount: 'userAccount/refreshAccount',
       }),
       isDefaultPaymentCard(paymentCard) {
-        return this.$auth.user.current_account.default_payment_card !== null && this.$auth.user.current_account.default_payment_card.uuid === paymentCard.uuid
+        if (this.current_account.discriminator == 'personal') {
+            return this.current_account.default_payment_card !== null && this.current_account.default_payment_card.uuid === paymentCard.uuid
+        } else {
+            return this.current_account.account.default_payment_card !== null && this.current_account.account.default_payment_card.uuid === paymentCard.uuid
+        }
       },
       updateDefaultPaymentCard(paymentCard) {
         this.$store.dispatch('paymentMethod/updateDefaultPaymentCard', paymentCard).then(() => {
+          this.refreshAccount([this.current_account, this.userAccounts]);
           this.showUpdatedDefaultPaymentCardSuccessMessage()
         });
       },
@@ -91,6 +98,9 @@
         this.getPaymentCards().then(() => {
             this.loaded = true;
         });
+      },
+      isAuthorized() {
+          return this.current_account.discriminator == 'personal' || (this.current_account !== null && (this.current_account.role == 'owner' || this.current_account.role == 'admin'));
       }
     },
     notifications: {

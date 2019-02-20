@@ -113,7 +113,7 @@
               <v-icon>phone_iphone</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>
-              <v-list-tile-title><a :href="'tel:' + trip.phone_number">{{ trip.phone_number }}</a></v-list-tile-title>
+              <v-list-tile-title><a :href="'tel:' + trip.phone_number" class="blue--text">{{ trip.phone_number }}</a></v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
           <v-list-tile v-if="!trip.driver_name">

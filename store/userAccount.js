@@ -5,10 +5,12 @@ export const state = () => ({
   userAccount: null,
   userSelected: null,
   currentAccount: null,
+  currentAccountId: null,
 })
 
 export const getters = {
   currentAccount: state => state.currentAccount,
+  currentAccountId: state => state.currentAccountId,
   userAccounts: state => state.userAccounts,
   userAccount: state => state.userAccount,
   editAccountDialog: state => state.editAccountDialog,
@@ -43,6 +45,9 @@ export const mutations = {
   },
   setAccount(state, account) {
     state.currentAccount = account
+  },
+  setAccountId(state, id) {
+    state.currentAccountId = id
   },
 }
 
@@ -81,6 +86,9 @@ export const actions = {
       }
 
       sessionStorage.setItem('current_account', JSON.stringify(account));
+      let accountId = account.discriminator == 'personal' ? account.id: account.account.id;
+
+      commit('setAccountId', accountId)
       commit('setAccount', account)
 
       return account;

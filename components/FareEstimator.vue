@@ -24,7 +24,7 @@
     </v-stepper-content>
 
 
-    <div v-if="current_account != null && current_account.discriminator == 'personal' || (current_account != null && current_account.role != 'owner' && current_account.role != 'admin')">
+    <div v-if="true || current_account != null && current_account.discriminator == 'personal' || (current_account != null && current_account.role != 'owner' && current_account.role != 'admin')">
       <v-stepper-step step="3">Confirmar la reserva</v-stepper-step>
       <v-stepper-content step="3">
         <v-textarea v-model="notes" label="Comentario" outline></v-textarea>

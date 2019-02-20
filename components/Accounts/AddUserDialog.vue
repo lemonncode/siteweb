@@ -38,8 +38,9 @@
       addUser() {
         this.$store.dispatch('account/addUser', {account: this.account, user: this.username})
             .then(data => {
-                this.closeDialog()
-                this.showAddUserSuccessMessage()
+                this.closeDialog();
+                this.errorMessage = null;
+                this.showAddUserSuccessMessage();
             })
             .catch(error => {
                 this.errorMessage = error.response.data.errors.children.user.errors[0];

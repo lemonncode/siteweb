@@ -77,11 +77,11 @@
             <v-list-tile-content>
               <v-list-tile-title>{{ account.user.full_name }}</v-list-tile-title>
             </v-list-tile-content>
-            <v-list-tile-action>
+            <v-list-tile-action v-if="!isCurrentUser(account.user)">
               <v-icon @click="openDeleteUserDialog(account.user)" color="#FF5252">delete</v-icon>
             </v-list-tile-action>
           </v-list-tile>
-          <v-divider></v-divider>
+
           <delete-user-dialog :account="userAccount"></delete-user-dialog>
         </v-list>
         <v-list v-else>
@@ -125,6 +125,9 @@
           },
           openDeleteUserDialog(user) {
             this.$store.commit('account/openDeleteUserDialog', user)
+          },
+          isCurrentUser(user) {
+              return user.id == this.$auth.user.id
           }
         },
         components: {

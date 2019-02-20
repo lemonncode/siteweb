@@ -3,7 +3,7 @@
     <v-card-title>
       <h3 class="headline">Cuentas de empresa</h3>
     </v-card-title>
-    <v-list two-line v-if="userAccounts.length > 1">
+    <v-list two-line v-if="userAccounts.length > 0">
       <template v-for="(account, index) in userAccounts">
         <v-list-tile :key="account.account.id" avatar>
           <v-list-tile-content>
