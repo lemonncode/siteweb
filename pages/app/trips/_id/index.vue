@@ -17,13 +17,5 @@
       TripSummary,
       TripMap
     },
-
-    async asyncData({app, params, error}) {
-      if (app.store.$auth.user.current_account) {
-        return app.$axios.$get(`/accounts/${app.store.$auth.user.current_account.id}/trips/${params.id}`).catch(e => {
-            error({ statusCode: 404 })
-        })
-      }
-    },
   }
 </script>

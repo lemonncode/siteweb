@@ -1,27 +1,30 @@
 <template>
   <v-stepper v-model="currentStep" vertical>
-      <v-stepper-step :complete="currentStep > 1" step="1">Seleccione un trayecto</v-stepper-step>
-      <v-stepper-content step="1">
-        <place-autocomplete-field :geolocation="pickupPlaceAutocomplete" icon="trip_origin" placeholder="Elige un punto de partida" @placeChanged="setPickupPlace($event)"></place-autocomplete-field>
-        <place-autocomplete-field icon="pin_drop" placeholder="Elige un destino" @placeChanged="setDestinationPlace($event)"></place-autocomplete-field>
+    <v-stepper-step :complete="currentStep > 1" step="1">Seleccione un trayecto</v-stepper-step>
+    <v-stepper-content step="1">
+      <place-autocomplete-field :geolocation="pickupPlaceAutocomplete" icon="trip_origin" placeholder="Elige un punto de partida" @placeChanged="setPickupPlace($event)"></place-autocomplete-field>
+      <place-autocomplete-field icon="pin_drop" placeholder="Elige un destino" @placeChanged="setDestinationPlace($event)"></place-autocomplete-field>
 
-        <v-alert :value="alert" type="error" transition="scale-transition">Trayecto inválido</v-alert>
+      <v-alert :value="alert" type="error" transition="scale-transition">Trayecto inválido</v-alert>
 
-        <v-btn color="primary" @click.native="handleRoute" :disabled="!isValidStep1">Continuar</v-btn>
-      </v-stepper-content>
-      <v-stepper-step :complete="currentStep > 2" step="2">
-          Seleccione una fecha
-      </v-stepper-step>
-      <v-stepper-content step="2">
-        <v-radio-group v-model="serviceType" row>
-          <v-radio label="Ahora" value="asap"></v-radio>
-          <v-radio label="Reserva" value="reservation"></v-radio>
-        </v-radio-group>
-        <date-field v-if="serviceType != 'asap'" :value="date" @dateUpdated="date = $event"></date-field>
-        <time-field v-if="serviceType != 'asap'" :value="time" :date="date" @timeUpdated="time = $event"></time-field>
-        <v-btn color="primary" @click="priceCalculator" @click.native="currentStep = 3" :disabled="!isValidStep2">Continuar</v-btn>
-        <v-btn flat @click.native="currentStep = 1">Cancelar</v-btn>
-      </v-stepper-content>
+      <v-btn color="primary" @click.native="handleRoute" :disabled="!isValidStep1">Continuar</v-btn>
+    </v-stepper-content>
+    <v-stepper-step :complete="currentStep > 2" step="2">
+        Seleccione una fecha
+    </v-stepper-step>
+    <v-stepper-content step="2">
+      <v-radio-group v-model="serviceType" row>
+        <v-radio label="Ahora" value="asap"></v-radio>
+        <v-radio label="Reserva" value="reservation"></v-radio>
+      </v-radio-group>
+      <date-field v-if="serviceType != 'asap'" :value="date" @dateUpdated="date = $event"></date-field>
+      <time-field v-if="serviceType != 'asap'" :value="time" :date="date" @timeUpdated="time = $event"></time-field>
+      <v-btn color="primary" @click="priceCalculator" @click.native="currentStep = 3" :disabled="!isValidStep2">Continuar</v-btn>
+      <v-btn flat @click.native="currentStep = 1">Cancelar</v-btn>
+    </v-stepper-content>
+
+
+    <div v-if="current_account != null && current_account.discriminator == 'personal' || (current_account != null && current_account.role != 'owner' && current_account.role != 'admin')">
       <v-stepper-step step="3">Confirmar la reserva</v-stepper-step>
       <v-stepper-content step="3">
         <v-textarea v-model="notes" label="Comentario" outline></v-textarea>
@@ -33,6 +36,31 @@
           ></v-progress-circular>
           <v-btn flat @click.native="currentStep = 2">Cancelar</v-btn>
       </v-stepper-content>
+    </div>
+    <div v-else>
+      <v-stepper-step step="3">Seleccionar usuario y confirmar</v-stepper-step>
+      <v-stepper-content step="3">
+        <v-flex xs12 sm12 d-flex>
+          <v-select
+              v-model="user"
+              :items="usersAccount"
+              item-text="user.full_name"
+              item-value="user.id"
+              label="Usuarios"
+              solo
+          ></v-select>
+        </v-flex>
+        <v-textarea v-model="notes" label="Comentario" outline></v-textarea>
+        <v-card-title>El precio de la reserva es de {{ priceFormat(price) }} €</v-card-title>
+        <v-btn v-if="!loading" color="primary" @click.native="complete">Reservar</v-btn>
+        <v-progress-circular v-if="loading"
+                             indeterminate
+                             color="primary"
+        ></v-progress-circular>
+        <v-btn flat @click.native="currentStep = 2">Cancelar</v-btn>
+      </v-stepper-content>
+    </div>
+
   </v-stepper>
 </template>
 
@@ -40,6 +68,7 @@
   import PlaceAutocompleteField from './PlaceAutocompleteField'
   import DateField from '~/components/Estimator/DateField'
   import TimeField from '~/components/Estimator/TimeField'
+  import { mapGetters } from 'vuex';
 
   export default {
     components: {
@@ -70,7 +99,8 @@
         geolocationOptions: {
           type: Object,
           default: null
-        }
+        },
+        user: ''
       };
     },
     mounted () {
@@ -89,7 +119,19 @@
         this.$emit('placeChanged', this.pickupPlaceAutocomplete.getPlace())
       })*/
     },
+    watch : {
+        userSelected: function (val) {
+            if (val) {
+                this.user = val;
+            }
+        }
+    },
     computed: {
+      ...mapGetters({
+        current_account: 'userAccount/currentAccount',
+        usersAccount: 'account/currentUsersAccount',
+        userSelected: 'userAccount/userSelected',
+      }),
       isValidStep1 () {
         return this.pickupPlace !== null && this.destinationPlace !== null;
       },
@@ -99,7 +141,6 @@
     },
     methods: {
       setPickupPlace (place) {
-        console.log(place)
         this.pickupPlace = 'place_id' in place ? place : null;
       },
       setDestinationPlace (place) {

@@ -58,7 +58,7 @@
     },
     computed: {
       ...mapGetters({
-          current_account: 'user/current_account',
+          current_account: 'userAccount/currentAccount',
       }),
       paymentCards() {
         return this.$store.state.paymentMethod.paymentCards

@@ -88,21 +88,29 @@
         </nuxt-link>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn class="hidden-sm-and-down" v-if="typeof current_account.customer != 'undefined'" flat>{{ $auth.user.first_name }} - {{ current_account.customer.name }} </v-btn>
+      <v-btn class="hidden-sm-and-down" v-if="current_account != null && current_account.discriminator != 'personal'" flat>{{ $auth.user.first_name }} - {{ current_account.account.customer.name }} </v-btn>
       <v-btn class="hidden-sm-and-down" v-else flat>{{ $auth.user.first_name }} </v-btn>
       <v-menu offset-y>
         <v-btn slot="activator" icon>
           <v-icon>more_vert</v-icon>
         </v-btn>
         <v-list>
-          <v-list-tile v-for="account in $auth.user.accounts" :key="account.id" @click="setAccount(account)">
+          <v-list-tile @click="setAccount($auth.user.account)">
             <v-list-tile-action>
-              <v-icon v-if="account.discriminator == 'personal'" color="primary">account_box</v-icon>
-              <v-icon v-else color="primary">assessment</v-icon>
+              <v-icon color="primary">account_box</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>
-              <v-list-tile-title v-bind:class="{ 'red--text': isCurrent(account) }" v-if="account.discriminator == 'personal'">Cuenta personal</v-list-tile-title>
-              <v-list-tile-title v-bind:class="{ 'red--text': isCurrent(account) }" v-else>{{ account.customer.name }}</v-list-tile-title>
+              <v-list-tile-title v-bind:class="{ 'red--text': isCurrent($auth.user.account) }">Cuenta personal</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+          <v-divider inset></v-divider>
+
+          <v-list-tile v-for="account in user_accounts" :key="account.id" @click="setAccount(account)">
+            <v-list-tile-action>
+              <v-icon color="primary">assessment</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title v-bind:class="{ 'red--text': isCurrent(account) }">{{ account.account.customer.name }}</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
           <v-divider inset></v-divider>
@@ -142,7 +150,7 @@
 
 <script>
   import Snackbar from '~/components/Snackbar'
-  import { mapGetters, mapActions } from 'vuex';
+  import { mapGetters, mapActions, mapMutations } from 'vuex';
 
   export default {
     components: {
@@ -156,6 +164,7 @@
           { icon: 'commute', text: 'Planificar un viaje', to: { name: 'app' } },
           { icon: 'local_taxi', text: 'Viajes', to: { name: 'app-trips' } },
           { icon: 'credit_card', text: 'Métodos de pago', to: { name: 'app-payment-methods' } },
+          { icon: 'assessment', text: 'Cuentas', to: { name: 'app-accounts' } },
           { icon: 'settings', text: 'Configuración' },
           { divider: true },
           { icon: 'feedback', text: 'Enviar un feedback' },
@@ -170,18 +179,45 @@
     },
     computed: {
         ...mapGetters({
-            current_account: 'user/current_account',
+            current_account: 'userAccount/currentAccount',
+            users_account: 'account/currentUsersAccount',
+            user_accounts: 'userAccount/userAccounts'
         }),
     },
     methods: {
       ...mapActions({
-        refreshAccount: 'user/refreshAccount',
+        refreshAccount: 'userAccount/refreshAccount',
+        userAccounts: 'userAccount/userAccounts',
+        getUsers: 'account/getCurrentUsers',
+        getAccounts: 'userAccount/getUserAccounts'
+      }),
+      ...mapMutations({
+          addUserSelected: 'userAccount/addUserSelected',
       }),
       setAccount: function(account) {
-        this.refreshAccount(account);
+        this.getAccounts().then( (accounts) => {
+          this.refreshAccount([account, accounts]).then( (data) => {
+            if (data.discriminator == 'business') {
+                this.getUsers(data.id).then(() => {
+                    if (this.current_account.discriminator == 'business') {
+                        let _self = this;
+                        let userSelected = this.users_account.find(function (user) {
+                            return user.user.id == _self.$auth.user.id
+                        });
+
+                        this.addUserSelected(userSelected);
+                    }
+                })
+            }
+          });
+        })
       },
       isCurrent(account) {
-          return this.current_account.id == account.id;
+        if (this.current_account != null) {
+            return this.current_account.id == account.id;
+        }
+
+        return false;
       }
     }
   }

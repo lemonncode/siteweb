@@ -103,7 +103,7 @@
     },
     computed: {
       ...mapGetters({
-        current_account: 'user/current_account',
+        current_account: 'userAccount/currentAccount',
       }),
     },
     watch: {
