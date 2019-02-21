@@ -1,17 +1,21 @@
 export const state = () => ({
   addUserDialog: false,
+  editUserDialog: false,
   deleteUserDialog: false,
   usersAccount: [],
   currentUsersAccount: [],
   deleteUser: null,
+  editUser: null
 });
 
 export const getters = {
   addUserDialog: state => state.addUserDialog,
+  editUserDialog: state => state.editUserDialog,
   deleteUserDialog: state => state.deleteUserDialog,
   account: state => state.account,
   usersAccount: state => state.usersAccount,
   deleteUser: state => state.deleteUser,
+  editUser: state => state.editUser,
   currentUsersAccount: state => state.currentUsersAccount,
 };
 
@@ -21,6 +25,13 @@ export const mutations = {
   },
   closeAddUserDialog(state) {
     state.addUserDialog = false
+  },
+  openEditUserDialog(state, user) {
+    state.editUserDialog = true;
+    state.editUser = user;
+  },
+  closeEditUserDialog(state) {
+    state.editUserDialog = false
   },
   openDeleteUserDialog(state, user) {
     state.deleteUserDialog = true;
@@ -72,5 +83,11 @@ export const actions = {
       .then((data) => {
         commit('addUser', data)
       })
+  },
+  async editUser({ dispatch }, {account, user, role}) {
+    return this.$axios.$patch(`/business-accounts/${account.account.id}/users/${user.id}`, { role: role })
+        .then((data) => {
+          dispatch('getUsers', account.account.id)
+        })
   }
 };

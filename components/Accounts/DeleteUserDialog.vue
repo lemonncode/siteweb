@@ -5,7 +5,7 @@
         <span class="headline">Borrar usuario</span>
       </v-card-title>
       <v-card-text v-if="user">
-        ¿Seguro que quiere borrar el usuario {{user.full_name}}?
+        ¿Seguro que quiere borrar el usuario {{user.user.full_name}}?
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
@@ -27,7 +27,7 @@
             },
             deleteUser(user) {
                 let userAccount = this.usersAccount.find(function (userBusinessAccount) {
-                    return userBusinessAccount.user.id == user.id;
+                    return userBusinessAccount.user.id == user.user.id;
                 });
 
                 this.$store.dispatch('account/deleteUser', {account: this.account, user: userAccount})
