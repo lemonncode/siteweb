@@ -197,9 +197,11 @@
       setAccount: function(account) {
         this.getAccounts().then( (accounts) => {
           this.refreshAccount([account, accounts]).then( (data) => {
-            if (data.discriminator == 'business') {
-                this.getUsers(data.id).then(() => {
-                    if (this.current_account.discriminator == 'business') {
+            let discriminator = this.getDiscriminator(data);
+            if (discriminator == 'business') {
+                this.getUsers(data.account.id).then(() => {
+                    let currentDiscriminator = this.getDiscriminator(this.current_account);
+                    if (currentDiscriminator == 'business') {
                         let _self = this;
                         let userSelected = this.users_account.find(function (user) {
                             return user.user.id == _self.$auth.user.id
@@ -218,6 +220,9 @@
         }
 
         return false;
+      },
+      getDiscriminator(account) {
+          return (typeof account.account != 'undefined') ? account.account.discriminator: account.discriminator;
       }
     }
   }
