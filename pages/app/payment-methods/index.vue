@@ -24,7 +24,7 @@
         this.$store.commit('paymentMethod/openDialog')
       },
       isAuthorized() {
-        return this.current_account !== null && this.current_account.role == 'owner' || this.current_account.role == 'admin';
+        return this.current_account !== null && (this.current_account.discriminator == 'personal' ||  (this.current_account.role == 'owner' || this.current_account.role == 'admin'));
       }
     },
     components: {

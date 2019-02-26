@@ -77,15 +77,15 @@ export const actions = {
         })
   },
   async refreshAccount ({ commit, dispatch }, [account, accounts]) {
-    if (typeof sessionStorage !== 'undefined') {
+    if (typeof localStorage !== 'undefined') {
       if (account == null) {
-        account = JSON.parse(sessionStorage.getItem('current_account'));
+        account = JSON.parse(localStorage.getItem('current_account'));
         if (!account) {
           account = this.$auth.user.account;
         }
       }
 
-      sessionStorage.setItem('current_account', JSON.stringify(account));
+      localStorage.setItem('current_account', JSON.stringify(account));
       let accountId = account.discriminator == 'personal' ? account.id: account.account.id;
 
       commit('setAccountId', accountId)
