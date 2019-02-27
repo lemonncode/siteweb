@@ -50,7 +50,10 @@
         busyOverlay
     },
     mounted() {
-      this.$refs.username.focus()
+      this.$refs.username.focus();
+      if (this.$auth.loggedIn) {
+          this.$auth.redirect('home');
+      }
     },
     computed: {
         ...mapGetters({
@@ -84,6 +87,9 @@
       cancel() {
         this.$router.push({ name: 'index' })
       },
+      redirect() {
+
+      }
     },
     notifications: {
       showLoginInfo: {

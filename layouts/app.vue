@@ -164,7 +164,7 @@
           { icon: 'commute', text: 'Planificar un viaje', to: { name: 'app' } },
           { icon: 'local_taxi', text: 'Viajes', to: { name: 'app-trips' } },
           { icon: 'credit_card', text: 'Métodos de pago', to: { name: 'app-payment-methods' } },
-          { icon: 'assessment', text: 'Cuentas', to: { name: 'app-accounts' } },
+          { icon: 'assessment', text: 'Cuentas de empresa', to: { name: 'app-accounts' } },
           { icon: 'settings', text: 'Configuración' },
           { divider: true },
           { icon: 'feedback', text: 'Enviar un feedback' },
@@ -215,7 +215,7 @@
         })
       },
       isCurrent(account) {
-        if (this.current_account != null) {
+        if (typeof account != 'undefined' && this.current_account != null) {
             return this.current_account.id == account.id;
         }
 

@@ -93,30 +93,13 @@
                     </div>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
-                    <v-dialog
-                        ref="dialog"
-                        v-model="modal"
-                        :return-value.sync="date"
+                    <v-text-field
+                        v-model="user.birthDate"
                         :rules="birthDateRules"
-                        persistent
-                        lazy
-                        full-width
-                        width="290px"
+                        type="date"
+                        label="Fecha de nacimiento"
                         required
-                    >
-                      <v-text-field
-                          slot="activator"
-                          v-model="dateFormatted"
-                          label="Fecha de nacimiento"
-                          persistent-hint
-                          @blur="date = parseDate(dateFormatted)"
-                      ></v-text-field>
-                      <v-date-picker locale="es-ES" color="#ed6363" v-model="date">
-                        <v-spacer></v-spacer>
-                        <v-btn flat color="primary" @click="modal = false">Cancelar</v-btn>
-                        <v-btn flat color="primary" @click="$refs.dialog.save(date)">OK</v-btn>
-                      </v-date-picker>
-                    </v-dialog>
+                    ></v-text-field>
                   </v-flex>
                   <v-flex xs6 sm2>
                     <v-select
