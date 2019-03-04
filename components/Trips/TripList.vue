@@ -22,8 +22,9 @@
       no-data-text="No tienes viajes"
     >
       <template slot="items" slot-scope="props">
-        <tr @click="viewTrip(props.item.id)" :style="{ cursor: 'pointer'}">
+        <tr @dblclick="viewTrip(props.item.id)" :style="{ cursor: 'pointer'}">
           <td>{{ formatedDate(props.item.date) }}</td>
+          <td>{{ props.item.user_name }}</td>
           <td>{{ props.item.origin.autocomplete }}</td>
           <td>{{ props.item.destination.autocomplete }}</td>
           <td class="text-xs-center">
@@ -39,6 +40,12 @@
                 && props.item.status !== 'canceled' && props.item.status !== 'pickedup'"
             >
               cancel
+            </v-icon>
+            <v-icon v-if="props.item.invoiced"
+                small
+                @click="printTripInvoice(props.item)"
+            >
+              print
             </v-icon>
           </td>
         </tr>
@@ -67,13 +74,17 @@
         search: '',
         headers: [
           { text: 'Fecha', value: 'date' },
+          {
+            text: 'Usuario',
+            value: 'user_name',
+          },
           { 
             text: 'Origen', 
-            value: 'origin',
+            value: 'origin.autocomplete',
           },
           { 
             text: 'Destino', 
-            value: 'destination',
+            value: 'destination.autocomplete',
           },
           { 
             text: 'Estado', 
@@ -134,7 +145,6 @@
           })
         ;
 
-
         /*this.$store.dispatch('cancelTrip', trip)
           .then(() => {
             trip.status = 'canceled'
@@ -153,6 +163,17 @@
             })
           })*/
       },
+
+      async printTripInvoice (trip) {
+          await this.$store.dispatch('printTrip', trip.id)
+              .then(() => {
+                  this.showPrintInvoiceSuccessMessage();
+              })
+              .catch(e => {
+                  this.showPrintInvoiceErrorMessage();
+              })
+          ;
+      },
       formatedDate (date) {
         return moment(date).locale('es').format('LLL')
       }
@@ -161,6 +182,14 @@
       showCanceledTripSuccessMessage: {
         message: 'Viaje privado cancelado',
         type: 'success' 
+      },
+      showPrintInvoiceSuccessMessage: {
+          message: 'Factura descargada correctamente',
+          type: 'success'
+      },
+      showPrintInvoiceErrorMessage: {
+          message: 'Error al obtener la factura',
+          type: 'success'
       }
     }
   }

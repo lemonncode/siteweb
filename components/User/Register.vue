@@ -93,13 +93,30 @@
                     </div>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
-                    <v-text-field
-                        v-model="user.birthDate"
+                    <v-dialog
+                        ref="dialog"
+                        v-model="modal"
+                        :return-value.sync="date"
                         :rules="birthDateRules"
-                        type="date"
-                        label="Fecha de nacimiento"
+                        persistent
+                        lazy
+                        full-width
+                        width="290px"
                         required
-                    ></v-text-field>
+                    >
+                      <v-text-field
+                          slot="activator"
+                          v-model="dateFormatted"
+                          label="Fecha de nacimiento"
+                          persistent-hint
+                          @blur="date = parseDate(dateFormatted)"
+                      ></v-text-field>
+                      <v-date-picker locale="es-ES" color="#ed6363" v-model="date">
+                        <v-spacer></v-spacer>
+                        <v-btn flat color="primary" @click="modal = false">Cancelar</v-btn>
+                        <v-btn flat color="primary" @click="$refs.dialog.save(date)">OK</v-btn>
+                      </v-date-picker>
+                    </v-dialog>
                   </v-flex>
                   <v-flex xs6 sm2>
                     <v-select
@@ -203,11 +220,11 @@
                 showPassword: false,
                 nifNumberRules: [
                     v => !!v || 'Introduce tu número de DNI',
-                    v => /^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKET]{1}$/.test(v) || 'DNI inválido',
+                    v => /^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKEtrwagmyfpdxbnjzsqvhlcke]{1}$/.test(v) || 'DNI inválido',
                 ],
                 nieNumberRules: [
                     v => !!v || 'Introduce tu número de NIE',
-                    v => /^[XYZ]{1}[0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKET]{1}$/.test(v) || 'NIE inválido',
+                    v => /^[XYZ]{1}[0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKETtrwagmyfpdxbnjzsqvhlcket]{1}$/.test(v) || 'NIE inválido',
                 ],
                 passportNumberRules: [
                     v => !!v || 'Introduce número de pasaporte'

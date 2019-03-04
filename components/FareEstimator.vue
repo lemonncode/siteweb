@@ -24,7 +24,7 @@
     </v-stepper-content>
 
 
-    <div v-if="true || current_account != null && current_account.discriminator == 'personal' || (current_account != null && current_account.role != 'owner' && current_account.role != 'admin')">
+    <div v-if="current_account != null && current_account.discriminator == 'personal' || (current_account != null && current_account.role != 'owner' && current_account.role != 'admin')">
       <v-stepper-step step="3">Confirmar la reserva</v-stepper-step>
       <v-stepper-content step="3">
         <v-textarea v-model="notes" label="Comentario" outline></v-textarea>
@@ -100,7 +100,7 @@
           type: Object,
           default: null
         },
-        user: ''
+        user: null
       };
     },
     mounted () {
@@ -118,13 +118,6 @@
         console.log(this.pickupPlaceAutocomplete.getPlace());
         this.$emit('placeChanged', this.pickupPlaceAutocomplete.getPlace())
       })*/
-    },
-    watch : {
-        userSelected: function (val) {
-            if (val) {
-                this.user = val;
-            }
-        }
     },
     computed: {
       ...mapGetters({
@@ -166,7 +159,7 @@
             avoidTolls: true,
             avoidFerries: true,
             region: 'es',
-            provideRouteAlternatives: true
+            provideRouteAlternatives: true,
           }, (response, status) => {
 
             if (response.status !== 'OK') {
@@ -192,7 +185,8 @@
           destination: this.destinationPlace.place_id,
           date: this.date && this.time ? `${this.date} ${this.time}` : null,
           notes: this.notes,
-          serviceType: this.serviceType
+          serviceType: this.serviceType,
+          user: this.user,
         })
       },
 
