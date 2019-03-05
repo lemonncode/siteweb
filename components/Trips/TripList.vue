@@ -22,7 +22,7 @@
       no-data-text="No tienes viajes"
     >
       <template slot="items" slot-scope="props">
-        <tr @dblclick="viewTrip(props.item.id)" :style="{ cursor: 'pointer'}">
+        <tr @click="viewTrip(props.item.id)" :style="{ cursor: 'pointer'}">
           <td>{{ formatedDate(props.item.date) }}</td>
           <td>{{ props.item.user_name }}</td>
           <td>{{ props.item.origin.autocomplete }}</td>
@@ -43,7 +43,7 @@
             </v-icon>
             <v-icon v-if="props.item.invoiced"
                 small
-                @click="printTripInvoice(props.item)"
+                @click="printTripInvoice(props.item, $event)"
             >
               print
             </v-icon>
@@ -164,7 +164,8 @@
           })*/
       },
 
-      async printTripInvoice (trip) {
+      async printTripInvoice (trip, event) {
+          event.stopPropagation();
           await this.$store.dispatch('printTrip', trip.id)
               .then(() => {
                   this.showPrintInvoiceSuccessMessage();
