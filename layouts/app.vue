@@ -215,7 +215,7 @@
         })
       },
       isCurrent(account) {
-        if (typeof account != 'undefined' && this.current_account != null) {
+        if (typeof account != 'undefined' && account != null && this.current_account != null) {
             return this.current_account.id == account.id;
         }
 

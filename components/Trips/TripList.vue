@@ -10,7 +10,7 @@
         single-line
         hide-details
       ></v-text-field>
-    </v-card-title>  
+    </v-card-title>
     <v-data-table
       :headers="headers"
       :items="trips"
@@ -32,21 +32,15 @@
           </td>
           <td class="text-xs-right">{{ props.item.price }} €</td>
           <td class="text-xs-right">
-            <v-icon
-              color="red" 
-              small
-              @click="cancelTrip(props.item)"
-              v-if="props.item.status !== 'done' && props.item.status !== 'finalized'
-                && props.item.status !== 'canceled' && props.item.status !== 'pickedup'"
-            >
-              cancel
-            </v-icon>
-            <v-icon v-if="props.item.invoiced"
-                small
-                @click="printTripInvoice(props.item, $event)"
-            >
-              print
-            </v-icon>
+            <v-tooltip bottom>
+              <v-icon color="red" v-if="props.item.status !== 'done' && props.item.status !== 'finalized'
+                && props.item.status !== 'canceled' && props.item.status !== 'pickedup'" small slot="activator" @click="cancelTrip(props.item)">cancel</v-icon>
+              <span>Cancelar</span>
+            </v-tooltip>
+            <v-tooltip bottom>
+              <v-icon v-if="props.item.invoiced" small slot="activator" @click="printTripInvoice(props.item, $event)">print</v-icon>
+              <span>Imprimir</span>
+            </v-tooltip>
           </td>
         </tr>
       </template>
