@@ -1,9 +1,13 @@
+import moment from 'moment'
+
 export const state = () => ({
 })
 
 export const actions = {
   async getTrips ({ rootState }) {
-    return this.$axios.$get(`/accounts/${rootState.userAccount.currentAccountId}/trips`)
+    if (rootState.userAccount.currentAccountId != null) {
+      return this.$axios.$get(`/accounts/${rootState.userAccount.currentAccountId}/trips`)
+    }
   },
   async getTrip ({ commit, rootState }, id) {
     return this.$axios.$get(`/accounts/${rootState.userAccount.currentAccountId}/trips/${id}`)
@@ -20,7 +24,22 @@ export const actions = {
   async reassignTrip ({ commit, rootState }, trip) {
     return this.$axios.$patch(`/accounts/${rootState.userAccount.currentAccountId}/trips/${trip.id}/reassign`)
   },
-  async printTrip ({ commit, rootState }, id) {
+  async getTripsCsv ({ rootState }) {
+    return this.$axios({
+      url: `/accounts/${rootState.userAccount.currentAccountId}/trips.csv`,
+      method: 'GET',
+      responseType: 'blob',
+    }).then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      const date = new Date();
+      link.href = url;
+      link.setAttribute('download', `viajes${moment().format('DDMMYYYYhhmm')}.csv`);
+      document.body.appendChild(link);
+      link.click();
+    });
+  },
+  async printTrip ({ rootState }, id) {
     return this.$axios({
       url: `/accounts/${rootState.userAccount.currentAccountId}/trips/${id}/invoice`,
       method: 'GET',

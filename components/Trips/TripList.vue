@@ -10,6 +10,8 @@
         single-line
         hide-details
       ></v-text-field>
+      <v-spacer></v-spacer>
+      <v-btn color="#ed6363" class="white--text" @click="getCsv()">Descargar</v-btn>
     </v-card-title>
     <v-data-table
       :headers="headers"
@@ -120,6 +122,9 @@
       async loadTrips () {
         this.trips = await this.$store.dispatch('getTrips')
         this.loading = false
+      },
+      async getCsv () {
+          await this.$store.dispatch('getTripsCsv')
       },
       async viewTrip (id) {
         this.$router.push({ name: 'app-trips-id', params: {id: id} })
