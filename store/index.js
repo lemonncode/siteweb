@@ -10,7 +10,9 @@ export const actions = {
     }
   },
   async getTrip ({ commit, rootState }, id) {
-    return this.$axios.$get(`/accounts/${rootState.userAccount.currentAccountId}/trips/${id}`)
+    if (rootState.userAccount.currentAccountId != null) {
+      return this.$axios.$get(`/accounts/${rootState.userAccount.currentAccountId}/trips/${id}`)
+    }
   },
   async addTrip ({ commit, rootState }, trip) {
     return this.$axios.$post(`/accounts/${rootState.userAccount.currentAccountId}/trips`, trip)

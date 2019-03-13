@@ -211,7 +211,7 @@
                     }
                 })
             }
-          });
+          }).catch(() => {});
         })
       },
       isCurrent(account) {
