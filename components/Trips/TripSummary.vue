@@ -186,7 +186,8 @@
       computed: {
         ...mapGetters({
           trip: 'trip/trip',
-          waitTime: 'map/waitTime'
+          waitTime: 'map/waitTime',
+          currentAccountId: 'userAccount/currentAccountId'
         }),
         formatedDated () {
           let date = this.trip.date;
@@ -203,6 +204,9 @@
       watch: {
         trip: {
           handler: 'scrollToEnd'
+        },
+        currentAccountId () {
+            this.loadTrip(this.$route.params.id)
         }
       },
       methods: {

@@ -76,7 +76,7 @@ export const actions = {
           this.$router.push({ name: 'app-accounts-id', params: {id: data.id} })
         })
   },
-  async refreshAccount ({ commit, dispatch }, [account, accounts]) {
+  async refreshAccount ({ commit, dispatch }, [account]) {
     if (typeof localStorage !== 'undefined') {
       if (account == null) {
         account = JSON.parse(localStorage.getItem('current_account'));
