@@ -80,6 +80,11 @@ export const actions = {
     if (typeof localStorage !== 'undefined') {
       if (account == null) {
         account = JSON.parse(localStorage.getItem('current_account'));
+
+        if (account.user == null || this.$auth.state.user.id != account.user) {
+          account = null;
+        }
+
         if (!account) {
           account = this.$auth.user.account;
         }
@@ -93,5 +98,5 @@ export const actions = {
 
       return account;
     }
-  },
+  }
 }
