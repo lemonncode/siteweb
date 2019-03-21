@@ -2,8 +2,18 @@
   <v-stepper v-model="currentStep" vertical>
     <v-stepper-step :complete="currentStep > 1" step="1">Seleccione un trayecto</v-stepper-step>
     <v-stepper-content step="1">
-      <place-autocomplete-field :geolocation="pickupPlaceAutocomplete" icon="trip_origin" placeholder="Elige un punto de partida" @placeChanged="setPickupPlace($event)"></place-autocomplete-field>
-      <place-autocomplete-field icon="pin_drop" placeholder="Elige un destino" @placeChanged="setDestinationPlace($event)"></place-autocomplete-field>
+      <place-autocomplete-field
+          icon="trip_origin"
+          placeholder="Punto de partida"
+          display-geolocation-button
+          @changed="pickupPlace = $event"
+      ></place-autocomplete-field>
+
+      <place-autocomplete-field
+          icon="pin_drop"
+          placeholder="Destino"
+          @changed="destinationPlace = $event"
+      ></place-autocomplete-field>
 
       <v-alert :value="alert" type="error" transition="scale-transition">Trayecto inválido</v-alert>
 
@@ -65,10 +75,10 @@
 </template>
 
 <script>
-  import PlaceAutocompleteField from './PlaceAutocompleteField'
   import DateField from '~/components/Estimator/DateField'
+  import PlaceAutocompleteField from '~/components/Estimator/PlaceAutocompleteField'
   import TimeField from '~/components/Estimator/TimeField'
-  import { mapGetters } from 'vuex';
+  import { mapGetters, mapActions } from 'vuex';
 
   export default {
     components: {
@@ -81,8 +91,6 @@
         date: null,
         time: null,
         currentStep: 1,
-        pickupPlaceAutocomplete: null,
-        destinationPlaceAutocomplete: null,
         pickupPlace: null,
         destinationPlace: null,
         route: null,
@@ -100,24 +108,8 @@
           type: Object,
           default: null
         },
-        user: null
+        user: null,
       };
-    },
-    mounted () {
-      /*this.pickupPlaceAutocomplete = new google.maps.places.Autocomplete(
-        this.$refs.pickupAutocomplete.$el.querySelector('input'),
-        {types: ['geocode'] }
-      );
-
-      this.destinationPlaceAutocomplete = new google.maps.places.Autocomplete(
-        this.$refs.destinationAutocomplete.$el.querySelector('input'),
-        {types: ['geocode']}
-      );
-
-      this.pickupPlaceAutocomplete.addListener('placeChanged', () => {
-        console.log(this.pickupPlaceAutocomplete.getPlace());
-        this.$emit('placeChanged', this.pickupPlaceAutocomplete.getPlace())
-      })*/
     },
     computed: {
       ...mapGetters({
@@ -130,15 +122,9 @@
       },
       isValidStep2 () {
         return (this.serviceType == 'asap' || (this.date !== null && this.time !== null));
-      }
+      },
     },
     methods: {
-      setPickupPlace (place) {
-        this.pickupPlace = 'place_id' in place ? place : null;
-      },
-      setDestinationPlace (place) {
-        this.destinationPlace = 'place_id' in place ? place : null;
-      },
       cancelStep1 () {
         this.pickupPlace = this.destinationPlace = null;
       },
@@ -152,8 +138,8 @@
         var directionsService = new google.maps.DirectionsService;
 
         directionsService.route({
-            origin: { placeId: this.pickupPlace.place_id },
-            destination: { placeId: this.destinationPlace.place_id },
+            origin: { placeId: this.pickupPlace.placeId },
+            destination: { placeId: this.destinationPlace.placeId },
             travelMode: google.maps.TravelMode['DRIVING'],
             optimizeWaypoints: true,
             avoidTolls: true,
@@ -181,8 +167,8 @@
       complete () {
         this.loading = true;
         this.addTrip({
-          origin: this.pickupPlace.place_id,
-          destination: this.destinationPlace.place_id,
+          origin: this.pickupPlace.placeId,
+          destination: this.destinationPlace.placeId,
           date: this.date && this.time ? `${this.date} ${this.time}` : null,
           notes: this.notes,
           serviceType: this.serviceType,
@@ -218,8 +204,8 @@
       priceCalculator () {
           this.tripDetail({
               params: {
-                  origin: this.pickupPlace.place_id,
-                  destination: this.destinationPlace.place_id
+                  origin: this.pickupPlace.placeId,
+                  destination: this.destinationPlace.placeId
               }
           })
       },
@@ -234,47 +220,6 @@
             //this.showTripDetailErrorMessage(error.response !== undefined ? { message: error.response.data.message } : {})
             this.showTripDetailErrorMessage({})
           })
-      },
-
-      getGeoposition() {
-        this.updateGeolocation ((geolocation, position) => {
-          this.updateCoordinates(geolocation)
-        })
-      },
-
-      updateCoordinates (value) {
-        if (!value && !(value.lat || value.lng)) return;
-        if (!this.geolocation.geocoder) this.geolocation.geocoder = new google.maps.Geocoder();
-        this.geolocation.geocoder.geocode({'location': value}, (results, status) => {
-          if (status === 'OK') {
-            if (results[0]) {
-                this.pickupPlaceAutocomplete = results[0].formatted_address;
-                this.setPickupPlace(results[0]);
-            } else {
-                this.showNoResultForGeolocation;
-            }
-          } else {
-            this.showErrorForGeolocation;
-          }
-        })
-      },
-
-      updateGeolocation (callback = null) {
-        if (navigator.geolocation) {
-          let options = {};
-          if(this.geolocationOptions) Object.assign(options, this.geolocationOptions);
-          navigator.geolocation.getCurrentPosition(position => {
-            let geolocation = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            };
-            this.geolocation.loc = geolocation;
-            this.geolocation.position = position;
-            if (callback) callback(geolocation, position);
-          }, err => {
-            this.showNavigatorError;
-          }, options);
-        }
       },
     },
     notifications: {
