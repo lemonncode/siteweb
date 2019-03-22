@@ -18,6 +18,7 @@
         append=false
         @change="change"
         v-if="currentAccount"
+        :menu-props="{ 'allow-overflow': true }"
     >
       <template slot="item" slot-scope="data">
         <template v-if="typeof data.item !== 'object'">
