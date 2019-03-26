@@ -1017,6 +1017,10 @@
     mustache "^2.3.0"
     stack-trace "0.0.10"
 
+"@types/cookie@^0.3.1":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@types/cookie/-/cookie-0.3.2.tgz#453f4b14b25da6a8ea4494842dedcbf0151deef9"
+
 "@types/q@^1.5.1":
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/@types/q/-/q-1.5.1.tgz#48fd98c1561fe718b61733daed46ff115b496e18"
@@ -2070,6 +2074,20 @@ cookie-parser@^1.4.3:
 cookie-signature@1.0.6:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/cookie-signature/-/cookie-signature-1.0.6.tgz#e303a882b342cc3ee8ca513a79999734dab3ae2c"
+
+cookie-universal-nuxt@^2.0.14:
+  version "2.0.14"
+  resolved "https://registry.yarnpkg.com/cookie-universal-nuxt/-/cookie-universal-nuxt-2.0.14.tgz#6fdf8e928eadd7611c04a57614fe2e29b60eb971"
+  dependencies:
+    "@types/cookie" "^0.3.1"
+    cookie-universal "^2.0.14"
+
+cookie-universal@^2.0.14:
+  version "2.0.14"
+  resolved "https://registry.yarnpkg.com/cookie-universal/-/cookie-universal-2.0.14.tgz#1b4f27cffccfc2e47703fa235c1f67f931213041"
+  dependencies:
+    "@types/cookie" "^0.3.1"
+    cookie "^0.3.1"
 
 cookie@0.3.1, cookie@^0.3.1:
   version "0.3.1"

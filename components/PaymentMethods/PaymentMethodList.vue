@@ -73,7 +73,6 @@
     methods: {
       ...mapActions({
           getPaymentCards: 'paymentMethod/getPaymentCards',
-          refreshAccount: 'userAccount/refreshAccount',
       }),
       isDefaultPaymentCard(paymentCard) {
         if (this.current_account.discriminator == 'personal') {
@@ -84,7 +83,6 @@
       },
       updateDefaultPaymentCard(paymentCard) {
         this.$store.dispatch('paymentMethod/updateDefaultPaymentCard', paymentCard).then(() => {
-          this.refreshAccount([this.current_account, this.userAccounts]);
           this.showUpdatedDefaultPaymentCardSuccessMessage()
         });
       },

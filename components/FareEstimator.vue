@@ -39,7 +39,7 @@
       <v-stepper-content step="3">
         <v-textarea v-model="notes" label="Comentario" outline></v-textarea>
           <v-card-title>El precio de la reserva es de {{ priceFormat(price) }} €</v-card-title>
-          <v-btn v-if="!loading" color="primary" @click.native="complete">Reservar</v-btn>
+          <v-btn v-if="!loading" color="primary" @click.native="complete">{{ getButtonLabel() }}</v-btn>
           <v-progress-circular v-if="loading"
               indeterminate
               color="primary"
@@ -62,7 +62,7 @@
         </v-flex>
         <v-textarea v-model="notes" label="Comentario" outline></v-textarea>
         <v-card-title>El precio de la reserva es de {{ priceFormat(price) }} €</v-card-title>
-        <v-btn v-if="!loading" color="primary" @click.native="complete">Reservar</v-btn>
+        <v-btn v-if="!loading" color="primary" @click.native="complete">{{ getButtonLabel() }}</v-btn>
         <v-progress-circular v-if="loading"
                              indeterminate
                              color="primary"
@@ -78,7 +78,7 @@
   import DateField from '~/components/Estimator/DateField'
   import PlaceAutocompleteField from '~/components/Estimator/PlaceAutocompleteField'
   import TimeField from '~/components/Estimator/TimeField'
-  import { mapGetters, mapActions } from 'vuex';
+  import { mapGetters } from 'vuex';
 
   export default {
     components: {
@@ -133,6 +133,9 @@
           let val = (value/1).toFixed(2).replace('.', ',')
           return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
         }
+      },
+      getButtonLabel () {
+        return this.serviceType == 'asap' ? 'Pedir ahora' : 'Reservar'
       },
       handleRoute () {
         var directionsService = new google.maps.DirectionsService;

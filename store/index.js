@@ -4,6 +4,10 @@ export const state = () => ({
 })
 
 export const actions = {
+  async nuxtServerInit ({ dispatch }) {
+    await dispatch('userAccount/load')
+  },
+
   async getTrips ({ rootState }) {
     if (rootState.userAccount.currentAccountId != null) {
       return this.$axios.$get(`/accounts/${rootState.userAccount.currentAccountId}/trips`)

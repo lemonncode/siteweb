@@ -64,7 +64,8 @@ module.exports = {
     '@nuxtjs/axios',
     '@nuxtjs/auth',
     '@nuxtjs/toast',
-    '@nuxtjs/dotenv'
+    '@nuxtjs/dotenv',
+    'cookie-universal-nuxt',
   ],
 
   /*

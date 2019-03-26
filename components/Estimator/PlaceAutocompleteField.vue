@@ -1,6 +1,6 @@
 <template>
-  <div>
     <v-autocomplete
+        v-if="currentAccount"
         v-model="value"
         :items="items"
         :loading="isLoadingPlaces || isLoadingPredictions"
@@ -15,9 +15,7 @@
         return-object
         single-line
         clearable
-        append=false
         @change="change"
-        v-if="currentAccount"
     >
       <template slot="item" slot-scope="data">
         <template v-if="typeof data.item !== 'object'">
@@ -36,8 +34,6 @@
         <geolocation-button @geolocalized="geolocalized($event)"></geolocation-button>
       </template>
     </v-autocomplete>
-  </div>
-
 </template>
 
 <script>
@@ -65,6 +61,9 @@
           'google': { color: 'light-blue darken-3', icon: 'place' }
         }
       };
+    },
+    mounted () {
+      this.searchPlaces('');
     },
     computed: {
       ...mapGetters({

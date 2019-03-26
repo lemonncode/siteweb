@@ -88,7 +88,7 @@
         </nuxt-link>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn class="hidden-sm-and-down" v-if="current_account != null && current_account.discriminator != 'personal'" flat>{{ $auth.user.first_name }} - {{ current_account.account.customer.name }} </v-btn>
+      <v-btn class="hidden-sm-and-down" v-if="currentAccount != null && currentAccount.discriminator != 'personal'" flat>{{ $auth.user.first_name }} - {{ currentAccount.account.customer.name }} </v-btn>
       <v-btn class="hidden-sm-and-down" v-else flat>{{ $auth.user.first_name }} </v-btn>
       <v-menu offset-y>
         <v-btn slot="activator" icon>
@@ -105,7 +105,7 @@
           </v-list-tile>
           <v-divider inset></v-divider>
 
-          <v-list-tile v-for="account in user_accounts" :key="account.id" @click="setAccount(account)">
+          <v-list-tile v-for="account in userAccounts" :key="account.id" @click="setAccount(account)">
             <v-list-tile-action>
               <v-icon color="primary">assessment</v-icon>
             </v-list-tile-action>
@@ -131,19 +131,6 @@
           <router-view></router-view>
         </v-container>
       </nuxt-child>
-
-      <!--
-        <v-container fluid>
-          <router-view></router-view>
-        </v-container>
-      -->
-      <!--
-      <v-container fluid fill-height pa-0>
-        <v-layout justify-center align-center>
-          <nuxt />
-        </v-layout>
-      </v-container
-      -->
     </v-content>
   </v-app>
 </template>
@@ -174,55 +161,22 @@
         drawer: null,
       }
     },
-    created: function () {
-      this.setAccount(null);
-    },
     computed: {
-        ...mapGetters({
-            current_account: 'userAccount/currentAccount',
-            users_account: 'account/currentUsersAccount',
-            user_accounts: 'userAccount/userAccounts'
-        }),
+      ...mapGetters({
+        currentAccount: 'userAccount/currentAccount',
+        userAccounts: 'userAccount/userAccounts'
+      }),
     },
     methods: {
-      ...mapActions({
-        refreshAccount: 'userAccount/refreshAccount',
-        userAccounts: 'userAccount/userAccounts',
-        getUsers: 'account/getCurrentUsers',
-        getAccounts: 'userAccount/getUserAccounts'
-      }),
       ...mapMutations({
-          addUserSelected: 'userAccount/addUserSelected',
+        setAccount: 'userAccount/setAccount',
       }),
-      setAccount: function(account) {
-        this.getAccounts().then( (accounts) => {
-          this.refreshAccount([account, accounts]).then( (data) => {
-            let discriminator = this.getDiscriminator(data);
-            if (discriminator == 'business') {
-                this.getUsers(data.account.id).then(() => {
-                    let currentDiscriminator = this.getDiscriminator(this.current_account);
-                    if (currentDiscriminator == 'business') {
-                        let _self = this;
-                        let userSelected = this.users_account.find(function (user) {
-                            return user.user.id == _self.$auth.user.id
-                        });
-
-                        this.addUserSelected(userSelected);
-                    }
-                })
-            }
-          }).catch(() => {});
-        })
-      },
       isCurrent(account) {
-        if (typeof account != 'undefined' && account != null && this.current_account != null) {
-            return this.current_account.id == account.id;
+        if (typeof account != 'undefined' && account != null && this.currentAccount != null) {
+            return this.currentAccount.id == account.id;
         }
 
         return false;
-      },
-      getDiscriminator(account) {
-          return (typeof account.account != 'undefined') ? account.account.discriminator: account.discriminator;
       }
     }
   }

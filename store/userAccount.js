@@ -45,6 +45,15 @@ export const mutations = {
   },
   setAccount(state, account) {
     state.currentAccount = account
+
+    if (account != null) {
+      state.currentAccountId = account.discriminator == 'personal' ? account.id: account.account.id
+    } else {
+      state.currentAccountId = null
+    }
+
+
+    this.$cookies.set('currentAccountId', state.currentAccountId)
   },
   setAccountId(state, id) {
     state.currentAccountId = id
@@ -52,6 +61,9 @@ export const mutations = {
 }
 
 export const actions = {
+  async setAccount ({ commit }, account) {
+    commit('setAccount', account)
+  },
   async getUserAccounts({ commit }) {
     return this.$axios.$get(`/user/business-accounts`).then(data => {
       commit('setUserAccounts', data)
@@ -76,27 +88,28 @@ export const actions = {
           this.$router.push({ name: 'app-accounts-id', params: {id: data.id} })
         })
   },
-  async refreshAccount ({ commit, dispatch }, [account]) {
-    if (typeof localStorage !== 'undefined') {
-      if (account == null) {
-        account = JSON.parse(localStorage.getItem('current_account'));
-
-        if (account.user == null || this.$auth.state.user.id != account.user) {
-          account = null;
-        }
-
-        if (!account) {
-          account = this.$auth.user.account;
-        }
-      }
-
-      localStorage.setItem('current_account', JSON.stringify(account));
-      let accountId = account.discriminator == 'personal' ? account.id: account.account.id;
-
-      commit('setAccountId', accountId)
-      commit('setAccount', account)
-
-      return account;
+  async load ({ commit }) {
+    if (this.$auth.user == null) {
+      return;
     }
+
+    let currentAccountId = this.$cookies.get('currentAccountId')
+    if (currentAccountId == null) {
+      currentAccountId = this.$auth.user.account.id
+    }
+
+    let currentAccount = null
+    if (this.$auth.user.account.id == currentAccountId) {
+      currentAccount = this.$auth.user.account
+    } else {
+      this.$auth.user.business_accounts.forEach(businessAccount => {
+        if (businessAccount.account.id == currentAccountId) {
+          currentAccount = businessAccount
+        }
+      })
+    }
+
+    commit('setAccount', currentAccount)
+    commit('setUserAccounts', this.$auth.user.business_accounts)
   }
 }

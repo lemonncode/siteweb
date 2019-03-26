@@ -42,7 +42,7 @@
 <script>
   import busyOverlay from '~/components/busy-overlay'
   import Captcha from '~/components/Captcha';
-  import { mapGetters } from 'vuex';
+  import { mapGetters, mapActions } from 'vuex';
 
   export default {
     components: {
@@ -67,14 +67,20 @@
       };
     },
     methods: {
+      ...mapActions({
+        setAccount: 'userAccount/setAccount',
+        loadAccount: 'userAccount/load',
+      }),
       login() {
         if (this.captchaValidation) {
           this.showLoginInfo()
 
           this.$store.dispatch('user/login', { username: this.username, password: this.password })
             .then(() => {
-                this.showLoginSuccess({ message: `Bienvenido ${this.$auth.user.first_name}` })
-                //this.$router.push({ name: 'app' })
+              this.setAccount(this.$auth.user.account)
+              this.loadAccount()
+              this.showLoginSuccess({ message: `Bienvenido ${this.$auth.user.first_name}` })
+              //this.$router.push({ name: 'app' })
             })
             .catch(error => {
                 this.showLoginError(error.response !== undefined ? { message: error.response.data.message } : {})
@@ -82,13 +88,9 @@
         } else {
           this.showCaptchaMessage()
         }
-
       },
       cancel() {
         this.$router.push({ name: 'index' })
-      },
-      redirect() {
-
       }
     },
     notifications: {
