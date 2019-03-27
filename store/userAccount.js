@@ -9,6 +9,7 @@ export const state = () => ({
 })
 
 export const getters = {
+  account: state => state.currentAccount.discriminator == 'personal' ? state.currentAccount : state.currentAccount.account,
   currentAccount: state => state.currentAccount,
   currentAccountId: state => state.currentAccountId,
   userAccounts: state => state.userAccounts,

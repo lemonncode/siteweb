@@ -1,35 +1,39 @@
 <template>
-  <v-card>
+  <v-card class="pb-5">
+    <v-card-title>
+      <h3 class="headline">Métodos de pago</h3>
+    </v-card-title>
     <v-container fluid grid-list-lg>
-      <payment-method-list></payment-method-list>
-      <v-btn v-if="isAuthorized()" large color="primary" @click="openDialog">Añadir una tarjeta</v-btn>
-      <add-payment-method-dialog></add-payment-method-dialog>
+      <div v-if="this.getPaymentMethod() == 'stripe'">
+        <payment-method-list></payment-method-list>
+      </div>
+      <div v-else>
+        <transfer-payment-method></transfer-payment-method>
+      </div>
     </v-container>
   </v-card>
 </template>
 
 <script>
-  import PaymentMethodList from '~/components/PaymentMethods/PaymentMethodList'
-  import AddPaymentMethodDialog from '~/components/PaymentMethods/AddPaymentMethodDialog'
   import { mapGetters } from 'vuex';
+  import PaymentMethodList from '~/components/PaymentMethods/PaymentMethodList'
+  import TransferPaymentMethod from '~/components/PaymentMethods/TransferPaymentMethod'
 
   export default {
     computed: {
       ...mapGetters({
-        current_account: 'userAccount/currentAccount',
+        account: 'userAccount/account',
       }),
     },
     methods: {
-      openDialog() {
-        this.$store.commit('paymentMethod/openDialog')
-      },
-      isAuthorized() {
-        return this.current_account !== null && (this.current_account.discriminator == 'personal' ||  (this.current_account.role == 'owner' || this.current_account.role == 'admin'));
+      getPaymentMethod () {
+        console.log(this.account.payment_method)
+        return this.account.payment_method;
       }
     },
     components: {
       PaymentMethodList,
-      AddPaymentMethodDialog
+      TransferPaymentMethod
     }
   }
 </script>
