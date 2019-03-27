@@ -153,6 +153,7 @@
         }
 
         this.value = this.geolocation
+        this.change()
       }
     },
     components: {

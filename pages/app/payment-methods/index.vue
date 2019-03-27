@@ -4,7 +4,7 @@
       <h3 class="headline">Métodos de pago</h3>
     </v-card-title>
     <v-container fluid grid-list-lg>
-      <div v-if="this.getPaymentMethod() == 'stripe'">
+      <div v-if="account.payment_method == 'stripe'">
         <payment-method-list></payment-method-list>
       </div>
       <div v-else>
@@ -24,12 +24,6 @@
       ...mapGetters({
         account: 'userAccount/account',
       }),
-    },
-    methods: {
-      getPaymentMethod () {
-        console.log(this.account.payment_method)
-        return this.account.payment_method;
-      }
     },
     components: {
       PaymentMethodList,
