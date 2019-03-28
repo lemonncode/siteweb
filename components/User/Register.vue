@@ -274,7 +274,6 @@
                 }
             },
             cancel() {
-                console.log(this.countries);
                 this.$router.push({ name: 'index' })
             },
             displayMessageError(response) {

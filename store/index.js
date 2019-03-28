@@ -1,11 +1,32 @@
 import moment from 'moment'
+import { firestore } from '~/plugins/firebase.js'
 
 export const state = () => ({
+  activeTripsList: [],
 })
 
+export const mutations = {
+  setActiveTripsList(state, trips) {
+    state.activeTripsList = trips
+  },
+}
+
 export const actions = {
-  async nuxtServerInit ({ dispatch }) {
-    await dispatch('userAccount/load')
+  async nuxtServerInit ({ dispatch, commit }) {
+    await dispatch('userAccount/load').then( (account) => {
+      /*firestore.collection('trips').where("account_id", "==", account.id)
+          .get()
+          .then(function (querySnapshot) {
+            let tripsList = [];
+            querySnapshot.forEach(function(doc) {
+              if (doc.data().status != 'done' && doc.data().status != 'finished' && doc.data().status != 'canceled') {
+                tripsList.push(doc.data());
+              }
+            });
+
+          commit('setActiveTripsList', tripsList);
+      }).catch((error) => {console.log(error)})*/
+    }).catch( () => {this.app.router.push('/login')})
   },
 
   async getTrips ({ rootState }) {

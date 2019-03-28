@@ -50,15 +50,14 @@
     <div v-else>
       <v-stepper-step step="3">Seleccionar usuario y confirmar</v-stepper-step>
       <v-stepper-content step="3">
-        <v-flex xs12 sm12 d-flex>
-          <v-select
-              v-model="user"
-              :items="usersAccount"
-              item-text="user.full_name"
-              item-value="user.id"
-              label="Usuarios"
-              solo
-          ></v-select>
+        <trip-more-info @change="updateMoreInfo($event)"></trip-more-info>
+        <v-flex xs12 sm12>
+          <v-text-field
+              v-model="reference"
+              type="text"
+              label="Referencia (optativo)"
+              required
+          ></v-text-field>
         </v-flex>
         <v-textarea v-model="notes" label="Comentario" outline></v-textarea>
         <v-card-title>El precio de la reserva es de {{ priceFormat(price) }} €</v-card-title>
@@ -78,10 +77,12 @@
   import DateField from '~/components/Estimator/DateField'
   import PlaceAutocompleteField from '~/components/Estimator/PlaceAutocompleteField'
   import TimeField from '~/components/Estimator/TimeField'
-  import { mapGetters } from 'vuex';
+  import { mapGetters, mapActions } from 'vuex'
+  import TripMoreInfo from "./Trips/TripMoreInfo";
 
   export default {
     components: {
+        TripMoreInfo,
       PlaceAutocompleteField,
       DateField,
       TimeField,
@@ -109,13 +110,17 @@
           default: null
         },
         user: null,
+        riderName: null,
+        riderPhone: null,
+        reference: null,
       };
+    },
+    mounted () {
+        this.setAccount(this.current_account)
     },
     computed: {
       ...mapGetters({
         current_account: 'userAccount/currentAccount',
-        usersAccount: 'account/currentUsersAccount',
-        userSelected: 'userAccount/userSelected',
       }),
       isValidStep1 () {
         return this.pickupPlace !== null && this.destinationPlace !== null;
@@ -125,6 +130,9 @@
       },
     },
     methods: {
+      ...mapActions({
+          setAccount: 'userAccount/setAccount'
+      }),
       cancelStep1 () {
         this.pickupPlace = this.destinationPlace = null;
       },
@@ -176,6 +184,8 @@
           notes: this.notes,
           serviceType: this.serviceType,
           user: this.user,
+          embeddedRider: {name: this.riderName, phoneNumber: this.riderPhone},
+          accountReferenceNumber: this.reference,
         })
       },
 
@@ -188,7 +198,6 @@
           })
           .catch(error => {
             this.loading = false;
-            console.log(error)
             this.showAddTripError(error.response !== undefined ? { message: error.response.data.message } : {})
           })
       },
@@ -224,6 +233,12 @@
             this.showTripDetailErrorMessage({})
           })
       },
+
+      updateMoreInfo(data) {
+          this.user = data.user;
+          this.riderName = data.riderName;
+          this.riderPhone = data.riderPhone;
+      }
     },
     notifications: {
       showTripDetailErrorMessage: {

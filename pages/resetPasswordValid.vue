@@ -8,7 +8,7 @@
           </v-toolbar>
           <v-card-text>
             <p class="text-xs-left text--secondary">
-              Revise su correo para introducir una nueva contraseña
+              Hemos enviado un mensaje a su correo electŕonico. En caso de no haberlo recibido, póngase en contacto con nosotros.
             </p>
           </v-card-text>
         </v-card>

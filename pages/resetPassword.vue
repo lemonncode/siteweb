@@ -58,36 +58,14 @@
         }
 
         this.$store.dispatch('user/resetPassword', this.email)
-          .then(() => {
+          .catch(() => {})
+          .finally(() => {
               this.$router.push({ name: 'resetPasswordValid' })
-          })
-          .catch(error => {
-            this.showSubmitError({ message: error.response.message})
           })
       },
       cancel() {
         this.$router.push({ name: 'login' })
       },
-      displayMessageError(response) {
-        let notification = {}
-
-        if (response !== undefined) {
-          for (let [key, value] of Object.entries(response.data.errors.children)) {
-            if (value.errors !== undefined && value.errors.length > 0) {
-              notification = { message: value.errors[0] }
-              break
-            }
-          }
-        }
-
-        this.showSubmitError(notification)
-      }
     },
-    notifications: {
-      showSubmitError: {
-        message: 'Error de connexión',
-        type: 'error'
-      }
-    }
   }
 </script>

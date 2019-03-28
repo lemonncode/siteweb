@@ -137,13 +137,13 @@
 
 <script>
   import Snackbar from '~/components/Snackbar'
-  import { mapGetters, mapActions, mapMutations } from 'vuex';
+  import { mapGetters, mapActions } from 'vuex';
 
   export default {
     components: {
       Snackbar
     },
-    middleware: 'auth',
+    middleware: ['auth', 'account'],
     data() {
       return {
         title: 'Auro',
@@ -168,7 +168,7 @@
       }),
     },
     methods: {
-      ...mapMutations({
+      ...mapActions({
         setAccount: 'userAccount/setAccount',
       }),
       isCurrent(account) {

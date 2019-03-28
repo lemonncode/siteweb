@@ -9,7 +9,7 @@ export const state = () => ({
 })
 
 export const getters = {
-  account: state => state.currentAccount.discriminator == 'personal' ? state.currentAccount : state.currentAccount.account,
+  account: state => state.account,
   currentAccount: state => state.currentAccount,
   currentAccountId: state => state.currentAccountId,
   userAccounts: state => state.userAccounts,
@@ -49,6 +49,7 @@ export const mutations = {
 
     if (account != null) {
       state.currentAccountId = account.discriminator == 'personal' ? account.id: account.account.id
+      state.account = account.discriminator == 'personal' ? account : account.account
     } else {
       state.currentAccountId = null
     }
@@ -62,8 +63,11 @@ export const mutations = {
 }
 
 export const actions = {
-  async setAccount ({ commit }, account) {
+  async setAccount ({ commit, dispatch }, account) {
     commit('setAccount', account)
+    if (account.account && account.account.discriminator == 'business') {
+      dispatch('account/getCurrentUsers', account.account.id, {root:true})
+    }
   },
   async getUserAccounts({ commit }) {
     return this.$axios.$get(`/user/business-accounts`).then(data => {
@@ -89,7 +93,7 @@ export const actions = {
           this.$router.push({ name: 'app-accounts-id', params: {id: data.id} })
         })
   },
-  async load ({ commit }) {
+  async load ({ commit, dispatch }) {
     if (this.$auth.user == null) {
       return;
     }
@@ -110,7 +114,9 @@ export const actions = {
       })
     }
 
-    commit('setAccount', currentAccount)
+    dispatch('setAccount', currentAccount)
     commit('setUserAccounts', this.$auth.user.business_accounts)
+
+    return currentAccount;
   }
 }

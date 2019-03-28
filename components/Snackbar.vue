@@ -21,11 +21,8 @@ export default {
   },
   created: function () {
     this.$store.watch(state => state.snackbar.snack, () => {
-      console.log('COMMIT')
-      console.log(this.$store.state.snackbar.snack.message)
       if (this.$store.state.snackbar.snack.message !== '') {
         this.show = true
-        console.log(this.show)
         const { message, color } = this.$store.state.snackbar.snack
         this.message = message
         this.color = color
