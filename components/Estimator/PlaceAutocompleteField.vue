@@ -27,7 +27,8 @@
             <v-icon small dark>{{ avatars[data.item.group]['icon'] }}</v-icon>
           </v-list-tile-avatar>
           <v-list-tile-content>
-            <v-list-tile-title v-html="data.item.description"></v-list-tile-title>
+            <v-list-tile-title v-if="data.item.group == 'route'" v-html="data.item.displayDescription"></v-list-tile-title>
+            <v-list-tile-title v-else v-html="data.item.description"></v-list-tile-title>
           </v-list-tile-content>
         </template>
       </template>
@@ -45,7 +46,9 @@
     props: {
       placeholder: String,
       icon: String,
-      displayGeolocationButton: Boolean
+      displayGeolocationButton: Boolean,
+      displayRoutes: Boolean,
+      selected: Object
     },
     data () {
       return {
@@ -54,21 +57,26 @@
         search: null,
         places: [],
         predictions: [],
+        routes: [],
         isLoadingPlaces: false,
         isLoadingPredictions: false,
+        isLoadingRoutes: false,
         avatars: {
           'location': { color: 'deep-orange darken-4', icon: 'near_me' },
           'favorite': { color: 'purple darken-3', icon: 'favorite' },
-          'google': { color: 'light-blue darken-3', icon: 'place' }
-        }
+          'google': { color: 'light-blue darken-3', icon: 'place' },
+          'route': { color: 'green darken-3', icon: 'map' },
+        },
+        routeSelected: null,
       };
     },
     mounted () {
       this.searchPlaces('');
+      this.searchRoutes('');
     },
     computed: {
       ...mapGetters({
-        currentAccount: 'userAccount/currentAccount',
+        currentAccount: 'userAccount/account',
       }),
       items () {
         var items = [];
@@ -86,12 +94,34 @@
           })
         }
 
+        if (this.routes.length && this.displayRoutes) {
+          items.push({header: 'Rutas'})
+
+          this.routes.forEach((route) => {
+            items.push({ displayDescription: route.name,
+              description: route.origin.autocomplete,
+              originDescription: route.origin.autocomplete,
+              originPlaceId: route.origin.google_id,
+              destinationDescription: route.destination.autocomplete,
+              destinationPlaceId: route.destination.google_id,
+              group: 'route' });
+          })
+        }
+
         if (this.predictions.length) {
           items.push({ header: 'Sugerencias Google' });
 
           this.predictions.forEach((prediction) => {
             items.push({ description: prediction.description, placeId: prediction.place_id, group: 'google' });
           })
+        }
+
+        if (this.routeSelected) {
+          if (this.displayRoutes) {
+            items.push({ description: this.routeSelected.origin.description, placeId: this.routeSelected.origin.placeId, group: 'google' });
+          } else {
+            items.push({ description: this.routeSelected.destination.description, placeId: this.routeSelected.destination.placeId, group: 'google' });
+          }
         }
 
         return items;
@@ -101,16 +131,22 @@
       currentAccount (val) {
         if (val) {
           this.searchPlaces('');
+          this.searchRoutes('');
         }
       },
       search (val) {
         this.searchPlaces(val)
         this.searchPredictions(val)
+        this.searchRoutes(val)
+      },
+      selected (val) {
+        this.searchSelected(val)
       }
     },
     methods: {
       change () {
-        this.$emit('changed', this.value)
+        if (this.value && this.value.group == 'route') this.setRouteSelected(this.value)
+        this.$emit('changed', { data: this.value, route: this.routeSelected })
       },
       searchPlaces (val) {
         if (this.isLoadingPlaces) {
@@ -146,6 +182,26 @@
           this.isLoadingPredictions = false
         });
       },
+      searchRoutes (val) {
+        if (this.isLoadingRoutes) {
+          return
+        }
+
+        this.isLoadingRoutes = true
+
+        this.$axios.$get(`/accounts/${this.currentAccount.id}/routes?query=${val}`).then(data => {
+          this.routes = data
+          this.isLoadingRoutes = false
+        })
+      },
+      searchSelected (val) {
+        if (this.selected) {
+          this.routeSelected = val;
+          this.value = val.destination
+            this.change()
+
+        }
+      },
       geolocalized (place) {
         this.geolocation = {
           description: place.formatted_address,
@@ -154,6 +210,11 @@
 
         this.value = this.geolocation
         this.change()
+      },
+      setRouteSelected (route) {
+        let origin = {description: route.originDescription, placeId: route.originPlaceId};
+        let destination = {description: route.destinationDescription, placeId: route.destinationPlaceId};
+        this.routeSelected = {origin, destination};
       }
     },
     components: {

@@ -30,7 +30,6 @@
                 item-text="user.full_name"
                 item-value="user.id"
                 label="Usuarios"
-                solo
                 @change="updateData"
             ></v-select>
           </v-flex>

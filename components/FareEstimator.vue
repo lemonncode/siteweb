@@ -6,13 +6,15 @@
           icon="trip_origin"
           placeholder="Punto de partida"
           display-geolocation-button
-          @changed="pickupPlace = $event"
+          display-routes
+          @changed="setPickupPlace($event)"
       ></place-autocomplete-field>
 
       <place-autocomplete-field
           icon="pin_drop"
           placeholder="Destino"
-          @changed="destinationPlace = $event"
+          @changed="setDestinationPlace($event)"
+          v-bind:selected="selectedRoute"
       ></place-autocomplete-field>
 
       <v-alert :value="alert" type="error" transition="scale-transition">Trayecto inválido</v-alert>
@@ -78,11 +80,11 @@
   import PlaceAutocompleteField from '~/components/Estimator/PlaceAutocompleteField'
   import TimeField from '~/components/Estimator/TimeField'
   import { mapGetters, mapActions } from 'vuex'
-  import TripMoreInfo from "./Trips/TripMoreInfo";
+  import TripMoreInfo from "./Estimator/TripMoreInfo";
 
   export default {
     components: {
-        TripMoreInfo,
+      TripMoreInfo,
       PlaceAutocompleteField,
       DateField,
       TimeField,
@@ -113,6 +115,7 @@
         riderName: null,
         riderPhone: null,
         reference: null,
+        selectedRoute: null,
       };
     },
     mounted () {
@@ -123,7 +126,7 @@
         current_account: 'userAccount/currentAccount',
       }),
       isValidStep1 () {
-        return this.pickupPlace !== null && this.destinationPlace !== null;
+        return this.pickupPlace !== null && this.destinationPlace !== null && this.pickupPlace.placeId !== this.destinationPlace.placeId;
       },
       isValidStep2 () {
         return (this.serviceType == 'asap' || (this.date !== null && this.time !== null));
@@ -238,7 +241,23 @@
           this.user = data.user;
           this.riderName = data.riderName;
           this.riderPhone = data.riderPhone;
-      }
+      },
+
+      setPickupPlace(event) {
+          if (event.data && event.data.group == 'route') {
+              this.pickupPlace = {description: event.data.originDescription, placeId: event.data.originPlaceId}
+              this.selectedRoute = event.route;
+          } else {
+              this.pickupPlace = event.data;
+          }
+      },
+        setDestinationPlace(event) {
+            if (event.data) {
+                this.destinationPlace = {description: event.data.description, placeId: event.data.placeId}
+            } else {
+                this.destinationPlace = event;
+            }
+        }
     },
     notifications: {
       showTripDetailErrorMessage: {
