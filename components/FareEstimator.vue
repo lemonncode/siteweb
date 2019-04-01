@@ -7,12 +7,14 @@
           placeholder="Punto de partida"
           display-geolocation-button
           display-routes
+          display-places
           @changed="setPickupPlace($event)"
       ></place-autocomplete-field>
 
       <place-autocomplete-field
           icon="pin_drop"
           placeholder="Destino"
+          display-places
           @changed="setDestinationPlace($event)"
           v-bind:selected="selectedRoute"
       ></place-autocomplete-field>
@@ -251,13 +253,13 @@
               this.pickupPlace = event.data;
           }
       },
-        setDestinationPlace(event) {
-            if (event.data) {
-                this.destinationPlace = {description: event.data.description, placeId: event.data.placeId}
-            } else {
-                this.destinationPlace = event;
-            }
-        }
+      setDestinationPlace(event) {
+          if (event.data) {
+              this.destinationPlace = {description: event.data.description, placeId: event.data.placeId}
+          } else {
+              this.destinationPlace = event;
+          }
+      }
     },
     notifications: {
       showTripDetailErrorMessage: {

@@ -43,4 +43,7 @@ export const actions = {
   async refreshCaptcha ({ commit }, validated) {
     commit('setValidated', validated)
   },
+  async update({ commit, dispatch }, user) {
+    return this.$axios.$patch('/update-user', user)
+  },
 }

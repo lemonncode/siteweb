@@ -152,11 +152,11 @@
           { icon: 'local_taxi', text: 'Viajes', to: { name: 'app-trips' } },
           { icon: 'credit_card', text: 'Métodos de pago', to: { name: 'app-payment-methods' } },
           { icon: 'assessment', text: 'Cuentas de empresa', to: { name: 'app-accounts' } },
-          { icon: 'settings', text: 'Configuración' },
+          { icon: 'settings', text: 'Configuración', to: { name: 'app-settings' } },
           { divider: true },
-          { icon: 'feedback', text: 'Enviar un feedback' },
+          /*{ icon: 'feedback', text: 'Enviar un feedback' },
           { icon: 'history', text: 'Preguntas frecuentes' },
-          { icon: 'help', text: 'Ayuda' },
+          { icon: 'help', text: 'Ayuda' },*/
         ],
         drawer: null,
       }

@@ -48,7 +48,8 @@
       icon: String,
       displayGeolocationButton: Boolean,
       displayRoutes: Boolean,
-      selected: Object
+      displayPlaces: Boolean,
+      selected: Object,
     },
     data () {
       return {
@@ -86,7 +87,7 @@
           items.push({ description: this.geolocation.description, placeId: this.geolocation.placeId, group: 'location' });
         }
 
-        if (this.places.length) {
+        if (this.places.length && this.displayPlaces) {
           items.push({header: 'Favoritos'})
 
           this.places.forEach((place) => {

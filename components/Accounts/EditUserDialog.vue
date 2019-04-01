@@ -2,7 +2,7 @@
   <v-dialog v-model="dialog" persistent max-width="700px">
     <v-card>
       <v-card-title>
-        <span class="headline">Editar role de usuario</span>
+        <span class="headline">Editar rol de usuario</span>
       </v-card-title>
       <v-card-text>
         <v-select
