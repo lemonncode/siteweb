@@ -40,7 +40,7 @@
               <span>Cancelar</span>
             </v-tooltip>
             <v-tooltip bottom>
-              <v-icon v-if="props.item.invoiced" small slot="activator" @click="printTripInvoice(props.item, $event)">print</v-icon>
+              <v-icon v-if="props.item.invoice_item" small slot="activator" @click="printTripInvoice(props.item, $event)">print</v-icon>
               <span>Imprimir</span>
             </v-tooltip>
           </td>
