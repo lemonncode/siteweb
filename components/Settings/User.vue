@@ -133,41 +133,48 @@
         <v-btn color="" @click="cancel">Cancelar</v-btn>
         <v-btn color="secondary" @click="submit">Modificar</v-btn>
       </v-card-actions>
-      <v-card class="ma-5">
-        <v-card-title>
-          <span class="title pa-2">Lugares favoritos</span>
-        </v-card-title>
-        <div>
-          <v-data-table
-              :headers="headers"
-              :items="userPlaces"
-              class="elevation-1"
-          >
-            <template slot="items" slot-scope="props">
-              <td>{{ props.item.name }}</td>
-              <td class="text-left">{{ props.item.place.autocomplete }}</td>
-              <td class="justify-center layout px-0">
+      <v-card class="mt-4">
+        <v-toolbar color="blue-grey darken-3" dark>
+          <v-toolbar-title>Lugares favoritos</v-toolbar-title>
+          <v-spacer></v-spacer>
+        </v-toolbar>
+        <v-list two-line>
+          <template v-for="(item, index) in places">
+            <v-list-tile
+                :key="item.name"
+                avatar
+                ripple
+            >
+              <v-list-tile-content>
+                <v-list-tile-title><strong>{{ item.name }}</strong></v-list-tile-title>
+                <v-list-tile-sub-title class="text--secondary">{{ item.place.autocomplete }}</v-list-tile-sub-title>
+              </v-list-tile-content>
+
+              <v-list-tile-action>
                 <v-icon
                     small
-                    @click="deletePlace(props.item)"
+                    color="#ed6363"
+                    @click="deletePlace(item)"
                 >
                   delete
                 </v-icon>
-              </td>
-            </template>
+              </v-list-tile-action>
 
-            <template slot="no-data">
-              <v-btn color="primary" @click="initialize">Actualizar</v-btn>
-            </template>
-          </v-data-table>
-        </div>
+            </v-list-tile>
+            <v-divider
+                v-if="index + 1 < places.length"
+                :key="index"
+            ></v-divider>
+          </template>
+        </v-list>
         <v-fab-transition>
           <v-btn
               color="primary"
               dark
+              small
               absolute
               bottom
-              left
+              right
               fab
               @click="openAddPlaceDialog"
           >

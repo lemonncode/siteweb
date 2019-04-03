@@ -1,3 +1,5 @@
+import { firestore } from '~/plugins/firebase.js'
+
 export const state = () => ({
   editAccountDialog: false,
   addAccountDialog: false,
@@ -6,6 +8,7 @@ export const state = () => ({
   userSelected: null,
   currentAccount: null,
   currentAccountId: null,
+  activeTripsList: [],
 })
 
 export const getters = {
@@ -17,6 +20,7 @@ export const getters = {
   editAccountDialog: state => state.editAccountDialog,
   addAccountDialog: state => state.addAccountDialog,
   userSelected: state => state.userSelected,
+  activeTripsList: state => state.activeTripsList,
 }
 
 export const mutations = {
@@ -60,11 +64,15 @@ export const mutations = {
   setAccountId(state, id) {
     state.currentAccountId = id
   },
+  setActiveTripsList(state, trips) {
+    state.activeTripsList = trips
+  },
 }
 
 export const actions = {
   async setAccount ({ commit, dispatch }, account) {
     commit('setAccount', account)
+    dispatch('getActiveTrips', account)
     if (account.account && account.account.discriminator == 'business') {
       dispatch('account/getCurrentUsers', account.account.id, {root:true})
     }
@@ -116,7 +124,23 @@ export const actions = {
 
     dispatch('setAccount', currentAccount)
     commit('setUserAccounts', this.$auth.user.business_accounts)
+    await dispatch('getActiveTrips', currentAccount)
 
     return currentAccount;
+  },
+  async getActiveTrips ({ commit, dispatch }, account) {
+    account = account.discriminator == 'personal' ? account : account.account;
+    await firestore.collection('trips').where("account_id", "==", account.id)
+      .get()
+      .then(function (querySnapshot) {
+        let tripsList = [];
+        querySnapshot.forEach(function (doc) {
+          if (doc.data().status != 'done' && doc.data().status != 'finished' && doc.data().status != 'canceled') {
+            tripsList.push(doc.data());
+          }
+        });
+
+        commit('setActiveTripsList', tripsList);
+      });
   }
 }

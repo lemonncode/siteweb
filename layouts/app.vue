@@ -148,7 +148,7 @@
       return {
         title: 'Auro',
         items: [
-          { icon: 'commute', text: 'Planificar un viaje', to: { name: 'app' } },
+          { icon: 'commute', text: 'Planificar un viaje', to: { name: 'app-trips-new' } },
           { icon: 'local_taxi', text: 'Viajes', to: { name: 'app-trips' } },
           { icon: 'credit_card', text: 'Métodos de pago', to: { name: 'app-payment-methods' } },
           { icon: 'assessment', text: 'Cuentas de empresa', to: { name: 'app-accounts' } },
