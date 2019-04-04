@@ -3,7 +3,7 @@
         v-if="currentAccount"
         v-model="value"
         :items="items"
-        :loading="isLoadingPlaces || isLoadingPredictions"
+        :loading="isLoadingPlaces || isLoadingPredictions || isLoadingRoutes"
         :search-input.sync="search"
         color="primary"
         hide-no-data
