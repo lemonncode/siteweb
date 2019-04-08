@@ -135,7 +135,7 @@ export const actions = {
       .then(function (querySnapshot) {
         let tripsList = [];
         querySnapshot.forEach(function (doc) {
-          if (doc.data().status != 'done' && doc.data().status != 'finished' && doc.data().status != 'canceled') {
+          if (doc.data().status != 'done' && doc.data().status != 'finished' && doc.data().status != 'canceled' && doc.data().status != 'finalized') {
             tripsList.push(doc.data());
           }
         });
