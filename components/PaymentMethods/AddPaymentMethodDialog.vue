@@ -21,7 +21,11 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn flat @click.native="closeDialog">Cancelar</v-btn>
-        <v-btn color="primary" flat @click.native="createToken" :disabled="!complete">Añadir tarjeta</v-btn>
+        <v-btn v-if="!loading" color="primary" flat @click.native="createToken" :disabled="!complete">Añadir tarjeta</v-btn>
+        <v-progress-circular ml-4 v-if="loading"
+                             indeterminate
+                             color="primary"
+        ></v-progress-circular>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -37,7 +41,8 @@
     data() {
       return {
         stripeApiPublicKey: null,
-        complete: false
+        complete: false,
+        loading: false,
       }
     },
     computed: {
@@ -50,6 +55,7 @@
         this.$store.commit('paymentMethod/closeDialog')
       },
       async createToken() {
+        this.loading = true;
         await createToken().then(data => {
           if ('error' in data) {
             console.log(data.error.message)
@@ -62,10 +68,12 @@
         this.$store.dispatch('paymentMethod/addPaymentCard', token.id)
           .then(data => {
             this.$refs.card.clear()
+            this.loading = false
             this.closeDialog()
             this.showAddPaymentCardSuccessMessage()
           })
           .catch(error => {
+            this.loading = false
             this.showAddPaymentCardErrorMessage(error.response !== undefined ? { message: error.response.data.message } : {})
           })
       }

@@ -117,7 +117,7 @@
       deletePaymentCard(paymentCard) {
         this.$store.dispatch('paymentMethod/deletePaymentCard', paymentCard).then(() => {
           this.showDeletedPaymentCardSuccessMessage()
-        });
+        }).catch( () => this.showDeletedPaymentCardErrorMessage());
       },
       loadPaymentCards() {
         this.loaded = false;
@@ -137,6 +137,10 @@
       showDeletedPaymentCardSuccessMessage: {
         message: 'Tarjeta borrada',
         type: 'success'
+      },
+      showDeletedPaymentCardErrorMessage: {
+        message: 'La tarjeta de crédito no ha podido ser borrada',
+        type: 'error'
       }
     },
     components: {
