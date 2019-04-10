@@ -76,7 +76,7 @@
     },
     watch : {
       trip:function(val) {
-        if (val) {
+        if (val && this.$route.params.id == val.id) {
           this.displayTripOnMap();
           let interval = null;
           if (val.driver_uuid && (val.status == 'pending' || val.status == 'asigned' || val.status == 'started' || val.status == 'pickedup' || val.status == 'arrived')) {
