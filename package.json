@@ -34,7 +34,8 @@
     "vue-tel-input": "^2.0.21",
     "vue2-google-maps": "^0.10.6",
     "vuetify": "^1.5.11",
-    "vuetify-loader": "^1.2.1"
+    "vuetify-loader": "^1.2.1",
+    "stylus-loader": "^3.0.2"
   },
   "devDependencies": {
     "body-parser": "^1.18.3",
@@ -42,7 +43,6 @@
     "css-loader": "^2.1.1",
     "jsonwebtoken": "^8.5.1",
     "nodemon": "^1.11.0",
-    "stylus": "^0.54.5",
-    "stylus-loader": "^3.0.2"
+    "stylus": "^0.54.5"
   }
 }
