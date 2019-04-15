@@ -32,7 +32,7 @@
               </v-list-tile-action>
 
               <v-list-tile-action>
-                <v-btn flat icon color="red" @click="deletePaymentCard(card)">
+                <v-btn v-if="activeTripsList.length == 0" flat icon color="red" @click="deletePaymentCard(card)">
                   <v-icon>delete</v-icon>
                 </v-btn>
               </v-list-tile-action>
@@ -75,6 +75,7 @@
   export default {
     mounted() {
       this.loadPaymentCards()
+      this.activeTripsListener()
     },
     data() {
       return {
@@ -84,7 +85,8 @@
     computed: {
       ...mapGetters({
           currentAccount: 'userAccount/currentAccount',
-          userAccounts: 'userAccount/userAccounts'
+          userAccounts: 'userAccount/userAccounts',
+          activeTripsList: 'userAccount/activeTripsList'
       }),
       paymentCards() {
         return this.$store.state.paymentMethod.paymentCards
@@ -98,6 +100,7 @@
     methods: {
       ...mapActions({
           getPaymentCards: 'paymentMethod/getPaymentCards',
+          activeTripsListener: 'userAccount/activeTripsListener',
       }),
       openDialog() {
         this.$store.commit('paymentMethod/openDialog')

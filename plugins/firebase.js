@@ -25,7 +25,7 @@ if (!firebase.apps.length) {
         //console.log(errorCode, errorMessage);
     });
 
-    firebase.firestore().settings({timestampsInSnapshots: true})
+    //firebase.firestore().settings({timestampsInSnapshots: true})
 }
 
 const firestore = firebase.firestore();

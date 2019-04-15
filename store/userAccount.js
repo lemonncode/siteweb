@@ -122,9 +122,10 @@ export const actions = {
       })
     }
 
+    await dispatch('getActiveTrips', currentAccount)
     dispatch('setAccount', currentAccount)
     commit('setUserAccounts', this.$auth.user.business_accounts)
-    await dispatch('getActiveTrips', currentAccount)
+
 
     return currentAccount;
   },
@@ -135,12 +136,36 @@ export const actions = {
       .then(function (querySnapshot) {
         let tripsList = [];
         querySnapshot.forEach(function (doc) {
-          if (doc.data().status != 'done' && doc.data().status != 'finished' && doc.data().status != 'canceled' && doc.data().status != 'finalized') {
+          if (doc.data().status != 'done' && doc.data().status != 'finished' && doc.data().status != 'canceled' && doc.data().status != 'finalized' && doc.data().status != 'no-assignment') {
             tripsList.push(doc.data());
           }
         });
 
+        tripsList.sort((a,b) => (a.date < b.date) ? 1 : ((b.date < a.date) ? -1 : 0));
         commit('setActiveTripsList', tripsList);
+
+        return true;
+      }, function(error) {
+        //...
+      });
+  },
+  async activeTripsListener ({ commit, state }) {
+    let account = state.account;
+    firestore.collection('trips').where("account_id", "==", account.id)
+      .onSnapshot(function(querySnapshot) {
+        let tripsList = [];
+        querySnapshot.forEach(function (doc) {
+          if (doc.data().status != 'done' && doc.data().status != 'finished' && doc.data().status != 'canceled' && doc.data().status != 'finalized' && doc.data().status != 'no-assignment') {
+            tripsList.push(doc.data());
+          }
+        });
+
+        tripsList.sort((a,b) => (a.date < b.date) ? 1 : ((b.date < a.date) ? -1 : 0));
+        commit('setActiveTripsList', tripsList);
+
+        return true;
+      }, function(error) {
+        //...
       });
   }
 }

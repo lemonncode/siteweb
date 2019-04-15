@@ -19,7 +19,6 @@
       :loading="loading"
       :search="search"
       :pagination.sync="pagination"
-      hide-actions
       class="elevation-1"
       no-data-text="No tienes viajes"
     >
@@ -104,7 +103,7 @@
         pagination: {
           'sortBy': 'date', 
           'descending': true, 
-          'rowsPerPage': -1
+          'rowsPerPage': 15
         }
       }
     },
