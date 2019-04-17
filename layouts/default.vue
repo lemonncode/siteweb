@@ -13,8 +13,8 @@
       <v-spacer></v-spacer>
       <template v-if="!$auth.$state.loggedIn">
         <v-toolbar-items>
-          <v-btn flat :to="{ name: 'registrarse' }">Registrarse</v-btn>
-          <v-btn flat :to="{ name: 'login' }">Iniciar sesión</v-btn>
+          <signup-dialog></signup-dialog>
+          <signin-dialog></signin-dialog>
         </v-toolbar-items>
       </template>
       <template v-else>
@@ -83,17 +83,20 @@
 </template>
 
 <script>
+  import SignupDialog from '~/components/Signup/SignupDialog';
+  import SigninDialog from '~/components/Signin/SigninDialog';
   import Snackbar from '~/components/Snackbar'
 
   export default {
-    components: {
-      Snackbar
-    },
-    middleware: 'login',
     data() {
       return {
         title: 'Auro',
       }
+    },
+    components: {
+      SignupDialog,
+      SigninDialog,
+      Snackbar
     }
   }
 </script>

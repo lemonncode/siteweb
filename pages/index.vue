@@ -244,7 +244,7 @@
               sm6
             >
               <v-card>
-                <v-card-media
+                <v-img
                   :src="card.src"
                   height="320px"
                 >
@@ -259,7 +259,7 @@
                       </v-flex>
                     </v-layout>
                   </v-container>
-                </v-card-media>
+                </v-img>
 
               </v-card>
             </v-flex>

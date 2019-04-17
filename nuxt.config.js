@@ -53,7 +53,9 @@ module.exports = {
     '@plugins/vuetify',
     '@plugins/map',
     '@plugins/firebase',
-    { src: '@plugins/telephone', ssr: false }
+    { src: '@plugins/telephone', ssr: false },
+    '@plugins/login',
+    '@plugins/vuelidate'
   ],
 
   /*
