@@ -87,43 +87,6 @@
                   </div>
                 </div>
               </v-flex>
-              <v-flex xs12 sm6 md4>
-                <v-dialog
-                    ref="dialog"
-                    v-model="modal"
-                    :return-value.sync="date"
-                    :rules="birthDateRules"
-                    persistent
-                    lazy
-                    full-width
-                    width="290px"
-                    required
-                >
-                  <v-text-field
-                      slot="activator"
-                      v-model="dateFormatted"
-                      label="Fecha de nacimiento"
-                      persistent-hint
-                      @blur="date = parseDate(dateFormatted)"
-                  ></v-text-field>
-                  <v-date-picker locale="es-ES" color="#ed6363" v-model="date">
-                    <v-spacer></v-spacer>
-                    <v-btn flat color="primary" @click="modal = false">Cancelar</v-btn>
-                    <v-btn flat color="primary" @click="$refs.dialog.save(date)">OK</v-btn>
-                  </v-date-picker>
-                </v-dialog>
-              </v-flex>
-              <v-flex xs6 sm2>
-                <v-select
-                    v-model="user.gender"
-                    :items="genders"
-                    :rules="genderRules"
-                    item-text="name"
-                    item-value="value"
-                    label="Género"
-                    required
-                ></v-select>
-              </v-flex>
             </v-layout>
           </v-container>
         </v-form>
@@ -138,7 +101,7 @@
           <v-toolbar-title>Lugares favoritos</v-toolbar-title>
           <v-spacer></v-spacer>
         </v-toolbar>
-        <v-list two-line>
+        <v-list two-line v-if="places.length > 0">
           <template v-for="(item, index) in places">
             <v-list-tile
                 :key="item.name"
@@ -166,6 +129,13 @@
                 :key="index"
             ></v-divider>
           </template>
+        </v-list>
+        <v-list v-else>
+          <v-list-tile>
+            <v-list-tile-content>
+              No has añadido ningún favorito todavía.
+            </v-list-tile-content>
+          </v-list-tile>
         </v-list>
         <v-fab-transition>
           <v-btn
