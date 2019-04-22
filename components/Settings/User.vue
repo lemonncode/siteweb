@@ -173,15 +173,11 @@
                     lastName: '',
                     phoneNumber: '',
                     documentType: 'nif',
-                    documentNumber: '',
-                    gender: '',
-                    birthDate: ''
+                    documentNumber: ''
                 },
                 modal: false,
                 valid: false,
                 validPhoneNumber: false,
-                dateFormatted: '',
-                date: '',
                 validated: false,
                 firstNameRules: [
                     v => !!v || 'Introduce tu nombre',
@@ -192,12 +188,6 @@
                 phoneNumberRules: [
                     v => !!v || 'Introduce tu número de teléfono',
                     v => /^\d{9}$/.test(v) || 'Número de teléfono inválido',
-                ],
-                genderRules: [
-                    v => !!v || 'Seleccione género',
-                ],
-                birthDateRules: [
-                    v => !!v || 'Seleccione fecha',
                 ],
                 nifNumberRules: [
                     v => !!v || 'Introduce tu número de DNI',
@@ -212,7 +202,6 @@
                 ],
                 documentOptions: [{name: "DNI", value: 'nif'}, {name: "NIE", value: 'nie'}, {name: "Pasaporte", value: 'passport'}],
                 countries: Object.keys(countries.getAlpha3Codes()),
-                genders: [{name: "Hombre", value: 'male'}, {name: "Mujer", value: 'female'}],
                 passportCountry: '',
                 passportNumber: '',
                 headers: [
@@ -231,9 +220,6 @@
             this.user.phoneNumber = this.$auth.user.phone_number;
             this.user.documentType = this.$auth.user.document_type;
             this.user.documentNumber = this.$auth.user.document_number;
-            this.user.gender = this.$auth.user.gender;
-            this.user.birthDate = this.parseDate(this.$auth.user.birth_date);
-            this.dateFormatted = this.$auth.user.birth_date;
         },
         computed: {
             ...mapGetters({
@@ -243,9 +229,6 @@
 
         },
         watch: {
-            date (val) {
-                this.dateFormatted = this.formatDate(this.date)
-            },
             passportCountry (val) {
                 this.user.documentNumber = this.passportCountry + this.passportNumber
             },
@@ -302,18 +285,6 @@
                 if (!isValid) {
                     this.validPhoneNumber = false;
                 }
-            },
-            formatDate (date) {
-                if (!date) return null
-                this.user.birthDate = date
-                const [year, month, day] = date.split('-')
-                return `${day}/${month}/${year}`
-            },
-            parseDate (date) {
-                if (!date) return null
-
-                const [day, month, year] = date.split('-')
-                return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
             },
             deletePlace(item) {
                 this.$store.commit('accountPlace/openDeletePlaceDialog', item)
