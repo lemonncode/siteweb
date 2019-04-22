@@ -150,7 +150,7 @@
         this.$emit('changed', { data: this.value, route: this.routeSelected })
       },
       searchPlaces (val) {
-        if (this.isLoadingPlaces) {
+        if (this.isLoadingPlaces || !this.currentAccount) {
           return
         }
 
