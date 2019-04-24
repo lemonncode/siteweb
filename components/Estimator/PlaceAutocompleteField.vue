@@ -184,7 +184,7 @@
         });
       },
       searchRoutes (val) {
-        if (this.isLoadingRoutes) {
+        if (this.isLoadingRoutes || !this.currentAccount) {
           return
         }
 
