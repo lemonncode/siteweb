@@ -130,7 +130,10 @@ export const actions = {
     return currentAccount;
   },
   async getActiveTrips ({ commit, dispatch }, account) {
-    account = account.discriminator == 'personal' ? account : account.account;
+    if (account) {
+      account = account.discriminator == 'personal' ? account : account.account;
+    }
+
     await firestore.collection('trips').where("account_id", "==", account.id)
       .get()
       .then(function (querySnapshot) {
