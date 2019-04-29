@@ -73,7 +73,7 @@ export const actions = {
   async setAccount ({ commit, dispatch }, account) {
     commit('setAccount', account)
     dispatch('getActiveTrips', account)
-    if (account.account && account.account.discriminator == 'business') {
+    if (account && account.account && account.account.discriminator == 'business') {
       dispatch('account/getCurrentUsers', account.account.id, {root:true})
     }
   },
@@ -130,9 +130,11 @@ export const actions = {
     return currentAccount;
   },
   async getActiveTrips ({ commit, dispatch }, account) {
-    if (account) {
-      account = account.discriminator == 'personal' ? account : account.account;
+    if (!account) {
+      return;
     }
+
+    account = account.discriminator == 'personal' ? account : account.account;
 
     await firestore.collection('trips').where("account_id", "==", account.id)
       .get()
