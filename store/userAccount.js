@@ -106,8 +106,9 @@ export const actions = {
       return;
     }
 
-    let currentAccountId = this.$cookies.get('currentAccountId')
-    if (currentAccountId == null) {
+    debugger;
+    let currentAccountId = this.$cookies.get('currentAccountId') ? this.$cookies.get('currentAccountId') : null;
+    if (!currentAccountId) {
       currentAccountId = this.$auth.user.account.id
     }
 
