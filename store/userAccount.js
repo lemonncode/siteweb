@@ -59,7 +59,10 @@ export const mutations = {
     }
 
 
-    this.$cookies.set('currentAccountId', state.currentAccountId)
+    this.$cookies.set('currentAccountId', state.currentAccountId, {
+      path: '/',
+      maxAge: 60 * 60 * 24 * 31
+    })
   },
   setAccountId(state, id) {
     state.currentAccountId = id
@@ -105,7 +108,7 @@ export const actions = {
     if (this.$auth.user == null) {
       return;
     }
-    
+
     let currentAccountId = this.$cookies.get('currentAccountId') ? this.$cookies.get('currentAccountId') : null;
     if (!currentAccountId) {
       currentAccountId = this.$auth.user.account.id
