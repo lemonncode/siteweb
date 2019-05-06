@@ -125,8 +125,8 @@ export const actions = {
       })
     }
 
-    await dispatch('getActiveTrips', currentAccount)
     dispatch('setAccount', currentAccount)
+    await dispatch('getActiveTrips', currentAccount)
     commit('setUserAccounts', this.$auth.user.business_accounts)
 
 
