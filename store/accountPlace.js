@@ -50,8 +50,9 @@ export const actions = {
       commit('removePlace', place)
     })
   },
-  async addPlace({ commit, rootState }, {name, place}) {
-    return this.$axios.$post(`/accounts/${rootState.userAccount.account.id}/places`, {name: name, place: place})
+  async addPlace({ commit, rootState }, {name, location}) {
+    console.log(location)
+    return this.$axios.$post(`/accounts/${rootState.userAccount.account.id}/places`, {name: name, location: location})
         .then((data) => {
           commit('addPlace', data)
         })

@@ -43,7 +43,7 @@
               <v-icon>trip_origin</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>
-              <v-list-tile-title>{{ trip.origin.autocomplete }}</v-list-tile-title>
+              <v-list-tile-title>{{ trip.origin_location ? trip.origin_location.formatted_address : trip.origin.autocomplete }}</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
           <v-list-tile>
@@ -51,7 +51,7 @@
               <v-icon>pin_drop</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>
-              <v-list-tile-title>{{ trip.destination.autocomplete }}</v-list-tile-title>
+              <v-list-tile-title>{{ trip.destination_location ? trip.destination_location.formatted_address : trip.destination.autocomplete }}</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
           <v-list-tile>

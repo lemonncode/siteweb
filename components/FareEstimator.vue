@@ -154,8 +154,8 @@
         var directionsService = new google.maps.DirectionsService;
 
         directionsService.route({
-            origin: { placeId: this.pickupPlace.placeId },
-            destination: { placeId: this.destinationPlace.placeId },
+            origin: this.pickupPlace.location.latitude + ',' + this.pickupPlace.location.longitude,
+            destination: this.destinationPlace.location.latitude + ',' + this.destinationPlace.location.longitude,
             travelMode: google.maps.TravelMode['DRIVING'],
             optimizeWaypoints: true,
             avoidTolls: true,
@@ -183,8 +183,8 @@
       complete () {
         this.loading = true;
         this.addTrip({
-          origin: this.pickupPlace.placeId,
-          destination: this.destinationPlace.placeId,
+          originLocation: this.pickupPlace.location,
+          destinationLocation: this.destinationPlace.location,
           date: this.date && this.time ? `${this.date} ${this.time}` : null,
           notes: this.notes,
           serviceType: this.serviceType,
@@ -220,15 +220,13 @@
 
       priceCalculator () {
           this.tripDetail({
-              params: {
-                  origin: this.pickupPlace.placeId,
-                  destination: this.destinationPlace.placeId
-              }
+            origin: this.pickupPlace.location,
+            destination: this.destinationPlace.location,
           })
       },
 
-      async tripDetail (trip) {
-        this.$store.dispatch('tripDetail', trip)
+      async tripDetail (data) {
+        this.$store.dispatch('tripDetail', data)
           .then(data => {
             this.price = data.price;
           })
@@ -247,7 +245,7 @@
 
       setPickupPlace(event) {
           if (event.data && event.data.group == 'route') {
-              this.pickupPlace = {description: event.data.originDescription, placeId: event.data.originPlaceId}
+              this.pickupPlace = {description: event.data.originDescription, placeId: event.data.originPlaceId, location: event.data.location}
               this.selectedRoute = event.route;
           } else {
               this.pickupPlace = event.data;
@@ -255,7 +253,7 @@
       },
       setDestinationPlace(event) {
           if (event.data) {
-              this.destinationPlace = {description: event.data.description, placeId: event.data.placeId}
+              this.destinationPlace = {description: event.data.description, placeId: event.data.placeId, location: event.data.location}
           } else {
               this.destinationPlace = event;
           }

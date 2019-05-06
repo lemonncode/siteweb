@@ -24,8 +24,12 @@ export const actions = {
   async cancelTrip ({ commit, rootState }, trip) {
     return this.$axios.$patch(`/accounts/${rootState.userAccount.currentAccountId}/trips/${trip.id}/cancel`)
   },
-  async tripDetail ({ commit, rootState }, trip) {
-      return this.$axios.$get(`/accounts/${rootState.userAccount.currentAccountId}/trips/detail`, trip)
+  async tripDetail ({ commit, rootState }, data) {
+    return this.$axios.$post(`/trips/price`, {
+      account: rootState.userAccount.currentAccountId,
+      origin: data.origin,
+      destination: data.destination,
+    })
   },
   async reassignTrip ({ commit, rootState }, trip) {
     return this.$axios.$patch(`/accounts/${rootState.userAccount.currentAccountId}/trips/${trip.id}/reassign`)

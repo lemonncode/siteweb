@@ -91,7 +91,7 @@
           items.push({header: 'Favoritos'})
 
           this.places.forEach((place) => {
-            items.push({ description: place.name, placeId: place.place.google_id, group: 'favorite' });
+            items.push({ description: place.name, location: place.location.location, group: 'favorite' });
           })
         }
 
@@ -147,7 +147,27 @@
     methods: {
       change () {
         if (this.value && this.value.group == 'route') this.setRouteSelected(this.value)
-        this.$emit('changed', { data: this.value, route: this.routeSelected })
+
+        if (this.value.location) {
+          this.$emit('changed', {
+            data: {...this.value, ...{ location: this.value.location } },
+            route: this.routeSelected
+          })
+        } else {
+          const service = new google.maps.Geocoder()
+          service.geocode({ placeId: this.value.placeId }, (places) => {
+            const location = places[0].geometry.location
+            const geolocation = {
+              latitude: location.lat(),
+              longitude: location.lng()
+            }
+
+            this.$emit('changed', {
+              data: {...this.value, ...{ location: geolocation } },
+              route: this.routeSelected
+            })
+          })
+        }
       },
       searchPlaces (val) {
         if (this.isLoadingPlaces || !this.currentAccount) {
@@ -173,9 +193,9 @@
         }
 
         this.isLoadingPredictions = true
-        var service = new google.maps.places.AutocompleteService()
+        let service = new google.maps.places.AutocompleteService()
 
-        service.getPredictions({ input: val, componentRestrictions: { country: 'es'} }, (predictions, status) => {
+        service.getQueryPredictions({ input: val, componentRestrictions: { country: 'es'} }, (predictions, status) => {
           if (status == google.maps.places.PlacesServiceStatus.OK) {
             this.predictions = predictions
           }
@@ -206,7 +226,7 @@
       geolocalized (place) {
         this.geolocation = {
           description: place.formatted_address,
-          placeId: place.place_id
+          placeId: place.place_id,
         }
 
         this.value = this.geolocation

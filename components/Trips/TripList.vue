@@ -26,8 +26,8 @@
         <tr @click="viewTrip(props.item.id)" :style="{ cursor: 'pointer'}">
           <td>{{ formatedDate(props.item.date) }}</td>
           <td>{{ props.item.user_name }}</td>
-          <td>{{ props.item.origin.autocomplete }}</td>
-          <td>{{ props.item.destination.autocomplete }}</td>
+          <td>{{ props.item.origin_location ? props.item.origin_location.formatted_address : props.item.origin.autocomplete }}</td>
+          <td>{{ props.item.destination_location ? props.item.destination_location.formatted_address : props.item.destination.autocomplete }}</td>
           <td class="text-xs-center">
             <trip-status-label :status="props.item.status"></trip-status-label>
           </td>

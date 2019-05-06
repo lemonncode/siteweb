@@ -110,7 +110,7 @@
             >
               <v-list-tile-content>
                 <v-list-tile-title><strong>{{ item.name }}</strong></v-list-tile-title>
-                <v-list-tile-sub-title class="text--secondary">{{ item.place.autocomplete }}</v-list-tile-sub-title>
+                <v-list-tile-sub-title class="text--secondary">{{ item.location.formatted_address }}</v-list-tile-sub-title>
               </v-list-tile-content>
 
               <v-list-tile-action>

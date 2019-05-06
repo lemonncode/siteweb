@@ -23,7 +23,9 @@
         })
       },
       updateGooglePlace (location) {
-        (new google.maps.Geocoder()).geocode({ 'location': location }, (results, status) => {
+        let geocoder = new google.maps.Geocoder()
+
+        geocoder.geocode({ 'location': location }, (results, status) => {
           if (status !== 'OK' || !results[0]) {
             return
           }

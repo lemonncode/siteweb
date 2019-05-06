@@ -49,7 +49,7 @@
         this.$store.commit('accountPlace/closeAddPlaceDialog')
       },
       addPlace() {
-        this.$store.dispatch('accountPlace/addPlace', {name: this.name, place: this.place.placeId})
+        this.$store.dispatch('accountPlace/addPlace', {name: this.name, location: this.place.location})
             .then(data => {
                 this.closeDialog();
                 this.name = '';

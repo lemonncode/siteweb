@@ -112,8 +112,8 @@
         var directionsService = new google.maps.DirectionsService
 
         directionsService.route({
-          origin: { placeId: this.trip.origin.google_id },
-          destination: { placeId: this.trip.destination.google_id },
+          origin: this.trip.origin_location ? this.trip.origin_location.location.latitude + ',' + this.trip.origin_location.location.longitude : { placeId: this.trip.origin.google_id },
+          destination: this.trip.destination_location ? this.trip.destination_location.location.latitude + ',' + this.trip.destination_location.location.longitude : { placeId: this.trip.destination.google_id },
           travelMode: google.maps.TravelMode['DRIVING'],
           optimizeWaypoints: true
         }, (response, status) => {
