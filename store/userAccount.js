@@ -59,7 +59,10 @@ export const mutations = {
     }
 
 
-    this.$cookies.set('currentAccountId', state.currentAccountId)
+    this.$cookies.set('currentAccountId', state.currentAccountId, {
+      path: '/',
+      maxAge: 60 * 60 * 24 * 31
+    })
   },
   setAccountId(state, id) {
     state.currentAccountId = id
@@ -73,7 +76,7 @@ export const actions = {
   async setAccount ({ commit, dispatch }, account) {
     commit('setAccount', account)
     dispatch('getActiveTrips', account)
-    if (account.account && account.account.discriminator == 'business') {
+    if (account && account.account && account.account.discriminator == 'business') {
       dispatch('account/getCurrentUsers', account.account.id, {root:true})
     }
   },
@@ -106,8 +109,8 @@ export const actions = {
       return;
     }
 
-    let currentAccountId = this.$cookies.get('currentAccountId')
-    if (currentAccountId == null) {
+    let currentAccountId = this.$cookies.get('currentAccountId') ? this.$cookies.get('currentAccountId') : null;
+    if (!currentAccountId) {
       currentAccountId = this.$auth.user.account.id
     }
 
@@ -122,15 +125,20 @@ export const actions = {
       })
     }
 
-    await dispatch('getActiveTrips', currentAccount)
     dispatch('setAccount', currentAccount)
+    await dispatch('getActiveTrips', currentAccount)
     commit('setUserAccounts', this.$auth.user.business_accounts)
 
 
     return currentAccount;
   },
   async getActiveTrips ({ commit, dispatch }, account) {
+    if (!account) {
+      return;
+    }
+
     account = account.discriminator == 'personal' ? account : account.account;
+
     await firestore.collection('trips').where("account_id", "==", account.id)
       .get()
       .then(function (querySnapshot) {

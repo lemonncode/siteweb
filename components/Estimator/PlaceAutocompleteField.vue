@@ -39,7 +39,7 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex';
+  import { mapGetters, mapActions } from 'vuex';
   import GeolocationButton from './GeolocationButton'
 
   export default {
@@ -72,6 +72,10 @@
       };
     },
     mounted () {
+      if (this.currentAccount == null) {
+        this.load;
+      }
+
       this.searchPlaces('');
       this.searchRoutes('');
     },
@@ -145,6 +149,9 @@
       }
     },
     methods: {
+      ...mapActions ({
+          load: 'userAccount/load',
+      }),
       change () {
         if (this.value && this.value.group == 'route') this.setRouteSelected(this.value)
 
@@ -204,7 +211,7 @@
         });
       },
       searchRoutes (val) {
-        if (this.isLoadingRoutes) {
+        if (this.isLoadingRoutes || !this.currentAccount) {
           return
         }
 
