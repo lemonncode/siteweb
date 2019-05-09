@@ -38,12 +38,14 @@ export const actions = {
     },
 
     estimatedTime({ commit, dispatch }, data) {
+        debugger;
         var driverPosition = new google.maps.LatLng(data.driver.latitude, data.driver.longitude);
+        var destinationPosition = new google.maps.LatLng(data.trip.origin.location.latitude, data.trip.origin.location.longitude);
         var directionsService = new google.maps.DirectionsService
 
         directionsService.route({
             origin: driverPosition,
-            destination: { placeId: data.trip.origin.google_id },
+            destination: destinationPosition,
             travelMode: google.maps.TravelMode['DRIVING'],
             optimizeWaypoints: true
         }, function(response, status) {
