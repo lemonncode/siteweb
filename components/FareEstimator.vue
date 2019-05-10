@@ -158,7 +158,6 @@
             destination: this.destinationPlace.location.latitude + ',' + this.destinationPlace.location.longitude,
             travelMode: google.maps.TravelMode['DRIVING'],
             optimizeWaypoints: true,
-            avoidTolls: true,
             avoidFerries: true,
             region: 'es',
             provideRouteAlternatives: true,

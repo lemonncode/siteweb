@@ -58,7 +58,6 @@ export const mutations = {
       state.currentAccountId = null
     }
 
-
     this.$cookies.set('currentAccountId', state.currentAccountId, {
       path: '/',
       maxAge: 60 * 60 * 24 * 31
@@ -138,8 +137,7 @@ export const actions = {
     }
 
     account = account.discriminator == 'personal' ? account : account.account;
-
-    await firestore.collection('trips').where("account_id", "==", account.id)
+    await firestore.collection('trips').where("account_id", "==", account.id).where('user_id','==', this.$auth.user.id)
       .get()
       .then(function (querySnapshot) {
         let tripsList = [];

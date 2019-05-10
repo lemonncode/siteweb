@@ -39,7 +39,7 @@ export const actions = {
 
     estimatedTime({ commit, dispatch }, data) {
         var driverPosition = new google.maps.LatLng(data.driver.latitude, data.driver.longitude);
-        var destinationPosition = new google.maps.LatLng(data.trip.origin.location.latitude, data.trip.origin.location.longitude);
+        var destinationPosition = new google.maps.LatLng(data.trip.origin_location.location.latitude, data.trip.origin_location.location.longitude);
         var directionsService = new google.maps.DirectionsService
 
         directionsService.route({
@@ -58,5 +58,10 @@ export const actions = {
                 }
             }
         });
+    },
+
+    resetDriver ({ commit }) {
+        commit('setDriver', null);
+        commit('setWaitTime', null);
     }
 }

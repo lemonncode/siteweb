@@ -28,5 +28,8 @@ export const actions = {
                 commit('setTrip', docSnapshot.data())
             }
         })
+    },
+    resetTrip ({ commit }) {
+        commit('setTrip', null)
     }
 }
