@@ -128,7 +128,9 @@
         current_account: 'userAccount/currentAccount',
       }),
       isValidStep1 () {
-        return this.pickupPlace !== null && this.destinationPlace !== null && this.pickupPlace.placeId !== this.destinationPlace.placeId;
+        return this.pickupPlace !== null && this.destinationPlace !== null &&
+            (this.pickupPlace.location.latitude != this.destinationPlace.location.latitude &&
+                this.pickupPlace.location.longitude != this.destinationPlace.location.longitude);
       },
       isValidStep2 () {
         return (this.serviceType == 'asap' || (this.date !== null && this.time !== null));
