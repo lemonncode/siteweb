@@ -24,9 +24,13 @@
 
 <script>
   import FareEstimator from '~/components/FareEstimator';
+  import { mapActions } from 'vuex';
 
   export default {
     mounted () {
+      this.resetTrip();
+      this.resetDriver();
+
       let vm = this;
 
       this.$refs.map.$mapPromise.then((map) => {
@@ -43,15 +47,6 @@
 
           return;
         }
-          
-        /*navigator.geolocation.getCurrentPosition(position => {
-          vm.center = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          };
-
-          vm.markers.push({ position: vm.center });
-        });*/
       })  
     },
     data () {
@@ -68,6 +63,10 @@
       }
     },
     methods: {
+      ...mapActions({
+        resetTrip: 'trip/resetTrip',
+        resetDriver: 'map/resetDriver',
+      }),
       handleNewRoute(route) {
          let directionsDisplay = new google.maps.DirectionsRenderer({
            map: this.$refs.map.$mapObject,

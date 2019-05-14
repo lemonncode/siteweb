@@ -76,15 +76,21 @@
     },
     watch : {
       trip:function(val) {
+        if (this.$route.params.id != val.id) {
+            return;
+        }
+
+        if (this.interval) {
+            clearInterval(this.interval);
+        }
+
         if (val && this.$route.params.id == val.id) {
           this.displayTripOnMap();
           let interval = null;
           if (val.driver_uuid && (val.status == 'pending' || val.status == 'asigned' || val.status == 'started' || val.status == 'pickedup' || val.status == 'arrived')) {
             this.showMarkers = true;
-            if (!this.interval) {
-                interval = setInterval(() => this.getDriver({'trip': val, 'driver': val.driver_uuid}), 500);
-                this.interval = true;
-            }
+              interval = setInterval(() => this.getDriver({'trip': val, 'driver': val.driver_uuid}), 5000);
+              this.interval = interval;
           }
 
           if (val && (val.status == 'done' || val.status == 'canceled' || val.status == 'finished' || val.status == 'finalized')) {
@@ -138,6 +144,9 @@
         this.infoContent = contentString;
         this.infoWinOpen = !this.infoWinOpen;
       },
+    },
+    destroyed() {
+      clearInterval(this.interval)
     }
   }
 </script>

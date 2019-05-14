@@ -148,7 +148,9 @@
         currentAccount: 'userAccount/account',
       }),
       isValidStep1 () {
-        return this.pickupPlace !== null && this.destinationPlace !== null && this.pickupPlace.placeId !== this.destinationPlace.placeId;
+        return this.pickupPlace !== null && this.destinationPlace !== null &&
+            (this.pickupPlace.location.latitude != this.destinationPlace.location.latitude &&
+                this.pickupPlace.location.longitude != this.destinationPlace.location.longitude);
       },
       isValidStep2 () {
         return (this.serviceType == 'asap' || (this.date !== null && this.time !== null));
@@ -175,7 +177,6 @@
             destination: this.destinationPlace.location.latitude + ',' + this.destinationPlace.location.longitude,
             travelMode: google.maps.TravelMode['DRIVING'],
             optimizeWaypoints: true,
-            avoidTolls: true,
             avoidFerries: true,
             region: 'es',
             provideRouteAlternatives: true,
