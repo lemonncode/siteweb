@@ -11,6 +11,9 @@
               <v-list-tile-title>
                 <span>{{ account.account.customer.name }}</span>
               </v-list-tile-title>
+              <v-list-tile-sub-title>
+                {{ account.account.discriminator == 'business' ? 'Cuenta de empresa' : 'Cuenta de prescriptor' }}
+              </v-list-tile-sub-title>
             </v-list-tile-content>
             <v-list-tile-action v-if="account.role == 'owner' || account.role == 'admin'">
               <v-btn flat icon @click="viewAccount(account.id)">

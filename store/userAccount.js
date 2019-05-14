@@ -76,7 +76,7 @@ export const actions = {
   async setAccount ({ commit, dispatch }, account) {
     commit('setAccount', account)
     dispatch('getActiveTrips', account)
-    if (account && account.account && account.account.discriminator == 'business') {
+    if (account && account.account) {
       dispatch('account/getCurrentUsers', account.account.id, {root:true})
     }
   },

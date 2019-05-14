@@ -7,8 +7,11 @@
       <div v-if="account.payment_method == 'stripe'">
         <payment-method-list></payment-method-list>
       </div>
-      <div v-else>
+      <div v-else-if="account.payment_method == 'transfer'">
         <transfer-payment-method></transfer-payment-method>
+      </div>
+      <div v-else>
+        <cash-payment-method></cash-payment-method>
       </div>
     </v-container>
   </v-card>
@@ -18,6 +21,7 @@
   import { mapGetters } from 'vuex';
   import PaymentMethodList from '~/components/PaymentMethods/PaymentMethodList'
   import TransferPaymentMethod from '~/components/PaymentMethods/TransferPaymentMethod'
+  import CashPaymentMethod from '~/components/PaymentMethods/CashPaymentMethod'
 
   export default {
     computed: {
@@ -27,7 +31,8 @@
     },
     components: {
       PaymentMethodList,
-      TransferPaymentMethod
+      TransferPaymentMethod,
+      CashPaymentMethod
     }
   }
 </script>

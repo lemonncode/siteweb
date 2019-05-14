@@ -1,5 +1,5 @@
 <template>
-  <v-stepper v-model="currentStep" vertical>
+  <v-stepper v-model="currentStep" vertical v-if="currentAccount">
     <v-stepper-step :complete="currentStep > 1" step="1">Seleccione un trayecto</v-stepper-step>
     <v-stepper-content step="1">
       <place-autocomplete-field
@@ -37,8 +37,32 @@
       <v-btn flat @click.native="currentStep = 1">Cancelar</v-btn>
     </v-stepper-content>
 
-
-    <div v-if="current_account != null && current_account.discriminator == 'personal' || (current_account != null && current_account.role != 'owner' && current_account.role != 'admin')">
+    <div v-if="currentAccount != null && currentAccount.discriminator == 'affiliate'">
+      <v-stepper-step step="3">Datos pasajero</v-stepper-step>
+      <v-stepper-content step="3">
+        <v-flex xs12 sm12>
+          <v-text-field
+              v-model="riderName"
+              type="text"
+              label="Pasajero"
+          ></v-text-field>
+          <v-text-field
+              v-model="riderPhone"
+              type="text"
+              label="Teléfono del pasajero"
+          ></v-text-field>
+        </v-flex>
+        <v-textarea v-model="notes" label="Comentario" outline></v-textarea>
+        <v-card-title>El precio de la reserva es de {{ priceFormat(price) }} €</v-card-title>
+        <v-btn v-if="!loading" color="primary" @click.native="complete">{{ getButtonLabel() }}</v-btn>
+        <v-progress-circular v-if="loading"
+                             indeterminate
+                             color="primary"
+        ></v-progress-circular>
+        <v-btn flat @click.native="currentStep = 2">Cancelar</v-btn>
+      </v-stepper-content>
+    </div>
+    <div v-else-if="currentAccount != null && currentAccount.discriminator == 'personal' || (currentAccount != null && currentAccount.role != 'owner' && currentAccount.role != 'admin')">
       <v-stepper-step step="3">Confirmar la reserva</v-stepper-step>
       <v-stepper-content step="3">
         <v-textarea v-model="notes" label="Comentario" outline></v-textarea>
@@ -73,7 +97,6 @@
         <v-btn flat @click.native="currentStep = 2">Cancelar</v-btn>
       </v-stepper-content>
     </div>
-
   </v-stepper>
 </template>
 
@@ -120,12 +143,9 @@
         selectedRoute: null,
       };
     },
-    mounted () {
-        this.setAccount(this.current_account)
-    },
     computed: {
       ...mapGetters({
-        current_account: 'userAccount/currentAccount',
+        currentAccount: 'userAccount/account',
       }),
       isValidStep1 () {
         return this.pickupPlace !== null && this.destinationPlace !== null && this.pickupPlace.placeId !== this.destinationPlace.placeId;
@@ -135,9 +155,6 @@
       },
     },
     methods: {
-      ...mapActions({
-          setAccount: 'userAccount/setAccount'
-      }),
       cancelStep1 () {
         this.pickupPlace = this.destinationPlace = null;
       },
