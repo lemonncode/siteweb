@@ -3,7 +3,7 @@
     <v-card class="mb-3" elevation="0">
       <v-container grid-list-md>
         <v-form>
-          <v-layout wrap>
+          <v-layout class="row">
             <v-flex xs12 sm6>
               <v-text-field
                   type="email"

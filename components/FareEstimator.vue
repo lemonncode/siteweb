@@ -46,11 +46,7 @@
               type="text"
               label="Pasajero"
           ></v-text-field>
-          <v-text-field
-              v-model="riderPhone"
-              type="text"
-              label="Teléfono del pasajero"
-          ></v-text-field>
+          <phone-number-field v-model="riderPhone"></phone-number-field>
         </v-flex>
         <v-textarea v-model="notes" label="Comentario" outline></v-textarea>
         <v-card-title>El precio de la reserva es de {{ priceFormat(price) }} €</v-card-title>
@@ -62,20 +58,7 @@
         <v-btn flat @click.native="currentStep = 2">Cancelar</v-btn>
       </v-stepper-content>
     </div>
-    <div v-else-if="currentAccount != null && currentAccount.discriminator == 'personal' || (currentAccount != null && currentAccount.role != 'owner' && currentAccount.role != 'admin')">
-      <v-stepper-step step="3">Confirmar la reserva</v-stepper-step>
-      <v-stepper-content step="3">
-        <v-textarea v-model="notes" label="Comentario" outline></v-textarea>
-          <v-card-title>El precio de la reserva es de {{ priceFormat(price) }} €</v-card-title>
-          <v-btn v-if="!loading" color="primary" @click.native="complete">{{ getButtonLabel() }}</v-btn>
-          <v-progress-circular v-if="loading"
-              indeterminate
-              color="primary"
-          ></v-progress-circular>
-          <v-btn flat @click.native="currentStep = 2">Cancelar</v-btn>
-      </v-stepper-content>
-    </div>
-    <div v-else>
+    <div v-else-if="currentAccount != null && currentAccount.discriminator == 'business' && (userAccount.role == 'owner' || userAccount.role == 'admin')">
       <v-stepper-step step="3">Seleccionar usuario y confirmar</v-stepper-step>
       <v-stepper-content step="3">
         <trip-more-info @change="updateMoreInfo($event)"></trip-more-info>
@@ -97,6 +80,20 @@
         <v-btn flat @click.native="currentStep = 2">Cancelar</v-btn>
       </v-stepper-content>
     </div>
+    <div v-else>
+      <v-stepper-step step="3">Confirmar la reserva</v-stepper-step>
+      <v-stepper-content step="3">
+        <v-textarea v-model="notes" label="Comentario" outline></v-textarea>
+          <v-card-title>El precio de la reserva es de {{ priceFormat(price) }} €</v-card-title>
+          <v-btn v-if="!loading" color="primary" @click.native="complete">{{ getButtonLabel() }}</v-btn>
+          <v-progress-circular v-if="loading"
+              indeterminate
+              color="primary"
+          ></v-progress-circular>
+          <v-btn flat @click.native="currentStep = 2">Cancelar</v-btn>
+      </v-stepper-content>
+    </div>
+
   </v-stepper>
 </template>
 
@@ -105,7 +102,8 @@
   import PlaceAutocompleteField from '~/components/Estimator/PlaceAutocompleteField'
   import TimeField from '~/components/Estimator/TimeField'
   import { mapGetters, mapActions } from 'vuex'
-  import TripMoreInfo from "./Estimator/TripMoreInfo";
+  import TripMoreInfo from "./Estimator/TripMoreInfo"
+  import PhoneNumberField from '~/components/Fields/PhoneNumberField'
 
   export default {
     components: {
@@ -113,6 +111,7 @@
       PlaceAutocompleteField,
       DateField,
       TimeField,
+      PhoneNumberField
     },
     data () {
       return {
@@ -146,6 +145,7 @@
     computed: {
       ...mapGetters({
         currentAccount: 'userAccount/account',
+        userAccount: 'userAccount/currentAccount',
       }),
       isValidStep1 () {
         return this.pickupPlace !== null && this.destinationPlace !== null &&
@@ -257,8 +257,8 @@
 
       updateMoreInfo(data) {
           this.user = data.user;
-          this.riderName = data.riderName;
-          this.riderPhone = data.riderPhone;
+          this.riderName = data.riderName
+          this.riderPhone = data.riderPhone
       },
 
       setPickupPlace(event) {

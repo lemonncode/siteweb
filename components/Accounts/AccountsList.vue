@@ -48,6 +48,7 @@
     <add-account-dialog></add-account-dialog>
   </div>
 </template>
+
 <script>
   import { mapGetters, mapActions } from 'vuex';
   import AddAccountDialog from '~/components/Accounts/AddAccountDialog'

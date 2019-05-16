@@ -66,26 +66,8 @@
                     required
                 ></v-text-field>
               </v-flex>
-              <v-flex sm6 xs12>
-                <div class="v-text-field__slot">
-                  <no-ssr>
-                    <vue-tel-input v-model="user.phoneNumber"
-                                   @onValidate="onValidate"
-                                   @onInput="onInput"
-                                   :preferredCountries="['es', 'gb', 'us']"
-                                   placeholder="Introduce un número de teléfono"
-                                   required
-                                   defaultCountry="es">
-                    </vue-tel-input>
-                  </no-ssr>
-                  <div class="v-text-field__details" v-if="user.phoneNumber && !validPhoneNumber">
-                    <div class="v-messages theme--light error--text">
-                      <div class="v-messages__wrapper">
-                        <div class="v-messages__message">Teléfono no válido</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              <v-flex xs12 sm6>
+                <phone-number-field v-model="user.phoneNumber"></phone-number-field>
               </v-flex>
             </v-layout>
           </v-container>
@@ -159,8 +141,9 @@
 </template>
 
 <script>
-    import { mapGetters, mapActions } from 'vuex';
-    import countries from 'i18n-iso-countries';
+    import { mapGetters, mapActions } from 'vuex'
+    import countries from 'i18n-iso-countries'
+    import PhoneNumberField from '~/components/Fields/PhoneNumberField'
     import DeletePlaceDialog from '~/components/Settings/DeletePlaceDialog'
     import AddPlaceDialog from '~/components/Settings/AddPlaceDialog'
 
@@ -177,17 +160,12 @@
                 },
                 modal: false,
                 valid: false,
-                validPhoneNumber: false,
                 validated: false,
                 firstNameRules: [
                     v => !!v || 'Introduce tu nombre',
                 ],
                 lastNameRules: [
                     v => !!v || 'Introduce tus apellidos',
-                ],
-                phoneNumberRules: [
-                    v => !!v || 'Introduce tu número de teléfono',
-                    v => /^\d{9}$/.test(v) || 'Número de teléfono inválido',
                 ],
                 nifNumberRules: [
                     v => !!v || 'Introduce tu número de DNI',
@@ -247,6 +225,7 @@
                 this.userPlaces = this.places;
             },
             submit() {
+              return
                 if (!this.$refs.form.validate()) {
                     return
                 }
@@ -276,16 +255,6 @@
 
                 this.showError(notification)
             },
-            onInput({ number, isValid, country }) {
-                if (isValid) {
-                    this.validPhoneNumber = true;
-                }
-            },
-            onValidate({ number, isValid, country }) {
-                if (!isValid) {
-                    this.validPhoneNumber = false;
-                }
-            },
             deletePlace(item) {
                 this.$store.commit('accountPlace/openDeletePlaceDialog', item)
             },
@@ -296,6 +265,7 @@
         components: {
             AddPlaceDialog,
             DeletePlaceDialog,
+            PhoneNumberField
         },
         notifications: {
             showSuccess: {

@@ -24,26 +24,11 @@
                     disabled
                 ></v-text-field>
               </v-flex>
-              <v-flex sm6 xs12>
-                <div class="v-text-field__slot">
-                  <no-ssr>
-                    <vue-tel-input v-model="account.account.customer.phone_number"
-                                   @onValidate="onValidate"
-                                   @onInput="onInput"
-                                   :preferredCountries="['es', 'gb', 'us']"
-                                   placeholder="Introduce un número de teléfono"
-                                   required
-                                   defaultCountry="es">
-                    </vue-tel-input>
-                  </no-ssr>
-                  <div class="v-text-field__details" v-if="account.account.customer.phone_number && !validPhoneNumber">
-                    <div class="v-messages theme--light error--text">
-                      <div class="v-messages__wrapper">
-                        <div class="v-messages__message">Teléfono no válido</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              <v-flex xs12 sm6>
+                <phone-number-field
+                    :value="account.account.customer.phone_number"
+                    @input="phoneNumberChanged($event)"
+                ></phone-number-field>
               </v-flex>
               <v-flex sm6>
                 <v-text-field
@@ -104,18 +89,14 @@
 </template>
 
 <script>
-    import countries from 'i18n-iso-countries';
+    import PhoneNumberField from '~/components/Fields/PhoneNumberField'
 
     export default {
         props: ['account'],
         data () {
             return {
+                phoneNumber: this.account.account.customer.phone_number,
                 valid: false,
-                validPhoneNumber: false,
-                phoneNumberRules: [
-                    v => !!v || 'Introduce tu número de teléfono',
-                    v => /^\d{9}$/.test(v) || 'Número de teléfono inválido',
-                ],
                 emailRules: [
                     v => !!v || 'Introduce un email',
                     v => /.+@.+/.test(v) || 'Email inválido',
@@ -132,23 +113,15 @@
                 ],
                 provinceRules: [
                     v => !!v || 'Introduce una provincia',
-                ],
-                countries: Object.keys(countries.getAlpha3Codes()),
+                ]
             };
         },
         methods: {
+          phoneNumberChanged (value) {
+            this.phoneNumber = value
+          },
             closeDialog() {
                 this.$store.commit('userAccount/closeEditAccountDialog')
-            },
-            onInput({ number, isValid, country }) {
-                if (isValid) {
-                    this.validPhoneNumber = true;
-                }
-            },
-            onValidate({ number, isValid, country }) {
-                if (!isValid) {
-                    this.validPhoneNumber = false;
-                }
             },
             editAccount() {
                 if (!this.$refs.form.validate()) {
@@ -157,7 +130,7 @@
 
                 let editValues = {
                       email: this.account.account.customer.email,
-                      phoneNumber: this.account.account.customer.phone_number,
+                      phoneNumber: this.phoneNumber,
                       billingAddress: {
                         city: this.account.account.customer.billing_address.city,
                         country: 'es',
@@ -206,5 +179,8 @@
                 type: 'success'
             }
         },
+      components: {
+        PhoneNumberField
+      }
     }
 </script>

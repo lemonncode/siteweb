@@ -42,12 +42,7 @@
                 label="Pasajero"
                 @change="updateData"
             ></v-text-field>
-            <v-text-field
-                v-model="riderPhone"
-                type="text"
-                label="Teléfono del pasajero"
-                @change="updateData"
-            ></v-text-field>
+            <phone-number-field v-model="riderPhone" @input="updateData"></phone-number-field>
           </v-flex>
         </v-card>
       </v-tab-item>
@@ -57,6 +52,7 @@
 
 <script>
     import { mapGetters } from 'vuex'
+    import PhoneNumberField from '~/components/Fields/PhoneNumberField'
 
     export default {
         name: "TripMoreInfo",
@@ -83,6 +79,9 @@
                 this.user = null;
                 this.updateData();
             }
+        },
+        components: {
+          PhoneNumberField
         }
     }
 </script>
