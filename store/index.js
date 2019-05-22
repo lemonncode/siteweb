@@ -29,6 +29,7 @@ export const actions = {
       account: rootState.userAccount.currentAccountId,
       origin: data.origin,
       destination: data.destination,
+      //coupon: 'SUMMER2019',
     })
   },
   async reassignTrip ({ commit, rootState }, trip) {

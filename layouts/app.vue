@@ -152,6 +152,7 @@
           { icon: 'local_taxi', text: 'Viajes', to: { name: 'app-trips' } },
           { icon: 'credit_card', text: 'Métodos de pago', to: { name: 'app-payment-methods' } },
           { icon: 'assessment', text: 'Cuentas de empresa', to: { name: 'app-accounts' } },
+          { icon: 'attach_money', text: 'Descuentos', to: { name: 'app-discounts' } },
           { icon: 'settings', text: 'Configuración', to: { name: 'app-settings' } },
           { divider: true },
           /*{ icon: 'feedback', text: 'Enviar un feedback' },
