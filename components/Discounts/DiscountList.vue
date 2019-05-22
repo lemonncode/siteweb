@@ -51,8 +51,14 @@
         loaded: false,
       }
     },
+    watch: {
+      account: {
+        handler: 'loadDiscounts'
+      }
+    },
     computed: {
       ...mapGetters({
+        account: 'userAccount/currentAccount',
         discounts: 'discount/discounts'
       })
     },
