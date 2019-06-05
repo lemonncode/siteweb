@@ -55,7 +55,8 @@ module.exports = {
     '@plugins/firebase',
     { src: '@plugins/telephone', ssr: false },
     '@plugins/login',
-    '@plugins/vuelidate'
+    '@plugins/vuelidate',
+    { src: '~plugins/ga.js', ssr: false }
   ],
 
   /*
@@ -111,6 +112,7 @@ module.exports = {
   ** Build configuration
   */
   build: {
+    transpile: [/^vue2-google-maps($|\/)/],
     vendor: ['axios', 'vue-notifications'],
 
     /*
