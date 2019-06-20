@@ -9,6 +9,7 @@ export const state = () => ({
   currentAccount: null,
   currentAccountId: null,
   activeTripsList: [],
+  account: null,
 })
 
 export const getters = {
