@@ -46,7 +46,7 @@
         },
         center: { lat: 30.4169751, lng: -3.6924527 },
         interval: false,
-        estimated: false
+        driversIntervalSubscriber: null,
       }
     },
     components: {
@@ -102,9 +102,12 @@
       },
       driver:function(val) {
         if (val) {
-            if (!this.estimated && this.trip && this.trip.status == 'started') {
-                this.estimated = true;
-                this.estimatedTime({'trip': this.trip, 'driver': val});
+            if (this.trip && this.trip.status == 'started') {
+                this.subscribeRemainingTimeInterval();
+            } else {
+                if (this.driversIntervalSubscriber) {
+                    this.unsubscribeRemainingTimeInterval();
+                }
             }
         }
       }
@@ -143,6 +146,20 @@
         this.infoWindowPos = marker.position;
         this.infoContent = contentString;
         this.infoWinOpen = !this.infoWinOpen;
+      },
+      subscribeRemainingTimeInterval: function () {
+        if (!this.driversIntervalSubscriber) {
+            this.estimatedTime(this.trip.id);
+            this.driversIntervalSubscriber = setInterval(() => {
+                this.estimatedTime(this.trip.id);
+            }, 60000);
+        }
+      },
+
+      unsubscribeRemainingTimeInterval: function () {
+          if (this.driversIntervalSubscriber) {
+              clearInterval(this.driversIntervalSubscriber);
+          }
       },
     },
     destroyed() {

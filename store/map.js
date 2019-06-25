@@ -2,7 +2,7 @@ import { firebase, db } from '~/plugins/firebase.js'
 
 export const state = () => ({
     driver: null,
-    waitTime: null
+    waitTime: null,
 })
 
 export const getters = {
@@ -37,26 +37,10 @@ export const actions = {
         });
     },
 
-    estimatedTime({ commit, dispatch }, data) {
-        var driverPosition = new google.maps.LatLng(data.driver.latitude, data.driver.longitude);
-        var destinationPosition = new google.maps.LatLng(data.trip.origin_location.location.latitude, data.trip.origin_location.location.longitude);
-        var directionsService = new google.maps.DirectionsService
-
-        directionsService.route({
-            origin: driverPosition,
-            destination: destinationPosition,
-            travelMode: google.maps.TravelMode['DRIVING'],
-            optimizeWaypoints: true
-        }, function(response, status) {
-            if (status === 'OK') {
-                var waitTime = response.routes[0].legs[0].duration.text;
-                commit('setWaitTime', waitTime);
-            } else {
-                // === if we were sending the requests to fast, try this one again and increase the delay
-                if (status == google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
-                    dispatch('estimatedTime', data);
-                }
-            }
+    estimatedTime({ commit, rootState }, id) {
+        return this.$axios.$get(`/pickuptime/${rootState.userAccount.currentAccountId}/trips/${id}`).then(data => {
+            commit('setWaitTime', data.remaining_time);
+            return true;
         });
     },
 

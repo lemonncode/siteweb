@@ -10,7 +10,7 @@
           <span class="caption grey--text text-lg-left">{{ formatedDated }}</span>
         </v-flex>
         <v-flex xs12>
-          <span class="caption text-lg-right" v-if="waitTime && trip.status == 'started'">El conductor llegará en {{ waitTime }}</span><trip-progress-bar :status="trip.status"></trip-progress-bar>
+          <span class="caption text-lg-right" v-if="waitTime && trip.status == 'started'">El conductor llegará en {{ waitTime | toMinutes }} min</span><trip-progress-bar :status="trip.status"></trip-progress-bar>
         </v-flex>
       </v-layout>
     </v-card-title>
@@ -244,6 +244,11 @@
             message: 'Viaje privado cancelado',
             type: 'success'
         }
+      },
+      filters: {
+          toMinutes(seconds) {
+              return Math.floor(seconds / 60);
+          }
       }
     }
 </script>
