@@ -148,7 +148,9 @@
         this.infoWinOpen = !this.infoWinOpen;
       },
       subscribeRemainingTimeInterval: function () {
+
         if (!this.driversIntervalSubscriber) {
+            this.driversIntervalSubscriber = true;
             this.estimatedTime(this.trip.id);
             this.driversIntervalSubscriber = setInterval(() => {
                 this.estimatedTime(this.trip.id);
@@ -157,7 +159,7 @@
       },
 
       unsubscribeRemainingTimeInterval: function () {
-          if (this.driversIntervalSubscriber) {
+          if (this.driversIntervalSubscriber > 0) {
               clearInterval(this.driversIntervalSubscriber);
           }
       },
