@@ -88,14 +88,14 @@
 
         this.$store.dispatch('user/newPassword', { token: this.token, password: this.password, confirmPassword: this.confirmPassword })
           .then(() => {
-              this.$router.push({ name: 'login' })
+              this.$router.push({ name: 'app' })
           })
           .catch(error => {
             this.showSubmitError()
           })
       },
       cancel() {
-        this.$router.push({ name: 'login' })
+        this.$router.push({ name: 'app' })
       },
       displayMessageError(response) {
         let notification = {}
