@@ -39,7 +39,7 @@
           <a href="/politica-de-privacidad" class="blue--text text--darken-4" target="_blank">Política de Privacidad</a>
       </v-flex>
       <v-flex>
-        <v-btn @click="cancel">Cancelar</v-btn>
+        <v-btn @click="cancel">Atrás</v-btn>
         <v-btn color="primary" @click="complete" :disabled="$v.$invalid">Continuar</v-btn>
       </v-flex>
     </v-layout>
