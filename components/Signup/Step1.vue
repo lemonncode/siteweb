@@ -90,7 +90,8 @@
         required: requiredIf(vm => vm.documentType === 'nif' || vm.documentType === 'nie'),
         valid: (value, vm) =>
           (vm.documentType === 'nif' && /^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKEtrwagmyfpdxbnjzsqvhlcke]{1}$/.test(value)) ||
-          (vm.documentType === 'nie' && /^[XYZ]{1}[0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKETtrwagmyfpdxbnjzsqvhlcket]{1}$/.test(value))
+          (vm.documentType === 'nie' && /^[XYZ]{1}[0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKETtrwagmyfpdxbnjzsqvhlcket]{1}$/.test(value)) ||
+          vm.documentType === 'passport'
       },
       passportNumber: {
         required: requiredIf(vm => vm.documentType === 'passport')
