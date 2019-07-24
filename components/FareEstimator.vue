@@ -246,7 +246,6 @@
       async tripDetail (data) {
         this.$store.dispatch('tripDetail', data)
           .then(data => {
-            console.log(data.price)
             this.price = data.price.toFixed(2);
           })
           .catch(error => {

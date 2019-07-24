@@ -17,8 +17,14 @@
               <v-list-tile-sub-title>
                 - Válido del {{ formatedDate(discount.discount.start_date) }} al {{ formatedDate(discount.discount.end_date) }}
               </v-list-tile-sub-title>
-              <v-list-tile-sub-title v-if="discount.discount.uses_limit">
-                - Número de usos {{ discount.discount.uses_limit }} / Restante {{ discount.discount.uses_limit - discount.number_of_uses }}
+              <v-list-tile-sub-title>
+                - Condiciones
+                <v-chip small v-if="discount.discount.uses_limit">
+                  Número de usos {{ discount.discount.uses_limit }} / Restante {{ discount.discount.uses_limit - discount.number_of_uses }}
+                </v-chip>
+                <v-chip small v-if="discount.discount.maximum_amount > 0">
+                  Importe máximo {{ discount.discount.maximum_amount }} €
+                </v-chip>
               </v-list-tile-sub-title>
             </v-list-tile-content>
           </v-list-tile>
