@@ -37,12 +37,12 @@ export const actions = {
         });
     },
 
-    estimatedTime({ commit, rootState }, id) {
+    /*estimatedTime({ commit, rootState }, id) {
         return this.$axios.$get(`/pickuptime/${rootState.userAccount.currentAccountId}/trips/${id}`).then(data => {
             commit('setWaitTime', data.remaining_time);
             return true;
         });
-    },
+    },*/
 
     resetDriver ({ commit }) {
         commit('setDriver', null);

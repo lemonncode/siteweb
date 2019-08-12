@@ -10,7 +10,7 @@
           <span class="caption grey--text text-lg-left">{{ formatedDated }}</span>
         </v-flex>
         <v-flex xs12>
-          <span class="caption text-lg-right" v-if="waitTime && trip.status == 'started'">El conductor llegará en {{ waitTime | toMinutes }} min</span><trip-progress-bar :status="trip.status"></trip-progress-bar>
+          <span class="caption text-lg-right" v-if="trip.lastPickUpTime && trip.status == 'started'">El conductor llegará en {{ trip.lastPickUpTime.remaining_time | toMinutes }} min</span><trip-progress-bar :status="trip.status"></trip-progress-bar>
         </v-flex>
       </v-layout>
     </v-card-title>
@@ -186,7 +186,6 @@
       computed: {
         ...mapGetters({
           trip: 'trip/trip',
-          waitTime: 'map/waitTime',
           currentAccountId: 'userAccount/currentAccountId'
         }),
         formatedDated () {
