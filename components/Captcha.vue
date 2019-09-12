@@ -26,7 +26,7 @@
                 this.setValidated(true);
             },
             render: function () {
-                this.setValidated(false);
+                this.setValidated(true);
             }
         },
     }

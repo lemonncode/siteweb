@@ -25,6 +25,7 @@
 <script>
   import FareEstimator from '~/components/FareEstimator';
   import { mapActions } from 'vuex';
+  import StripeCard from '~/components/StripeCard'
 
   export default {
     mounted () {
@@ -47,7 +48,7 @@
 
           return;
         }
-      })  
+      })
     },
     data () {
       return {
@@ -75,7 +76,8 @@
       }
     },
     components: {
-      FareEstimator
+      FareEstimator,
+        StripeCard
     },
   }
 </script>

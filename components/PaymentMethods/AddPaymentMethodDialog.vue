@@ -1,5 +1,20 @@
 <template>
   <v-dialog v-model="dialog" persistent max-width="500px">
+    <template v-slot:activator="{ on }">
+      <v-fab-transition>
+        <v-btn
+          v-on="on"
+          color="primary"
+          dark
+          absolute
+          bottom
+          right
+          fab
+        >
+          <v-icon>add</v-icon>
+        </v-btn>
+      </v-fab-transition>
+    </template>
     <v-card>
       <v-card-title>
         <span class="headline">Añadir un método de pago</span>
@@ -8,20 +23,21 @@
         <v-container>
           <v-layout>
             <card
-                ref='card'
-                class='stripe-card'
-                :class='{ complete }'
-                :stripe='stripeApiPublicKey'
-                @change='complete = $event.complete'
-                v-if="stripeApiPublicKey !== null"
+              ref='card'
+              class='stripe-card'
+              :class='{ complete }'
+              :stripe='stripeApiPublicKey'
+              @change='complete = $event.complete'
+              v-if="stripeApiPublicKey !== null"
             />
           </v-layout>
         </v-container>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn flat @click.native="closeDialog">Cancelar</v-btn>
-        <v-btn v-if="!loading" color="primary" flat @click.native="createToken" :disabled="!complete">Añadir tarjeta</v-btn>
+        <v-btn flat @click="cancel">Cancelar</v-btn>
+        <v-btn v-if="!loading" color="primary" flat @click.native="addCard" :disabled="!complete">Añadir tarjeta
+        </v-btn>
         <v-progress-circular ml-4 v-if="loading"
                              indeterminate
                              color="primary"
@@ -32,50 +48,48 @@
 </template>
 
 <script>
-  import { Card, createToken } from 'vue-stripe-elements-plus'
+  import {mapActions} from 'vuex';
+  import {Card, handleCardSetup} from 'vue-stripe-elements-plus'
 
   export default {
-    mounted() {
+    async mounted() {
       this.stripeApiPublicKey = process.env.STRIPE_API_PUBLIC_KEY
     },
     data() {
       return {
+        dialog: false,
         stripeApiPublicKey: null,
         complete: false,
         loading: false,
       }
     },
-    computed: {
-      dialog() {
-        return this.$store.state.paymentMethod.dialog
-      }
-    },
     methods: {
-      closeDialog() {
-        this.$store.commit('paymentMethod/closeDialog')
+      ...mapActions({
+        getSetupIntent: 'paymentMethod/getSetupIntent',
+        addPaymentMethod: 'paymentMethod/addPaymentMethod'
+      }),
+      cancel() {
+        this.close()
       },
-      async createToken() {
-        this.loading = true;
-        await createToken().then(data => {
-          if ('error' in data) {
-            console.log(data.error.message)
-          } else {
-            this.addCard(data.token);
-          }
-        });
+      async addCard() {
+        this.loading = true
+
+        const setupIntent = await this.getSetupIntent()
+        let result = await handleCardSetup(setupIntent.clientSecret)
+
+        if (result.error) {
+          this.showAddPaymentCardErrorMessage({message: result.error.message})
+        } else {
+          await this.addPaymentMethod(setupIntent)
+          this.showAddPaymentCardSuccessMessage()
+          this.close()
+        }
+
+        this.loading = false
       },
-      addCard(token) {
-        this.$store.dispatch('paymentMethod/addPaymentCard', token.id)
-          .then(data => {
-            this.$refs.card.clear()
-            this.loading = false
-            this.closeDialog()
-            this.showAddPaymentCardSuccessMessage()
-          })
-          .catch(error => {
-            this.loading = false
-            this.showAddPaymentCardErrorMessage(error.response !== undefined ? { message: error.response.data.message } : {})
-          })
+      close() {
+        this.$refs.card.clear()
+        this.dialog = false
       }
     },
     notifications: {

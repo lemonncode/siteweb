@@ -5,40 +5,38 @@
         <h3>Mis tarjetas de crédito y débito</h3>
       </v-card-title>
 
-      <v-list two-line v-if="paymentCards.length > 0">
-        <template v-for="(card, index) in paymentCards">
-          <v-list-tile :key="card.id" avatar>
+      <v-list two-line v-if="paymentMethods.length > 0">
+        <template v-for="(paymentMethod, index) in paymentMethods">
+          <v-list-tile avatar>
             <v-list-tile-avatar :tile=true size="40x25">
-              <card-image :brand="card.brand"></card-image>
+              <card-image :brand="paymentMethod.card.brand"></card-image>
             </v-list-tile-avatar>
 
             <v-list-tile-content>
               <v-list-tile-title>
-                <strong>{{ card.brand }}</strong> <span class="gray"> que termina en {{ card.last_four_digits }}</span>
+                <strong>{{ paymentMethod.card.brand }}</strong> <span class="gray"> que termina en {{ paymentMethod.card.lastFourDigits }}</span>
               </v-list-tile-title>
               <v-list-tile-sub-title>
-                Fecha caducidad: {{ card.expiration_month }}/{{ card.expiration_year }}
+                Fecha caducidad: {{ paymentMethod.card.expirationMonth }}/{{ paymentMethod.card.expirationYear }}
               </v-list-tile-sub-title>
             </v-list-tile-content>
-
             <template v-if="isAuthorized()">
-              <v-list-tile-action v-if="!isDefaultPaymentCard(card)">
-                <a v-if="$vuetify.breakpoint.mdAndUp" @click="updateDefaultPaymentCard(card)">
+              <v-list-tile-action v-if="!isDefaultPaymentMethod(paymentMethod)">
+                <a v-if="$vuetify.breakpoint.mdAndUp" @click="updateDefaultPaymentMethod(paymentMethod)">
                   definir como predeterminada
                 </a>
-                <v-btn v-else flat icon color="green" @click="updateDefaultPaymentCard(card)">
+                <v-btn v-else flat icon color="green" @click="updateDefaultPaymentMethod(paymentMethod)">
                   <v-icon>check</v-icon>
                 </v-btn>
               </v-list-tile-action>
-
               <v-list-tile-action>
-                <v-btn v-if="activeTripsList.length == 0" flat icon color="red" @click="deletePaymentCard(card)">
+                <v-btn flat icon color="red" @click="removePaymentMethod(paymentMethod)">
                   <v-icon>delete</v-icon>
                 </v-btn>
               </v-list-tile-action>
             </template>
           </v-list-tile>
-          <v-divider v-if="index + 1 < paymentCards.length" :key="index"></v-divider>
+          <v-divider v-if="index + 1 < paymentMethods.length" :key="index"></v-divider>
         </template>
       </v-list>
       <v-list v-else>
@@ -49,33 +47,19 @@
         </v-list-tile>
       </v-list>
     </v-card>
-    <v-fab-transition>
-      <v-btn
-          v-if="isAuthorized()"
-          color="primary"
-          dark
-          absolute
-          bottom
-          right
-          fab
-          @click="openDialog"
-      >
-        <v-icon>add</v-icon>
-      </v-btn>
-    </v-fab-transition>
-    <add-payment-method-dialog></add-payment-method-dialog>
+    <add-payment-method-dialog v-if="isAuthorized()"></add-payment-method-dialog>
   </div>
 </template>
 
 <script>
   import CardImage from './CardImage'
   import AddPaymentMethodDialog from '~/components/PaymentMethods/AddPaymentMethodDialog'
-  import { mapGetters, mapActions } from 'vuex';
+  import {mapGetters, mapActions} from 'vuex';
 
   export default {
-    mounted() {
-      this.loadPaymentCards()
-      this.activeTripsListener()
+    async mounted() {
+      await this.getPaymentMethods()
+      this.loaded = true
     },
     data() {
       return {
@@ -84,65 +68,48 @@
     },
     computed: {
       ...mapGetters({
-          currentAccount: 'userAccount/currentAccount',
-          userAccounts: 'userAccount/userAccounts',
-          activeTripsList: 'userAccount/activeTripsList'
+        paymentMethods: 'paymentMethod/paymentMethods',
+        currentAccount: 'userAccount/currentAccount',
+        userAccounts: 'userAccount/userAccounts',
       }),
-      paymentCards() {
-        return this.$store.state.paymentMethod.paymentCards
-      }
-    },
-    watch: {
-      currentAccount: {
-          handler: 'loadPaymentCards'
-      }
     },
     methods: {
       ...mapActions({
-          getPaymentCards: 'paymentMethod/getPaymentCards',
-          activeTripsListener: 'userAccount/activeTripsListener',
+        getPaymentMethods: 'paymentMethod/getPaymentMethods',
+        deletePaymentMethod: 'paymentMethod/deletePaymentMethod',
+        setDefaultPaymentMethod: 'paymentMethod/setDefaultPaymentMethod'
       }),
-      openDialog() {
-        this.$store.commit('paymentMethod/openDialog')
-      },
-      isDefaultPaymentCard(paymentCard) {
+      isDefaultPaymentMethod(paymentMethod) {
         if (this.currentAccount.discriminator == 'personal') {
-            return this.currentAccount.default_payment_card !== null && this.currentAccount.default_payment_card.uuid === paymentCard.uuid
+          return this.currentAccount.defaultPaymentMethod !== null && this.currentAccount.defaultPaymentMethod.uuid === paymentMethod.uuid
         } else {
-            return this.currentAccount.account.default_payment_card !== null && this.currentAccount.account.default_payment_card.uuid === paymentCard.uuid
+          return this.currentAccount.account.defaultPaymentMethod !== null && this.currentAccount.account.defaultPaymentMethod.uuid === paymentMethod.uuid
         }
       },
-      updateDefaultPaymentCard(paymentCard) {
-        this.$store.dispatch('paymentMethod/updateDefaultPaymentCard', paymentCard).then(() => {
-          this.showUpdatedDefaultPaymentCardSuccessMessage()
-        });
+      async updateDefaultPaymentMethod(paymentMethod) {
+        await this.setDefaultPaymentMethod(paymentMethod)
+        this.showUpdatedDefaultPaymentMethodSuccessMessage()
       },
-      deletePaymentCard(paymentCard) {
-        this.$store.dispatch('paymentMethod/deletePaymentCard', paymentCard).then(() => {
-          this.showDeletedPaymentCardSuccessMessage()
-        }).catch( () => this.showDeletedPaymentCardErrorMessage());
-      },
-      loadPaymentCards() {
-        this.loaded = false;
-        this.getPaymentCards().then(() => {
-            this.loaded = true;
-        });
+      removePaymentMethod(paymentMethod) {
+        this.deletePaymentMethod(paymentMethod)
+          .then(() => this.showDeletedPaymentMethodSuccessMessage())
+          .catch(() => this.showDeletedPaymentMethodErrorMessage())
       },
       isAuthorized() {
-          return this.currentAccount.discriminator == 'personal' || (this.currentAccount !== null && (this.currentAccount.role == 'owner' || this.currentAccount.role == 'admin'));
+        return this.currentAccount.discriminator == 'personal' || (this.currentAccount !== null && (this.currentAccount.role == 'owner' || this.currentAccount.role == 'admin'))
       }
     },
     notifications: {
-      showUpdatedDefaultPaymentCardSuccessMessage : {
-        message: 'Tarjeta predeterminada actualizada',
+      showUpdatedDefaultPaymentMethodSuccessMessage: {
+        message: 'Método de pago predeterminado actualizado',
         type: 'success'
       },
-      showDeletedPaymentCardSuccessMessage: {
-        message: 'Tarjeta borrada',
+      showDeletedPaymentMethodSuccessMessage: {
+        message: 'método de pago borrado',
         type: 'success'
       },
-      showDeletedPaymentCardErrorMessage: {
-        message: 'La tarjeta de crédito no ha podido ser borrada',
+      showDeletedPaymentMethodErrorMessage: {
+        message: 'No es posible eliminar el método de pago mientras exista un viaje activo',
         type: 'error'
       }
     },
