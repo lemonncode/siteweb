@@ -46,7 +46,6 @@
         },
         center: { lat: 30.4169751, lng: -3.6924527 },
         interval: false,
-        driversIntervalSubscriber: null,
       }
     },
     components: {
@@ -100,22 +99,10 @@
           }
         }
       },
-      driver:function(val) {
-        if (val) {
-            if (this.trip && this.trip.status == 'started') {
-                this.subscribeRemainingTimeInterval();
-            } else {
-                if (this.driversIntervalSubscriber) {
-                    this.unsubscribeRemainingTimeInterval();
-                }
-            }
-        }
-      }
     },
     methods: {
       ...mapActions({
         getDriver: 'map/getDriver',
-        estimatedTime: 'map/estimatedTime'
       }),
       async displayTripOnMap () {
         var directionsService = new google.maps.DirectionsService
@@ -146,22 +133,6 @@
         this.infoWindowPos = marker.position;
         this.infoContent = contentString;
         this.infoWinOpen = !this.infoWinOpen;
-      },
-      subscribeRemainingTimeInterval: function () {
-
-        if (!this.driversIntervalSubscriber) {
-            this.driversIntervalSubscriber = true;
-            this.estimatedTime(this.trip.id);
-            this.driversIntervalSubscriber = setInterval(() => {
-                this.estimatedTime(this.trip.id);
-            }, 60000);
-        }
-      },
-
-      unsubscribeRemainingTimeInterval: function () {
-          if (this.driversIntervalSubscriber > 0) {
-              clearInterval(this.driversIntervalSubscriber);
-          }
       },
     },
     destroyed() {
