@@ -21,7 +21,7 @@
               </v-list-tile-sub-title>
             </v-list-tile-content>
             <template v-if="isAuthorized()">
-              <v-list-tile-action v-if="!isDefaultPaymentMethod(paymentMethod)">
+              <v-list-tile-action v-if="!paymentMethod.default">
                 <a v-if="$vuetify.breakpoint.mdAndUp" @click="updateDefaultPaymentMethod(paymentMethod)">
                   definir como predeterminada
                 </a>
@@ -79,13 +79,6 @@
         deletePaymentMethod: 'paymentMethod/deletePaymentMethod',
         setDefaultPaymentMethod: 'paymentMethod/setDefaultPaymentMethod'
       }),
-      isDefaultPaymentMethod(paymentMethod) {
-        if (this.currentAccount.discriminator == 'personal') {
-          return this.currentAccount.defaultPaymentMethod !== null && this.currentAccount.defaultPaymentMethod.uuid === paymentMethod.uuid
-        } else {
-          return this.currentAccount.account.defaultPaymentMethod !== null && this.currentAccount.account.defaultPaymentMethod.uuid === paymentMethod.uuid
-        }
-      },
       async updateDefaultPaymentMethod(paymentMethod) {
         await this.setDefaultPaymentMethod(paymentMethod)
         this.showUpdatedDefaultPaymentMethodSuccessMessage()

@@ -8,6 +8,7 @@
     data () {
       return {
         configuration: {
+          'pending-payment': { text: 'Pendiente autorización pago', color: 'red' },
           'pending': { text: 'Pendiente de asignar', color: 'grey' },
           'asigned': { text: 'Asignado', color: 'orange' },
           'done': { text: 'Finalizado', color: 'green' },

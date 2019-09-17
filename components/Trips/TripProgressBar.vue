@@ -19,6 +19,8 @@
             progression = 50
         } else if (this.status === 'asigned') {
             progression = 35
+        } else if (this.status === 'pending') {
+          progression = 20
         }
 
         return progression
@@ -29,6 +31,7 @@
         switch (this.status) {
           case 'canceled':
           case 'no-assignment':
+          case 'pending-payment':
             color = 'red'
             break;
 
