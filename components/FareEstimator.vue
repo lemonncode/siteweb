@@ -228,23 +228,26 @@
       },
 
       async handleNewTrip(response) {
-        if (response.paymentIntent !== null && response.paymentIntent.status === 'requires_source_action') {
+        const trip = response.trip
+        const paymentIntent = response.trip.paymentIntent
+
+        if (paymentIntent !== null && paymentIntent.status === 'requires_source_action') {
           let stripe = Stripe(this.stripeApiPublicKey)
 
           let result = await stripe.handleCardPayment(
-            response.paymentIntent.clientSecret,
-            {payment_method: response.paymentIntent.paymentMethodId}
+            paymentIntent.clientSecret,
+            {payment_method: paymentIntent.paymentMethodId}
           )
 
           if (result.error) {
-            this.$router.push({ name: 'app-trips-id', params: {id: response.trip.id} })
+            this.$router.push({ name: 'app-trips-id', params: {id: trip.id} })
             this.showAddTripError({ message: result.error.message })
           } else {
-            this.$router.push({ name: 'app-trips-id', params: {id: response.trip.id} })
+            this.$router.push({ name: 'app-trips-id', params: {id: trip.id} })
             this.showTripSuccess()
           }
         } else {
-          this.$router.push({ name: 'app-trips-id', params: {id: response.trip.id} })
+          this.$router.push({ name: 'app-trips-id', params: {id: trip.id} })
           this.showTripSuccess()
         }
       },
