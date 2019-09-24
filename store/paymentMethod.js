@@ -28,16 +28,17 @@ export const actions = {
     const data = await this.$axios.$get(`/accounts/${rootState.userAccount.currentAccountId}/payment-methods`)
     commit('setPaymentMethods', data.paymentMethods)
   },
-  async addPaymentMethod({commit, dispatch, state, rootState}, setupIntent) {
+  async addPaymentMethod({commit, rootState}, setupIntent) {
     const data = await this.$axios.$post(`/accounts/${rootState.userAccount.currentAccountId}/payment-methods`, {setupIntentId: setupIntent.id})
     commit('addPaymentMethod', data.paymentMethod)
   },
-  async deletePaymentMethod({commit, rootState}, paymentMethod) {
-    return await this.$axios.$delete(`/accounts/${rootState.userAccount.currentAccountId}/payment-methods/${paymentMethod.id}`)
-      .then(() => commit('removePaymentMethod', paymentMethod))
+  async deletePaymentMethod({dispatch, rootState}, paymentMethod) {
+    return await this.$axios.$delete(`/accounts/${rootState.userAccount.currentAccountId}/payment-methods/${paymentMethod.id}`).then(() => {
+      return dispatch('getPaymentMethods')
+    })
   },
-  async setDefaultPaymentMethod({commit, dispatch, rootState}, paymentMethod) {
+  async setDefaultPaymentMethod({dispatch, rootState}, paymentMethod) {
     await this.$axios.patch(`/accounts/${rootState.userAccount.currentAccountId}/payment-methods/${paymentMethod.id}/default`)
-    commit('userAccount/setDefaultPaymentMethod', paymentMethod, { root: true })
+    await dispatch('getPaymentMethods')
   }
 }

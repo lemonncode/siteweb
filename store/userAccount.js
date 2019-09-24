@@ -69,13 +69,6 @@ export const mutations = {
   },
   setActiveTripsList(state, trips) {
     state.activeTripsList = trips
-  },
-  setDefaultPaymentMethod(state, paymentMethod) {
-    if (state.currentAccount.discriminator == 'personal') {
-      state.currentAccount.defaultPaymentMethod = paymentMethod
-    } else {
-      state.currentAccount.defaultPaymentMethod = paymentMethod
-    }
   }
 }
 

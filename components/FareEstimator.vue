@@ -113,8 +113,12 @@
       TimeField,
       PhoneNumberField
     },
+    mounted() {
+      this.stripeApiPublicKey = process.env.STRIPE_API_PUBLIC_KEY
+    },
     data () {
       return {
+        stripeApiPublicKey: null,
         date: null,
         time: null,
         currentStep: 1,
@@ -212,17 +216,40 @@
         })
       },
 
-      addTrip (trip) {
-        this.$store.dispatch('addTrip', trip)
+      async addTrip (trip) {
+        const response = await this.$store.dispatch('addTrip', trip)
           .then(response => {
-            this.$router.push({ name: 'app-trips-id', params: {id: response.id} })
-            this.showTripSuccess()
-            this.loading = false;
+            this.handleNewTrip(response)
           })
-          .catch(error => {
+            .catch(error => {
             this.loading = false;
             this.showAddTripError(error.response !== undefined ? { message: error.response.data.message } : {})
           })
+      },
+
+      async handleNewTrip(response) {
+        const trip = response.trip
+        const paymentIntent = response.trip.paymentIntent
+
+        if (paymentIntent !== null && paymentIntent.status === 'requires_source_action') {
+          let stripe = Stripe(this.stripeApiPublicKey)
+
+          let result = await stripe.handleCardPayment(
+            paymentIntent.clientSecret,
+            {payment_method: paymentIntent.paymentMethodId}
+          )
+
+          if (result.error) {
+            this.$router.push({ name: 'app-trips-id', params: {id: trip.id} })
+            this.showAddTripError({ message: result.error.message })
+          } else {
+            this.$router.push({ name: 'app-trips-id', params: {id: trip.id} })
+            this.showTripSuccess()
+          }
+        } else {
+          this.$router.push({ name: 'app-trips-id', params: {id: trip.id} })
+          this.showTripSuccess()
+        }
       },
 
       getShortestRoute(routes) {
