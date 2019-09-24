@@ -66,9 +66,9 @@
                     required
                 ></v-text-field>
               </v-flex>
-              <v-flex xs12 sm6>
+              <!--v-flex xs12 sm6>
                 <phone-number-field v-model="user.phoneNumber"></phone-number-field>
-              </v-flex>
+              </v-flex-->
             </v-layout>
           </v-container>
         </v-form>

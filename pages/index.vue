@@ -49,7 +49,7 @@
                       <div class="headline text-xs-center">EXCELENTE</div>
                     </v-card-title>
                     <v-card-text style="min-height: 150px">
-                      Seriedad, puntualidad, discreción, amabilidad y profesionalidad son nuestros principales valores. 
+                      Seriedad, puntualidad, discreción, amabilidad y profesionalidad son nuestros principales valores.
                       Nuestros choferes van uniformados y hablan diferentes idiomas extranjeros.
                     </v-card-text>
                   </v-card>
@@ -63,7 +63,7 @@
                       <div class="headline">FLEXIBLE</div>
                     </v-card-title>
                     <v-card-text style="min-height: 150px">
-                      Operamos las <strong>24 horas</strong>, <strong>7 días a la semana</strong>, <strong>365 días al año</strong>. 
+                      Operamos las <strong>24 horas</strong>, <strong>7 días a la semana</strong>, <strong>365 días al año</strong>.
                       Siempre encontrarás un operador dispuesto a ayudarte con una respuesta rápida y eficaz.
                     </v-card-text>
                   </v-card>
@@ -77,9 +77,9 @@
                       <div class="headline text-xs-center">SEGURO</div>
                     </v-card-title>
                     <v-card-text style="min-height: 150px">
-                      Les ofrecemos todas las garantías exigidas por la actual Ley de transporte. 
-                      Vehículos geo localizados, selección de personal rigurosa, vehículos con máximas 
-                      prestaciones de seguridad, servicio técnico y gestión de tráfico las <strong>24h</strong>, 
+                      Les ofrecemos todas las garantías exigidas por la actual Ley de transporte.
+                      Vehículos geo localizados, selección de personal rigurosa, vehículos con máximas
+                      prestaciones de seguridad, servicio técnico y gestión de tráfico las <strong>24h</strong>,
                       asegurando al <strong>100%</strong> la máxima cobertura de cualquier servicio realizado con choferes de gran
                       presencia y muy experimentados.
                     </v-card-text>
@@ -134,7 +134,7 @@
                       <div class="headline text-xs-center">Empresas</div>
                     </v-card-title>
                     <v-card-text style="min-height: 100px">
-                      Ofrecemos una solución a la medida para brindar los mejores servicios de transporte a empresas 
+                      Ofrecemos una solución a la medida para brindar los mejores servicios de transporte a empresas
                       u organizaciones. Sistemas de facturación mensual, reserva y control de servicios,
                       poniendo a su disposición una herramienta web con la última tecnología.
                     </v-card-text>
@@ -149,8 +149,8 @@
                       <div class="headline">Visitas de Negocio</div>
                     </v-card-title>
                     <v-card-text style="min-height: 100px">
-                      Servicio de traslados para visitas de negocios, grandes actos o eventos políticos y comerciales. 
-                      Cuando estas de viaje fuera de tu ciudad, necesitas seguridad, comodidad y confianza en tus traslados. 
+                      Servicio de traslados para visitas de negocios, grandes actos o eventos políticos y comerciales.
+                      Cuando estas de viaje fuera de tu ciudad, necesitas seguridad, comodidad y confianza en tus traslados.
                       Le aseguramos la máxima confidencialidad.
                     </v-card-text>
                   </v-card>
@@ -164,7 +164,7 @@
                       <div class="headline text-xs-center">Transfer</div>
                     </v-card-title>
                     <v-card-text style="min-height: 100px">
-                      Traslados en aeropuertos y estaciones de tren. Recepción en la propia terminal, con carteleria 
+                      Traslados en aeropuertos y estaciones de tren. Recepción en la propia terminal, con carteleria
                       (personalizada si lo necesita), ayuda con equipaje y con la seguridad, puntualidad y la
                       atención al cliente como valores principales de nuestra empresa.
                     </v-card-text>
@@ -180,7 +180,7 @@
                       <div class="headline text-xs-center">Eventos Deportivos</div>
                     </v-card-title>
                     <v-card-text style="min-height: 100px">
-                      Transporte y desplazamientos para eventos deportivos. Disponemos del personal adecuado para 
+                      Transporte y desplazamientos para eventos deportivos. Disponemos del personal adecuado para
                       ayudarle en la perfecta organización de los traslados, desde origen a finalización.
                     </v-card-text>
                   </v-card>
@@ -195,7 +195,7 @@
                       <div class="headline text-xs-center">Celebraciones</div>
                     </v-card-title>
                     <v-card-text style="min-height: 100px">
-                      Brindamos el servicio de traslado para celebraciones y eventos especiales: 
+                      Brindamos el servicio de traslado para celebraciones y eventos especiales:
                       Bautizos, Comuniones, Bodas, Cumpleaños, Fiestas, etc. Déjelo en nuestras manos, organizamos
                       sus traslados según sus necesidades.
                     </v-card-text>
@@ -211,8 +211,8 @@
                       <div class="headline text-xs-center">Excursiones</div>
                     </v-card-title>
                     <v-card-text style="min-height: 100px">
-                      Visite ciudades cercanas a Madrid como Toledo, Ávila o Segovia. 
-                      Sabemos que este es un servicio muy personal y por ello nos adaptamos a sus necesidades sean 
+                      Visite ciudades cercanas a Madrid como Toledo, Ávila o Segovia.
+                      Sabemos que este es un servicio muy personal y por ello nos adaptamos a sus necesidades sean
                       las que sean. Nunca hacer turismo había sido tan fácil y cómodo. Nuestros conductores
                       son grandes profesionales que hablan diferentes idiomas extranjeros.
                     </v-card-text>
@@ -293,12 +293,12 @@
                 </v-card-title>
                 <v-card-text>
                   <p>
-                    La mayor flota de vehículos privados de España. Le ofrecemos un servicio de coches con 
-                    conductor, legal, profesional, serio, discreto y a su medida. 
+                    La mayor flota de vehículos privados de España. Le ofrecemos un servicio de coches con
+                    conductor, legal, profesional, serio, discreto y a su medida.
                   </p>
                   <p>
-                    Sabemos que este es un servicio muy personal y por ello nos adaptamos a sus necesidades 
-                    sean las quesean. Reservar con nosotros es tener la garantía de que todo va a ir bien. 
+                    Sabemos que este es un servicio muy personal y por ello nos adaptamos a sus necesidades
+                    sean las quesean. Reservar con nosotros es tener la garantía de que todo va a ir bien.
                   </p>
                   <p>
                     Servicios a nivel nacional con sedes en Madrid, Barcelona, Málaga y Valencia.

@@ -114,7 +114,7 @@
     },
     notifications: {
       showSubmitError: {
-        message: 'Error al intentar generar una nuva contraseña',
+        message: 'Error al intentar generar una nueva contraseña',
         type: 'error'
       }
     }

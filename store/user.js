@@ -46,4 +46,13 @@ export const actions = {
   async update({ commit, dispatch }, user) {
     return this.$axios.$patch('/update-user', user)
   },
+  async emailValidToken({ commit, dispatch }, user) {
+    return this.$axios.$get('/email-validation/' + user.token)
+  },
+  async validateEmail({ commit, dispatch }, email) {
+    return this.$axios.$post('/email-validation', {email: email})
+  },
+  async emailValidation({}, user) {
+    return this.$axios.$patch('/email-validation/' + user.token)
+  },
 }
