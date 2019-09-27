@@ -4,7 +4,7 @@
       app
       color="orange"
       style="font-weight: 100; color: black;"
-      v-if="!$auth.user.verified_email"
+      v-if="1 == 2"
     >
       <div class="flex-grow-1"></div>
       <v-icon color="black">warning</v-icon><n-link to="/validar-email" no-prefetch> Pinche aquí para validar su correo electrónico.</n-link>
