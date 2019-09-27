@@ -31,10 +31,9 @@
     },
     created() {
       this.token = this.$route.params.id
-      this.$store.dispatch('user/emailValidToken', { token: this.token})
+      this.$store.dispatch('user/emailValidation', { token: this.token})
         .then(() => {
           this.validToken = true;
-          this.$store.dispatch('user/emailValidation', { token: this.token})
         })
         .catch(error => {
           this.validToken = false;
