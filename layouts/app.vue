@@ -4,7 +4,7 @@
       app
       color="orange"
       style="font-weight: 100; color: black;"
-      v-if="1 == 2"
+      v-if="!$auth.user.verified_email && !emailVerified"
     >
       <div class="flex-grow-1"></div>
       <v-icon color="black">warning</v-icon><n-link to="/validar-email" no-prefetch> Pinche aquí para validar su correo electrónico.</n-link>
@@ -174,7 +174,8 @@
     computed: {
       ...mapGetters({
         currentAccount: 'userAccount/currentAccount',
-        userAccounts: 'userAccount/userAccounts'
+        userAccounts: 'userAccount/userAccounts',
+        emailVerified: 'user/emailValidated',
       }),
     },
     methods: {

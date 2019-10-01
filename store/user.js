@@ -1,18 +1,22 @@
 import VueNotifications from 'vue-notifications'
 
 export const state = () => ({
-  validated: false
+  validated: false,
+  emailValidated: false,
 })
 
 export const getters = {
-
-  validated: state => state.validated
+  validated: state => state.validated,
+  emailValidated: state => state.emailValidated
 }
 
 export const mutations = {
   setValidated(state, validated) {
     state.validated = validated
   },
+  setEmailValidated(state, validated) {
+    state.emailValidated = validated
+  }
 }
 
 export const actions = {
@@ -55,4 +59,7 @@ export const actions = {
   async emailValidation({}, user) {
     return this.$axios.$patch('/email-validation/' + user.token)
   },
+  async emailValidated({ commit }, value) {
+    commit('setEmailValidated', value)
+  }
 }

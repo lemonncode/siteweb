@@ -23,21 +23,31 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex';
+
   export default {
     data () {
       return {
-        validToken: true,
+        validToken: false,
       };
     },
     created() {
-      this.token = this.$route.params.id
-      this.$store.dispatch('user/emailValidation', { token: this.token})
-        .then(() => {
-          this.validToken = true;
-        })
-        .catch(error => {
-          this.validToken = false;
-        })
+      if (process.client) {
+        this.token = this.$route.params.id
+        this.$store.dispatch('user/emailValidation', { token: this.token})
+          .then(() => {
+            this.validToken = true;
+            this.emailValidated(true);
+          })
+          .catch(error => {
+            this.validToken = false;
+          })
+      }
+    },
+    methods: {
+      ...mapActions({
+        emailValidated: 'user/emailValidated',
+      }),
     }
   }
 </script>
