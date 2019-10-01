@@ -7,14 +7,9 @@
             <v-toolbar-title>Validar correo electrónico</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <p v-if="validToken" class="text-xs-left text--secondary">
-              El correo ha sido validado correctamente.
-            </p>
-            <v-card-text v-else>
               <p class="text-xs-left text--secondary">
-                El token no es válido
+                {{ text }}
               </p>
-            </v-card-text>
           </v-card-text>
         </v-card>
       </v-flex>
@@ -29,6 +24,7 @@
     data () {
       return {
         validToken: false,
+        text: 'Verificando....',
       };
     },
     created() {
@@ -36,10 +32,12 @@
         this.token = this.$route.params.id
         this.$store.dispatch('user/emailValidation', { token: this.token})
           .then(() => {
+            this.text = 'El correo ha sido validado correctamente.';
             this.validToken = true;
             this.emailValidated(true);
           })
           .catch(error => {
+            this.text = 'El token no es correcto.'
             this.validToken = false;
           })
       }
