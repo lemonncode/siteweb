@@ -24,6 +24,14 @@ export const actions = {
   async cancelTrip ({ commit, rootState }, trip) {
     return this.$axios.$patch(`/accounts/${rootState.userAccount.currentAccountId}/trips/${trip.id}/cancel`)
   },
+
+  async tripRequest ({}, data) {
+    return this.$axios.$post(`/trip-requests`, data, { headers: { 'X-Device': 'website' }})
+  },
+  async addTripFromRequest ({ }, data) {
+    return this.$axios.$post(`/trips`, data)
+  },
+
   async tripDetail ({ commit, rootState }, data) {
     return this.$axios.$post(`/trips/price`, {
       account: rootState.userAccount.currentAccountId,

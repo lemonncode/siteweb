@@ -119,6 +119,8 @@
     data () {
       return {
         stripeApiPublicKey: null,
+        requestId: null,
+        requestExpiresAt: null,
         date: null,
         time: null,
         currentStep: 1,
@@ -205,6 +207,17 @@
       complete () {
         this.loading = true;
         this.addTrip({
+          request: this.requestId,
+          user: this.user,
+          rider: {
+            name: this.riderName,
+            phoneNumber: this.riderPhone
+          },
+          accountReferenceNumber: this.reference,
+          notes: this.notes
+        })
+
+        /*this.addTrip({
           originLocation: this.pickupPlace.location,
           destinationLocation: this.destinationPlace.location,
           date: this.date && this.time ? `${this.date} ${this.time}` : null,
@@ -213,23 +226,24 @@
           user: this.user,
           embeddedRider: {name: this.riderName, phoneNumber: this.riderPhone},
           accountReferenceNumber: this.reference,
-        })
+        })*/
       },
 
       async addTrip (trip) {
-        const response = await this.$store.dispatch('addTrip', trip)
+        const response = await this.$store.dispatch('addTripFromRequest', trip)
           .then(response => {
             this.handleNewTrip(response)
           })
-            .catch(error => {
+          .catch(error => {
+            this.currentStep = 2
             this.loading = false;
             this.showAddTripError(error.response !== undefined ? { message: error.response.data.message } : {})
           })
       },
 
       async handleNewTrip(response) {
-        const trip = response.trip
-        const paymentIntent = response.trip.paymentIntent
+        const data = response.data
+        const paymentIntent = data.paymentIntent
 
         if (paymentIntent !== null && paymentIntent.status === 'requires_source_action') {
           let stripe = Stripe(this.stripeApiPublicKey)
@@ -240,14 +254,14 @@
           )
 
           if (result.error) {
-            this.$router.push({ name: 'app-trips-id', params: {id: trip.id} })
+            this.$router.push({ name: 'app-trips-id', params: {id: data.id} })
             this.showAddTripError({ message: result.error.message })
           } else {
-            this.$router.push({ name: 'app-trips-id', params: {id: trip.id} })
+            this.$router.push({ name: 'app-trips-id', params: {id: data.id} })
             this.showTripSuccess()
           }
         } else {
-          this.$router.push({ name: 'app-trips-id', params: {id: trip.id} })
+          this.$router.push({ name: 'app-trips-id', params: {id: data.id} })
           this.showTripSuccess()
         }
       },
@@ -262,16 +276,30 @@
 
         return shortestRoute
       },
-
       priceCalculator () {
-          this.tripDetail({
-            origin: this.pickupPlace.location,
-            destination: this.destinationPlace.location,
-          })
+        this.tripDetail({
+          account: this.currentAccount.id,
+          origin: this.pickupPlace.location,
+          destination: this.destinationPlace.location,
+          startType: this.serviceType,
+          date: this.date && this.time ? `${this.date} ${this.time}` : null
+        })
       },
 
       async tripDetail (data) {
-        this.$store.dispatch('tripDetail', data)
+        this.$store.dispatch('tripRequest', data)
+          .then(data => {
+            this.requestId = data.data.id;
+            this.requestExpiresAt = data.data.price.toFixed(2);
+            this.price = data.data.price.toFixed(2);
+          })
+          .catch(error => {
+            this.currentStep = 1
+            //this.showTripDetailErrorMessage(error.response !== undefined ? { message: error.response.data.message } : {})
+            this.showTripDetailErrorMessage({})
+          })
+
+        /*this.$store.dispatch('tripDetail', data)
           .then(data => {
             this.price = data.price.toFixed(2);
           })
@@ -279,7 +307,7 @@
             this.currentStep = 1
             //this.showTripDetailErrorMessage(error.response !== undefined ? { message: error.response.data.message } : {})
             this.showTripDetailErrorMessage({})
-          })
+          })*/
       },
 
       updateMoreInfo(data) {
