@@ -1,7 +1,7 @@
 <template>
   <div>
       <section>
-        <v-parallax src="hero1.jpg" height="800">
+        <v-parallax src="hero1.jpg" height="520">
           <v-layout
             column
             align-center
@@ -21,7 +21,36 @@
           </v-layout>
         </v-parallax>
       </section>
-
+      <section>
+        <v-flex xs12>
+          <v-container grid-list-xl>
+            <v-layout row wrap align-center>
+              <v-flex xs12 md6>
+                <v-card class="elevation-0 transparent">
+                  <v-card-text class="text-xs-center">
+                    <a href="https://apps.apple.com/es/app/auro/id1472989771 " target="_blank"><img src="iphone.png"></a>
+                  </v-card-text>
+                  <v-card-title primary-title class="layout justify-center">
+                    <div class="headline text-xs-center"><a href="https://apps.apple.com/es/app/auro/id1472989771 " target="_blank"><img src="appstore.png"></a></div>
+                  </v-card-title>
+                </v-card>
+              </v-flex>
+              <v-flex xs12 md6>
+                <v-card class="elevation-0 transparent">
+                  <v-card-text class="text-xs-center">
+                    <a href="https://play.google.com/store/apps/details?id=site.auro.rider" target="_blank"><img src="android.png"></a>
+                  </v-card-text>
+                  <v-card-title primary-title class="layout justify-center">
+                    <div class="headline">
+                      <a href="https://play.google.com/store/apps/details?id=site.auro.rider" target="_blank"><img src="google_play.png"></a>
+                    </div>
+                  </v-card-title>
+                </v-card>
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </v-flex>
+      </section>
       <section>
         <v-layout
           column
