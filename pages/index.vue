@@ -27,7 +27,7 @@
               <v-flex xs12 md6>
                 <v-card class="elevation-0 transparent">
                   <v-card-text class="text-xs-center">
-                    <a href="https://apps.apple.com/es/app/auro/id1472989771 " target="_blank">
+                    <a href="https://apps.apple.com/es/app/auro/id1472989771" target="_blank">
                       <v-img
                         class="white--text align-end"
                         src="iphone.png"
@@ -36,7 +36,7 @@
                     </a>
                   </v-card-text>
                   <v-responsive class="text-xs-center">
-                    <a href="https://play.google.com/store/apps/details?id=site.auro.rider" target="_blank">
+                    <a href="https://apps.apple.com/es/app/auro/id1472989771" target="_blank">
                       <img src="appstore.png">
                     </a>
                   </v-responsive>
