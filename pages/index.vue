@@ -22,35 +22,50 @@
         </v-parallax>
       </section>
       <section>
-        <v-flex xs12>
           <v-container grid-list-xl>
             <v-layout row wrap align-center>
               <v-flex xs12 md6>
                 <v-card class="elevation-0 transparent">
                   <v-card-text class="text-xs-center">
-                    <a href="https://apps.apple.com/es/app/auro/id1472989771 " target="_blank"><img src="iphone.png"></a>
+                    <a href="https://apps.apple.com/es/app/auro/id1472989771 " target="_blank">
+                      <v-img
+                        class="white--text align-end"
+                        src="iphone.png"
+                      >
+                      </v-img>
+                    </a>
                   </v-card-text>
-                  <v-card-title primary-title class="layout justify-center">
-                    <div class="headline text-xs-center"><a href="https://apps.apple.com/es/app/auro/id1472989771 " target="_blank"><img src="appstore.png"></a></div>
-                  </v-card-title>
+                  <v-responsive class="text-xs-center">
+                    <a href="https://play.google.com/store/apps/details?id=site.auro.rider" target="_blank">
+                      <img src="appstore.png">
+                    </a>
+                  </v-responsive>
                 </v-card>
               </v-flex>
               <v-flex xs12 md6>
                 <v-card class="elevation-0 transparent">
                   <v-card-text class="text-xs-center">
-                    <a href="https://play.google.com/store/apps/details?id=site.auro.rider" target="_blank"><img src="android.png"></a>
+                    <a href="https://play.google.com/store/apps/details?id=site.auro.rider" target="_blank">
+                      <v-img
+                        class="white--text align-end"
+                        src="android.png"
+                      >
+                      </v-img>
+                    </a>
                   </v-card-text>
-                  <v-card-title primary-title class="layout justify-center">
-                    <div class="headline">
-                      <a href="https://play.google.com/store/apps/details?id=site.auro.rider" target="_blank"><img src="google_play.png"></a>
-                    </div>
-                  </v-card-title>
+                  <v-responsive class="text-xs-center">
+                      <a href="https://play.google.com/store/apps/details?id=site.auro.rider" target="_blank">
+                        <img src="google_play.png">
+                      </a>
+                  </v-responsive>
                 </v-card>
               </v-flex>
             </v-layout>
           </v-container>
-        </v-flex>
       </section>
+
+
+
       <section>
         <v-layout
           column
