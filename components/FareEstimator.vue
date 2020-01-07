@@ -114,7 +114,8 @@
       PhoneNumberField
     },
     mounted() {
-      this.stripeApiPublicKey = process.env.STRIPE_API_PUBLIC_KEY
+      this.stripeApiPublicKey = process.env.STRIPE_API_PUBLIC_KEY;
+      this.user = this.$auth.user.id;
     },
     data () {
       return {
