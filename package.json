@@ -21,6 +21,7 @@
     "express": "^4.16.4",
     "firebase": "^6.2.0",
     "i18n-iso-countries": "^3.7.8",
+    "icss-replace-symbols": "^1.1.0",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "node-fetch": "^2.3.0",
