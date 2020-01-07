@@ -295,8 +295,7 @@
           })
           .catch(error => {
             this.currentStep = 1
-            //this.showTripDetailErrorMessage(error.response !== undefined ? { message: error.response.data.message } : {})
-            this.showTripDetailErrorMessage({})
+            this.showTripDetailErrorMessage(error.response !== undefined ? { message: error.response.data.message } : {})
           })
 
         /*this.$store.dispatch('tripDetail', data)
