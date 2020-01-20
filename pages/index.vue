@@ -330,26 +330,6 @@
       <section>
         <v-container grid-list-xl>
           <v-layout row wrap justify-center class="my-5">
-            <v-flex xs12 sm4>
-              <v-card class="elevation-0 transparent">
-                <v-card-title primary-title class="layout justify-center">
-                  <div class="headline">Quiénes somos ?</div>
-                </v-card-title>
-                <v-card-text>
-                  <p>
-                    La mayor flota de vehículos privados de España. Le ofrecemos un servicio de coches con
-                    conductor, legal, profesional, serio, discreto y a su medida.
-                  </p>
-                  <p>
-                    Sabemos que este es un servicio muy personal y por ello nos adaptamos a sus necesidades
-                    sean las quesean. Reservar con nosotros es tener la garantía de que todo va a ir bien.
-                  </p>
-                  <p>
-                    Servicios a nivel nacional con sedes en Madrid, Barcelona, Málaga y Valencia.
-                  </p>
-                </v-card-text>
-              </v-card>
-            </v-flex>
             <v-flex xs12 sm4 offset-sm1>
               <v-card class="elevation-0 transparent">
                 <v-card-title primary-title class="layout justify-center">
@@ -381,6 +361,62 @@
                     </v-list-tile-action>
                     <v-list-tile-content>
                       <v-list-tile-title>privados@auro-group.com</v-list-tile-title>
+                    </v-list-tile-content>
+                  </v-list-tile>
+                </v-list>
+              </v-card>
+            </v-flex>
+            <v-flex xs12 sm3>
+              <v-card class="elevation-0 transparent">
+                <v-card-title primary-title class="layout justify-center">
+                  <div class="headline">Quiénes somos ?</div>
+                </v-card-title>
+                <v-card-text>
+                  <p>
+                    La mayor flota de vehículos privados de España. Le ofrecemos un servicio de coches con
+                    conductor, legal, profesional, serio, discreto y a su medida.
+                  </p>
+                  <p>
+                    Sabemos que este es un servicio muy personal y por ello nos adaptamos a sus necesidades
+                    sean las quesean. Reservar con nosotros es tener la garantía de que todo va a ir bien.
+                  </p>
+                  <p>
+                    Servicios a nivel nacional con sedes en Madrid, Barcelona, Málaga y Valencia.
+                  </p>
+                </v-card-text>
+              </v-card>
+            </v-flex>
+            <v-flex xs12 sm3 offset-sm1>
+              <v-card class="elevation-0 transparent">
+                <v-card-title primary-title class="layout justify-center">
+                  <div class="headline">Quieres trabajar con nosotros ?</div>
+                </v-card-title>
+                <v-card-text>
+                  Si quieres trabajar en nuestra empresa puedes contactar a través de:
+                </v-card-text>
+                <v-list class="transparent">
+                  <v-list-tile>
+                    <v-list-tile-action>
+                      <v-icon class="primary--text text--lighten-2">web</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-content>
+                      <v-list-tile-title>https://www.auro.travel/conductores</v-list-tile-title>
+                    </v-list-tile-content>
+                  </v-list-tile>
+                  <v-list-tile>
+                    <v-list-tile-action>
+                      <v-icon class="primary--text text--lighten-2">phone</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-content>
+                      <v-list-tile-title>666-663-036</v-list-tile-title>
+                    </v-list-tile-content>
+                  </v-list-tile>
+                  <v-list-tile>
+                    <v-list-tile-action>
+                      <v-icon class="primary--text text--lighten-2">email</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-content>
+                      <v-list-tile-title>seleccion@auro-group.com</v-list-tile-title>
                     </v-list-tile-content>
                   </v-list-tile>
                 </v-list>
