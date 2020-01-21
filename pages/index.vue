@@ -330,7 +330,7 @@
       <section>
         <v-container grid-list-xl>
           <v-layout row wrap justify-center class="my-5">
-            <v-flex xs12 sm4 offset-sm1>
+            <v-flex xs12 sm4>
               <v-card class="elevation-0 transparent">
                 <v-card-title primary-title class="layout justify-center">
                   <div class="headline">Contacto</div>
@@ -366,7 +366,7 @@
                 </v-list>
               </v-card>
             </v-flex>
-            <v-flex xs12 sm3>
+            <v-flex xs12 sm4>
               <v-card class="elevation-0 transparent">
                 <v-card-title primary-title class="layout justify-center">
                   <div class="headline">Quiénes somos ?</div>
@@ -386,7 +386,7 @@
                 </v-card-text>
               </v-card>
             </v-flex>
-            <v-flex xs12 sm3 offset-sm1>
+            <v-flex xs12 sm4>
               <v-card class="elevation-0 transparent">
                 <v-card-title primary-title class="layout justify-center">
                   <div class="headline">Quieres trabajar con nosotros ?</div>
