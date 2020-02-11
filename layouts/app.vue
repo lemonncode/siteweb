@@ -97,7 +97,7 @@
         </nuxt-link>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn class="hidden-sm-and-down" v-if="currentAccount != null && currentAccount.discriminator != 'personal'" flat>{{ $auth.user.first_name }} - {{ currentAccount.account.customer.name }} </v-btn>
+      <v-btn class="hidden-sm-and-down" v-if="currentAccount != null && currentAccount.discriminator != 'personal'" flat>{{ $auth.user.first_name }} - {{ currentAccount.account.name }} </v-btn>
       <v-btn class="hidden-sm-and-down" v-else flat>{{ $auth.user.first_name }} </v-btn>
       <v-menu offset-y>
         <v-btn slot="activator" icon>
@@ -119,7 +119,7 @@
               <v-icon color="primary">assessment</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>
-              <v-list-tile-title v-bind:class="{ 'red--text': isCurrent(account) }">{{ account.account.customer.name }}</v-list-tile-title>
+              <v-list-tile-title v-bind:class="{ 'red--text': isCurrent(account) }">{{ account.account.name }}</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
           <v-divider inset></v-divider>
