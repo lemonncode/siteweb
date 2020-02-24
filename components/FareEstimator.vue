@@ -61,7 +61,7 @@
     <div v-else-if="currentAccount != null && currentAccount.discriminator == 'business' && (userAccount.role == 'owner' || userAccount.role == 'admin')">
       <v-stepper-step step="3">Seleccionar usuario y confirmar</v-stepper-step>
       <v-stepper-content step="3">
-        <trip-more-info @change="updateMoreInfo($event)"></trip-more-info>
+        <trip-more-info @change="updateMoreInfo($event)" :currentAccount="currentAccount"></trip-more-info>
         <v-flex xs12 sm12>
           <v-text-field
               v-model="reference"

@@ -111,6 +111,58 @@
       <delete-user-dialog :account="userAccount"></delete-user-dialog>
       <add-user-dialog :account="userAccount"></add-user-dialog>
       <edit-user-dialog :account="userAccount"></edit-user-dialog>
+
+
+
+
+
+      <v-card class="ma-2" v-if="accountDiscount != ''">
+        <v-card-title class="blue-grey darken-3 pa-2">
+          <span class="title white--text pa-2">Descuentos</span>
+          <v-spacer></v-spacer>
+        </v-card-title>
+
+        <div>
+
+          <v-toolbar flat color="white">
+            <v-text-field
+              class="mb-4"
+              v-model="search"
+              append-icon="mdi-magnify"
+              label="Buscar"
+              single-line
+              hide-details
+            ></v-text-field>
+            <v-spacer></v-spacer>
+            <v-btn @click="openAddUserDiscountDialog()" color="primary" dark class="mb-2">Añadir descuento</v-btn>
+          </v-toolbar>
+          <v-data-table
+            :headers="discountHeaders"
+            :items="discounts"
+            :search="search"
+            class="elevation-1"
+          >
+            <template slot="items" slot-scope="props">
+              <td>{{ props.item.account.name }}</td>
+              <td class="text-left">{{ props.item.account.document_number }}</td>
+              <td class="justify-center layout px-0">
+                <v-icon
+                        small
+                        @click="deleteUserDiscount(props.item)"
+                >
+                  delete
+                </v-icon>
+              </td>
+            </template>
+
+            <template slot="no-data">
+              <v-btn color="primary" @click="initialize">Actualizar</v-btn>
+            </template>
+          </v-data-table>
+        </div>
+      </v-card>
+      <delete-user-discount-dialog :account="userAccount"></delete-user-discount-dialog>
+      <add-user-discount-dialog :account="userAccount" :discount="accountDiscount"></add-user-discount-dialog>
     </v-flex>
 
   </v-layout>
@@ -118,7 +170,9 @@
 
 <script>
     import AddUserDialog from '~/components/Accounts/AddUserDialog'
-    import DeleteUserDialog from '~/components/Accounts/DeleteUserDialog'
+    import AddUserDiscountDialog from '~/components/Accounts/AddUserDiscountDialog'
+    import DeleteUserDialog from '~/components/Accounts/DeleteUserDiscountDialog'
+    import DeleteUserDiscountDialog from '~/components/Accounts/DeleteUserDialog'
     import EditAccountDialog from '~/components/Accounts/EditAccountDialog'
     import EditUserDialog from '~/components/Accounts/EditUserDialog'
     import { mapGetters } from 'vuex';
@@ -126,6 +180,7 @@
     export default {
         name: "Account",
         data: () => ({
+            search: '',
             dialog: false,
             headers: [
                 { text: 'Nombre', sortable: false, align: 'left', value: 'full_name', width: '50%' },
@@ -133,12 +188,20 @@
                 { text: 'Acciones', value: 'full_name', sortable: false }
 
             ],
+            discountHeaders: [
+              { text: 'Nombre', sortable: false, align: 'left', value: 'name', width: '70%' },
+              { text: 'DNI', value: 'role', width: '20%' },
+              { text: 'Acciones', value: 'name', sortable: false }
+            ],
             users: [],
+            discounts: [],
         }),
         computed: {
             ...mapGetters({
                 userAccount: 'userAccount/userAccount',
                 usersAccount: 'account/usersAccount',
+                accountDiscount: 'account/accountDiscount',
+                usersByDiscount: 'account/usersByDiscount',
             }),
         },
         watch: {
@@ -147,17 +210,27 @@
             },
             usersAccount () {
                 this.initialize();
+            },
+            usersByDiscount () {
+                this.discounts = this.usersByDiscount;
             }
         },
         methods: {
             initialize() {
                 this.users = this.usersAccount;
+                this.discounts = this.usersByDiscount;
             },
             deleteItem(item) {
                 this.$store.commit('account/openDeleteUserDialog', item)
             },
+            deleteUserDiscount(item) {
+              this.$store.commit('account/openDeleteUserDiscountDialog', item)
+            },
             openAddUserDialog() {
               this.$store.commit('account/openAddUserDialog')
+            },
+            openAddUserDiscountDialog() {
+              this.$store.commit('account/openAddUserDiscountDialog')
             },
             openEditAccountDialog(item) {
               this.$store.commit('userAccount/openEditAccountDialog', item)
@@ -179,7 +252,9 @@
           AddUserDialog,
           DeleteUserDialog,
           EditAccountDialog,
-          EditUserDialog
+          EditUserDialog,
+          AddUserDiscountDialog,
+          DeleteUserDiscountDialog,
         },
         filters: {
           roleTranslation(role)
@@ -194,6 +269,9 @@
                 break;
               case "user":
                 translation = "Usuario";
+                break;
+              case "reader":
+                translation = "Pasajero";
                 break;
             }
 

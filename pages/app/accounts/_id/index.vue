@@ -14,12 +14,14 @@
         let _self = this;
         this.getUserAccount(this.$route.params.id).then( (data) => {
           _self.getUsers(data.account.id);
+          _self.getDiscounts(data.account.id);
         });
     },
     methods: {
       ...mapActions({
           getUserAccount: 'userAccount/getUserAccount',
-          getUsers: 'account/getUsers'
+          getUsers: 'account/getUsers',
+          getDiscounts: 'account/getDiscounts'
       }),
     },
   }

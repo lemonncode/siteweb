@@ -12,6 +12,9 @@ export const mutations = {
   },
   addDiscount(state, discount) {
     state.discounts.push(discount)
+  },
+  removeDiscount(state, discount) {
+    state.discounts.slice(discount)
   }
 }
 
@@ -26,6 +29,12 @@ export const actions = {
   },
   async addDiscount({ commit, rootState }, discount) {
     return this.$axios.$post(`/accounts/${rootState.userAccount.currentAccountId}/discounts`, discount)
+      .then(data => {
+        return commit('addDiscount', data)
+      })
+  },
+  async removeDiscount({ commit, rootState }, id) {
+    return this.$axios.$post(`/accounts/${rootState.userAccount.currentAccountId}/discounts/delete`, id)
       .then(data => {
         return commit('addDiscount', data)
       })

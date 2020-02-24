@@ -51,11 +51,12 @@
 </template>
 
 <script>
-    import { mapGetters } from 'vuex'
+    import { mapGetters, mapActions } from 'vuex'
     import PhoneNumberField from '~/components/Fields/PhoneNumberField'
 
     export default {
         name: "TripMoreInfo",
+        props: ['currentAccount'],
         data () {
             return {
                 riderName: null,
@@ -68,7 +69,17 @@
                 usersAccount: 'account/currentUsersAccount',
             }),
         },
+        watch: {
+            currentAccount (val) {
+                if (val) {
+                    this.getCurrentUsers(val.id);
+                }
+            }
+        },
         methods: {
+            ...mapActions({
+                getCurrentUsers: 'account/getCurrentUsers'
+            }),
             updateData () {
                 this.$emit('change', {riderName: this.riderName,  riderPhone: this.riderPhone, user: this.user})
             },

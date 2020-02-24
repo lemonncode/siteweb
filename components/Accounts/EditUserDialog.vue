@@ -32,7 +32,8 @@
         role: '',
         roles: [
             { name: 'Usuario', value: 'user' },
-            { name: 'Administrador', value: 'admin' }
+            { name: 'Administrador', value: 'admin' },
+            { name: 'Pasajero', value: 'reader' }
         ]
       }
     },
