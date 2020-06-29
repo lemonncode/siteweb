@@ -2,7 +2,7 @@
   <v-stepper v-model="currentStep" vertical v-if="currentAccount">
     <v-stepper-step :complete="currentStep > 1" step="1">Seleccione un trayecto</v-stepper-step>
     <v-stepper-content step="1">
-      <!--<place-autocomplete-field
+      <place-autocomplete-field
           icon="trip_origin"
           placeholder="Punto de partida"
           display-geolocation-button
@@ -21,8 +21,7 @@
 
       <v-alert :value="alert" type="error" transition="scale-transition">Trayecto inválido</v-alert>
 
-      <v-btn color="primary" @click.native="handleRoute" :disabled="!isValidStep1">Continuar</v-btn>-->
-      Servicio temporalmente inactivo
+      <v-btn color="primary" @click.native="handleRoute" :disabled="!isValidStep1">Continuar</v-btn>
     </v-stepper-content>
     <v-stepper-step :complete="currentStep > 2" step="2">
         Seleccione una fecha
