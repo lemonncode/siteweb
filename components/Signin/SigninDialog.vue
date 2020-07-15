@@ -25,7 +25,10 @@
                     v-model="password"
                     label="Contraseña"
                     type="password"
-                    prepend-icon="lock">
+                    prepend-icon="lock"
+                    :type="showPassword ? 'text' : 'password'"
+                    :append-icon="showPassword ? 'visibility_off' : 'visibility'"
+                    @click:append="showPassword = !showPassword">
                 </v-text-field>
                 <nuxt-link :to="{ name: 'resetPassword' }" class="secondary--text ml-4">¿Has olvidado la contraseña?</nuxt-link>
               </v-flex>
@@ -57,7 +60,9 @@
     data() {
       return {
         username: null,
-        password: null
+        password: null,
+        showPassword: false,
+        showConfirmPassword: false
       }
     },
     watch: {
