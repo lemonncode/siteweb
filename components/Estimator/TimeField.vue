@@ -12,7 +12,9 @@
     max-width="290px"
     min-width="290px"
   >
-    <v-text-field slot="activator" v-model="time" label="Hora" prepend-icon="access_time" readonly></v-text-field>
+    <template v-slot:activator="{ on, attrs }">
+      <v-text-field v-on="on" v-model="time" label="Hora" prepend-icon="access_time" readonly></v-text-field>
+    </template>
     <v-time-picker v-model="time" format="24hr" scrollable @change="$refs.menu.save(time)" :allowed-hours="allowedHours"></v-time-picker>
   </v-menu>
 </template>

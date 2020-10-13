@@ -11,14 +11,16 @@
     full-width
     min-width="290px"
   >
-    <v-text-field
-      slot="activator"
-      v-model="dateFormatted"
-      label="Día"
-      prepend-icon="event"
-      @blur="date = parseDate(dateFormatted)"
-      readonly
-    ></v-text-field>
+    <template v-slot:activator="{ on, attrs }">
+      <v-text-field
+        v-model="dateFormatted"
+        label="Día"
+        prepend-icon="event"
+        @blur="date = parseDate(dateFormatted)"
+        readonly
+        v-on="on"
+      ></v-text-field>
+    </template>
     <v-date-picker v-model="date" locale="es-ES" scrollable :allowed-dates="allowedDates">
       <v-spacer></v-spacer>
       <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
