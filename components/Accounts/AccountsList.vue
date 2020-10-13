@@ -6,30 +6,30 @@
       </v-card-title>
       <v-list two-line v-if="userAccounts.length > 0">
         <template v-for="(account, index) in userAccounts">
-          <v-list-tile :key="account.account.id" avatar>
-            <v-list-tile-content>
-              <v-list-tile-title>
+          <v-list-item :key="account.account.id" avatar>
+            <v-list-item-content>
+              <v-list-item-title>
                 <span>{{ account.account.customer.name }}</span>
-              </v-list-tile-title>
-              <v-list-tile-sub-title>
+              </v-list-item-title>
+              <v-list-item-sub-title>
                 {{ account.account.discriminator == 'business' ? 'Cuenta de empresa' : 'Cuenta de prescriptor' }}
-              </v-list-tile-sub-title>
-            </v-list-tile-content>
-            <v-list-tile-action v-if="account.role == 'owner' || account.role == 'admin'">
-              <v-btn flat icon @click="viewAccount(account.id)">
+              </v-list-item-sub-title>
+            </v-list-item-content>
+            <v-list-item-action v-if="account.role == 'owner' || account.role == 'admin'">
+              <v-btn text icon @click="viewAccount(account.id)">
                 <v-icon>settings</v-icon>
               </v-btn>
-            </v-list-tile-action>
-          </v-list-tile>
+            </v-list-item-action>
+          </v-list-item>
           <v-divider v-if="index + 1 < userAccounts.length" :key="index"></v-divider>
         </template>
       </v-list>
       <v-list v-else>
-        <v-list-tile>
-          <v-list-tile-content>
+        <v-list-item>
+          <v-list-item-content>
             No tienes empresas que administrar.
-          </v-list-tile-content>
-        </v-list-tile>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
     </v-card>
     <v-fab-transition>

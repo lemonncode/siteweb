@@ -1,12 +1,12 @@
 <template>
-  <v-snackbar 
+  <v-snackbar
     v-model="show"
     :color="color"
     :bottom="true"
     :left="true"
   >
     {{ message }}
-    <v-btn flat color="white" @click.native="show = false">Cerrar</v-btn>
+    <v-btn text color="white" @click.native="show = false">Cerrar</v-btn>
   </v-snackbar>
 </template>
 

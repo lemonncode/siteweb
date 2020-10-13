@@ -16,8 +16,8 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn flat @click.native="closeDialog">Cancelar</v-btn>
-        <v-btn color="primary" flat @click.native="editUser">Editar</v-btn>
+        <v-btn text @click.native="closeDialog">Cancelar</v-btn>
+        <v-btn color="primary" text @click.native="editUser">Editar</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>

@@ -34,7 +34,7 @@
       <date-field v-if="serviceType != 'asap'" :value="date" @dateUpdated="date = $event"></date-field>
       <time-field v-if="serviceType != 'asap'" :value="time" :date="date" @timeUpdated="time = $event"></time-field>
       <v-btn color="primary" @click="priceCalculator" @click.native="currentStep = 3" :disabled="!isValidStep2">Continuar</v-btn>
-      <v-btn flat @click.native="currentStep = 1">Cancelar</v-btn>
+      <v-btn text @click.native="currentStep = 1">Cancelar</v-btn>
     </v-stepper-content>
 
     <div v-if="currentAccount != null && currentAccount.discriminator == 'affiliate'">
@@ -55,14 +55,14 @@
                              indeterminate
                              color="primary"
         ></v-progress-circular>
-        <v-btn flat @click.native="currentStep = 2">Cancelar</v-btn>
+        <v-btn text @click.native="currentStep = 2">Cancelar</v-btn>
       </v-stepper-content>
     </div>
-    <div v-else-if="currentAccount != null && currentAccount.discriminator == 'business' && (userAccount.role == 'owner' || userAccount.role == 'admin')">
+    <div v-else-if="currentAccount != null && currentAccount.discriminator == 'business' && (userAccount.role == 'owner' || userAccount.role == 'admin' || userAccount.role == 'manager')">
       <v-stepper-step step="3">Seleccionar usuario y confirmar</v-stepper-step>
       <v-stepper-content step="3">
         <trip-more-info @change="updateMoreInfo($event)" :currentAccount="currentAccount"></trip-more-info>
-        <v-flex xs12 sm12>
+        <v-flex xs12 sm12 class="mt-3">
           <v-text-field
               v-model="reference"
               type="text"
@@ -70,27 +70,28 @@
               required
           ></v-text-field>
         </v-flex>
-        <v-textarea v-model="notes" label="Comentario" outline></v-textarea>
-        <v-card-title>El precio de la reserva es de {{ priceFormat(price) }} €</v-card-title>
+        <v-textarea
+          v-model="notes" label="Comentario" outline></v-textarea>
+        <v-card-text>El precio de la reserva es de {{ priceFormat(price) }} €</v-card-text>
         <v-btn v-if="!loading" color="primary" @click.native="complete">{{ getButtonLabel() }}</v-btn>
         <v-progress-circular v-if="loading"
                              indeterminate
                              color="primary"
         ></v-progress-circular>
-        <v-btn flat @click.native="currentStep = 2">Cancelar</v-btn>
+        <v-btn text @click.native="currentStep = 2">Cancelar</v-btn>
       </v-stepper-content>
     </div>
     <div v-else>
       <v-stepper-step step="3">Confirmar la reserva</v-stepper-step>
       <v-stepper-content step="3">
         <v-textarea v-model="notes" label="Comentario" outline></v-textarea>
-          <v-card-title>El precio de la reserva es de {{ priceFormat(price) }} €</v-card-title>
+          <v-card-text>El precio de la reserva es de {{ priceFormat(price) }} €</v-card-text>
           <v-btn v-if="!loading" color="primary" @click.native="complete">{{ getButtonLabel() }}</v-btn>
           <v-progress-circular v-if="loading"
               indeterminate
               color="primary"
           ></v-progress-circular>
-          <v-btn flat @click.native="currentStep = 2">Cancelar</v-btn>
+          <v-btn text @click.native="currentStep = 2">Cancelar</v-btn>
       </v-stepper-content>
     </div>
 

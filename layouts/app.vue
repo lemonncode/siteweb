@@ -11,10 +11,9 @@
     </v-system-bar>
     <Snackbar />
     <v-navigation-drawer
-      fixed
-      :clipped="$vuetify.breakpoint.mdAndUp"
       app
       v-model="drawer"
+      :clipped="$vuetify.breakpoint.lgAndUp"
     >
       <v-list dense>
         <template v-for="item in items">
@@ -46,101 +45,107 @@
             :prepend-icon="item.model ? item.icon : item['icon-alt']"
             append-icon=""
           >
-            <v-list-tile slot="activator">
-              <v-list-tile-content>
-                <v-list-tile-title>
+            <v-list-item v-slot:activator="{ on }">
+              <v-list-item-content v-on="on">
+                <v-list-item-title>
                   {{ item.text }}
-                </v-list-tile-title>
-              </v-list-tile-content>
-            </v-list-tile>
-            <v-list-tile
+                </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item
               v-for="(child, i) in item.children"
               :key="i"
             >
-              <v-list-tile-action v-if="child.icon">
+              <v-list-item-action v-if="child.icon">
                 <v-icon>{{ child.icon }}</v-icon>
-              </v-list-tile-action>
-              <v-list-tile-content>
-                <v-list-tile-title>
+              </v-list-item-action>
+              <v-list-item-content>
+                <v-list-item-title>
                   {{ child.text }}
-                </v-list-tile-title>
-              </v-list-tile-content>
-            </v-list-tile>
+                </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
           </v-list-group>
-          <v-list-tile :key="item.text" :to="item.to" router>
-            <v-list-tile-action>
+          <v-list-item :key="item.text" :to="item.to" router exact>
+            <v-list-item-action>
               <v-icon>{{ item.icon }}</v-icon>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>
                 {{ item.text }}
-              </v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
+              </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
         </template>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar
+    <v-app-bar
+      :clipped-left="$vuetify.breakpoint.lgAndUp"
       color="secondary"
       dark
       app
-      :clipped-left="$vuetify.breakpoint.mdAndUp"
-      fixed
     >
       <v-toolbar-title class="ml-0 pl-3">
-        <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
         <nuxt-link :to="{ name: 'index' }">
           <v-avatar size="32px" >
             <img src="/logo.svg" alt="Auro"/>
           </v-avatar>
-        <span class="hidden-sm-and-down pl-2">{{ title }}</span>
+          <span class="hidden-sm-and-down pl-2">{{ title }}</span>
         </nuxt-link>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn class="hidden-sm-and-down" v-if="currentAccount != null && currentAccount.discriminator != 'personal'" flat>{{ $auth.user.first_name }} - {{ currentAccount.account.name }} </v-btn>
-      <v-btn class="hidden-sm-and-down" v-else flat>{{ $auth.user.first_name }} </v-btn>
-      <v-menu offset-y>
-        <v-btn slot="activator" icon>
-          <v-icon>more_vert</v-icon>
-        </v-btn>
+      <v-btn text v-if="currentAccount != null && currentAccount.discriminator != 'personal'">{{ $auth.user.first_name }} - {{ currentAccount.account.name }} </v-btn>
+      <v-btn text v-else>{{ $auth.user.first_name }} </v-btn>
+      <v-menu
+        offset-y
+        left
+        bottom
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            icon
+            v-bind="attrs"
+            v-on="on"
+          >
+            <v-icon>mdi-dots-vertical</v-icon>
+          </v-btn>
+        </template>
+
         <v-list>
-          <v-list-tile @click="setAccount($auth.user.account)">
-            <v-list-tile-action>
+          <v-list-item @click="setAccount($auth.user.account)">
+            <v-list-item-action>
               <v-icon color="primary">account_box</v-icon>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title v-bind:class="{ 'red--text': isCurrent($auth.user.account) }">Cuenta personal</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title v-bind:class="{ 'red--text': isCurrent($auth.user.account) }">Cuenta personal</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
           <v-divider inset></v-divider>
 
-          <v-list-tile v-for="account in userAccounts" :key="account.id" @click="setAccount(account)">
-            <v-list-tile-action>
+          <v-list-item v-for="account in userAccounts" :key="account.id" @click="setAccount(account)">
+            <v-list-item-action>
               <v-icon color="primary">assessment</v-icon>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title v-bind:class="{ 'red--text': isCurrent(account) }">{{ account.account.name }}</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title v-bind:class="{ 'red--text': isCurrent(account) }">{{ account.account.name }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
           <v-divider inset></v-divider>
-          <v-list-tile @click="$auth.logout()">
-            <v-list-tile-action>
+          <v-list-item @click="$auth.logout()">
+            <v-list-item-action>
               <v-icon color="primary">exit_to_app</v-icon>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title >Cerrar sesión</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title >Cerrar sesión</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
         </v-list>
       </v-menu>
-    </v-toolbar>
-    <v-content>
-      <nuxt-child>
-        <v-container fluid>
-          <router-view></router-view>
-        </v-container>
-      </nuxt-child>
-    </v-content>
+    </v-app-bar>
+
+    <v-main>
+      <nuxt />
+    </v-main>
   </v-app>
 </template>
 

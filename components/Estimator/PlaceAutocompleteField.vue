@@ -20,16 +20,16 @@
     >
       <template slot="item" slot-scope="data">
         <template v-if="typeof data.item !== 'object'">
-          <v-list-tile-content v-text="data.item"></v-list-tile-content>
+          <v-list-item-content v-text="data.item"></v-list-item-content>
         </template>
         <template v-else>
-          <v-list-tile-avatar :color="avatars[data.item.group]['color']" size="30">
+          <v-list-item-avatar :color="avatars[data.item.group]['color']" size="30">
             <v-icon small dark>{{ avatars[data.item.group]['icon'] }}</v-icon>
-          </v-list-tile-avatar>
-          <v-list-tile-content>
-            <v-list-tile-title v-if="data.item.group == 'route'" v-html="data.item.displayDescription"></v-list-tile-title>
-            <v-list-tile-title v-else v-html="data.item.description"></v-list-tile-title>
-          </v-list-tile-content>
+          </v-list-item-avatar>
+          <v-list-item-content>
+            <v-list-item-title v-if="data.item.group == 'route'" v-html="data.item.displayDescription"></v-list-item-title>
+            <v-list-item-title v-else v-html="data.item.description"></v-list-item-title>
+          </v-list-item-content>
         </template>
       </template>
       <template slot="append" v-if="displayGeolocationButton">

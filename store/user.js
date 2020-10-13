@@ -1,5 +1,3 @@
-import VueNotifications from 'vue-notifications'
-
 export const state = () => ({
   validated: false,
   emailValidated: false,

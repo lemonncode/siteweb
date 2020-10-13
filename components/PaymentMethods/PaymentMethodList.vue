@@ -7,44 +7,44 @@
 
       <v-list two-line v-if="paymentMethods.length > 0">
         <template v-for="(paymentMethod, index) in paymentMethods">
-          <v-list-tile avatar>
-            <v-list-tile-avatar :tile=true size="40x25">
+          <v-list-item avatar>
+            <v-list-item-avatar :tile=true size="40x25">
               <card-image :brand="paymentMethod.card.brand"></card-image>
-            </v-list-tile-avatar>
+            </v-list-item-avatar>
 
-            <v-list-tile-content>
-              <v-list-tile-title>
+            <v-list-item-content>
+              <v-list-item-title>
                 <strong>{{ paymentMethod.card.brand }}</strong> <span class="gray"> que termina en {{ paymentMethod.card.lastFourDigits }}</span>
-              </v-list-tile-title>
-              <v-list-tile-sub-title>
+              </v-list-item-title>
+              <v-list-item-sub-title>
                 Fecha caducidad: {{ paymentMethod.card.expirationMonth }}/{{ paymentMethod.card.expirationYear }}
-              </v-list-tile-sub-title>
-            </v-list-tile-content>
+              </v-list-item-sub-title>
+            </v-list-item-content>
             <template v-if="isAuthorized()">
-              <v-list-tile-action v-if="!paymentMethod.default">
+              <v-list-item-action v-if="!paymentMethod.default">
                 <a v-if="$vuetify.breakpoint.mdAndUp" @click="updateDefaultPaymentMethod(paymentMethod)">
                   definir como predeterminada
                 </a>
-                <v-btn v-else flat icon color="green" @click="updateDefaultPaymentMethod(paymentMethod)">
+                <v-btn v-else text icon color="green" @click="updateDefaultPaymentMethod(paymentMethod)">
                   <v-icon>check</v-icon>
                 </v-btn>
-              </v-list-tile-action>
-              <v-list-tile-action>
-                <v-btn flat icon color="red" @click="removePaymentMethod(paymentMethod)">
+              </v-list-item-action>
+              <v-list-item-action>
+                <v-btn text icon color="red" @click="removePaymentMethod(paymentMethod)">
                   <v-icon>delete</v-icon>
                 </v-btn>
-              </v-list-tile-action>
+              </v-list-item-action>
             </template>
-          </v-list-tile>
+          </v-list-item>
           <v-divider v-if="index + 1 < paymentMethods.length" :key="index"></v-divider>
         </template>
       </v-list>
       <v-list v-else>
-        <v-list-tile>
-          <v-list-tile-content>
+        <v-list-item>
+          <v-list-item-content>
             No has añadido una tarjeta todavía.
-          </v-list-tile-content>
-        </v-list-tile>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
     </v-card>
     <add-payment-method-dialog v-if="isAuthorized()"></add-payment-method-dialog>

@@ -40,7 +40,7 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn flat @click="cancel">Cancelar</v-btn>
+        <v-btn text @click="cancel">Cancelar</v-btn>
         <v-btn color="primary" @click="complete" :disabled="$v.$invalid">Añadir</v-btn>
       </v-card-actions>
     </v-card>

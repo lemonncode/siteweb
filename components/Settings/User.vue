@@ -79,23 +79,22 @@
         <v-btn color="secondary" @click="submit">Modificar</v-btn>
       </v-card-actions>
       <v-card class="mt-4">
-        <v-toolbar color="blue-grey darken-3" dark>
+        <v-app-bar color="blue-grey darken-3" dark>
           <v-toolbar-title>Lugares favoritos</v-toolbar-title>
           <v-spacer></v-spacer>
-        </v-toolbar>
+        </v-app-bar>
         <v-list two-line v-if="places.length > 0">
           <template v-for="(item, index) in places">
-            <v-list-tile
+            <v-list-item
                 :key="item.name"
-                avatar
                 ripple
             >
-              <v-list-tile-content>
-                <v-list-tile-title><strong>{{ item.name }}</strong></v-list-tile-title>
-                <v-list-tile-sub-title class="text--secondary">{{ item.location.formatted_address }}</v-list-tile-sub-title>
-              </v-list-tile-content>
+              <v-list-item-content>
+                <v-list-item-title><strong>{{ item.name }}</strong></v-list-item-title>
+                <v-list-item-subtitle class="text--secondary">{{ item.location.formatted_address }}</v-list-item-subtitle>
+              </v-list-item-content>
 
-              <v-list-tile-action>
+              <v-list-item-action>
                 <v-icon
                     small
                     color="#ed6363"
@@ -103,9 +102,9 @@
                 >
                   delete
                 </v-icon>
-              </v-list-tile-action>
+              </v-list-item-action>
 
-            </v-list-tile>
+            </v-list-item>
             <v-divider
                 v-if="index + 1 < places.length"
                 :key="index"
@@ -113,11 +112,11 @@
           </template>
         </v-list>
         <v-list v-else>
-          <v-list-tile>
-            <v-list-tile-content>
+          <v-list-item>
+            <v-list-item-content>
               No has añadido ningún favorito todavía.
-            </v-list-tile-content>
-          </v-list-tile>
+            </v-list-item-content>
+          </v-list-item>
         </v-list>
         <v-fab-transition>
           <v-btn

@@ -1,13 +1,9 @@
+import colors from 'vuetify/es5/util/colors'
 const pkg = require('./package')
 const nodeExternals = require('webpack-node-externals')
-require('dotenv').config()
 
-module.exports = {
-  mode: 'universal',
-
-  /*
-  ** Headers of the page
-  */
+export default {
+  // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     title: 'Auro Travel | Auro New Transport Concept',
     meta: [
@@ -26,42 +22,46 @@ module.exports = {
   },
 
   /*
-  ** Customize the progress-bar color
-  */
+   ** Customize the progress-bar color
+   */
   loading: {
     name: 'chasing-dots',
     color: '#ff5638',
     //color: '#000000'
     background: 'white',
     height: '4px'
- },  
+  },
 
   /*
-  ** Global CSS
-  */
+   ** Global CSS
+   */
   css: [
-    'vuetify/src/stylus/main.styl',
-    'vue-tel-input/dist/vue-tel-input.css',
     '~/assets/styles/main.styl'
   ],
 
-  /*
-  ** Plugins to load before mounting the App
-  */
+  // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
     { src: '@plugins/vue-notifications.js', ssr: false },
-    '@plugins/vuetify',
     '@plugins/map',
     '@plugins/firebase',
     { src: '@plugins/telephone', ssr: false },
     '@plugins/login',
     '@plugins/vuelidate',
-    { src: '~plugins/ga.js', ssr: false }
+    { src: '~plugins/ga.js', ssr: false },
+    '~/plugins/api',
+    { src: '~plugins/vue-cookie-law', ssr: false }
   ],
 
-  /*
-  ** Nuxt.js modules
-  */
+  // Auto import components (https://go.nuxtjs.dev/config-components)
+  components: true,
+
+  // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
+  buildModules: [
+    // https://go.nuxtjs.dev/vuetify
+    '@nuxtjs/vuetify',
+  ],
+
+  // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
     // Doc: https://github.com/nuxt-community/axios-module#usage
     '@nuxtjs/axios',
@@ -72,16 +72,13 @@ module.exports = {
   ],
 
   /*
-  ** Axios module configuration
-  */
+   ** Axios module configuration
+   */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
     baseURL: process.env.API_URL
   },
 
-  /*
-   ** Auth module configuration
-   */
   auth: {
     // See https://auth.nuxtjs.org/options.html
     redirect: {
@@ -108,9 +105,26 @@ module.exports = {
     position: 'bottom-left'
   },
 
-  /*
-  ** Build configuration
-  */
+  // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
+  vuetify: {
+    customVariables: ['~/assets/variables.scss'],
+    theme: {
+      dark: false,
+      themes: {
+        light: {
+          primary: '#003545',
+          accent: colors.grey.darken3,
+          secondary: '#ed6363',
+          info: colors.teal.lighten1,
+          warning: colors.amber.base,
+          error: colors.deepOrange.accent4,
+          success: colors.green.accent3
+        }
+      }
+    }
+  },
+
+  // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
     transpile: [/^vue2-google-maps($|\/)/],
     vendor: ['axios', 'vue-notifications'],
@@ -119,13 +133,6 @@ module.exports = {
     ** You can extend webpack config here
     */
     extend(config, ctx) {
-      if (ctx.isServer) {
-        config.externals = [
-          nodeExternals({
-            whitelist: [/^vuetify/]
-          })
-        ]
-      }
     }
   }
 }

@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialog" persistent max-width="800px">
     <template v-slot:activator="{ on }">
-      <v-btn flat v-on="on">Registrarse</v-btn>
+      <v-btn text v-on="on">Registrarse</v-btn>
     </template>
     <v-card>
       <v-card-title class="secondary white--text">
@@ -40,7 +40,7 @@
   export default {
     data() {
       return {
-        currentStep: 0,
+        currentStep: 1,
         confirmationResult: null,
         appVerifier : null,
         user: {

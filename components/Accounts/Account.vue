@@ -7,63 +7,63 @@
         </v-card-title>
 
         <v-list>
-          <v-list-tile>
-            <v-list-tile-action>
+          <v-list-item>
+            <v-list-item-action>
               <v-icon>account_balance_wallet</v-icon>
-            </v-list-tile-action>
+            </v-list-item-action>
 
-            <v-list-tile-content>
-              <v-list-tile-title>{{ userAccount.account.customer.identification_number }}</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
+            <v-list-item-content>
+              <v-list-item-title>{{ userAccount.account.customer.identification_number }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
 
           <v-divider inset></v-divider>
 
-          <v-list-tile>
-            <v-list-tile-action>
+          <v-list-item>
+            <v-list-item-action>
               <v-icon>mail</v-icon>
-            </v-list-tile-action>
+            </v-list-item-action>
 
-            <v-list-tile-content>
-              <v-list-tile-title>{{ userAccount.account.customer.email }}</v-list-tile-title>
-            </v-list-tile-content>
+            <v-list-item-content>
+              <v-list-item-title>{{ userAccount.account.customer.email }}</v-list-item-title>
+            </v-list-item-content>
 
-            <v-list-tile-action>
+            <v-list-item-action>
               <v-icon @click="openEditAccountDialog">edit</v-icon>
-            </v-list-tile-action>
-          </v-list-tile>
+            </v-list-item-action>
+          </v-list-item>
 
           <v-divider inset></v-divider>
 
-          <v-list-tile>
-            <v-list-tile-action>
+          <v-list-item>
+            <v-list-item-action>
               <v-icon>phone</v-icon>
-            </v-list-tile-action>
+            </v-list-item-action>
 
-            <v-list-tile-content>
-              <v-list-tile-title>{{ userAccount.account.customer.phone_number }}</v-list-tile-title>
-            </v-list-tile-content>
+            <v-list-item-content>
+              <v-list-item-title>{{ userAccount.account.customer.phone_number }}</v-list-item-title>
+            </v-list-item-content>
 
-            <v-list-tile-action>
+            <v-list-item-action>
               <v-icon @click="openEditAccountDialog">edit</v-icon>
-            </v-list-tile-action>
-          </v-list-tile>
+            </v-list-item-action>
+          </v-list-item>
 
           <v-divider inset></v-divider>
 
-          <v-list-tile>
-            <v-list-tile-action>
+          <v-list-item>
+            <v-list-item-action>
               <v-icon>location_on</v-icon>
-            </v-list-tile-action>
+            </v-list-item-action>
 
-            <v-list-tile-content>
-              <v-list-tile-title v-if="userAccount.account.customer.billing_address">{{ userAccount.account.customer.billing_address.street }}, {{ userAccount.account.customer.billing_address.zip_code }}, {{ userAccount.account.customer.billing_address.city }}</v-list-tile-title>
-            </v-list-tile-content>
+            <v-list-item-content>
+              <v-list-item-title v-if="userAccount.account.customer.billing_address">{{ userAccount.account.customer.billing_address.street }}, {{ userAccount.account.customer.billing_address.zip_code }}, {{ userAccount.account.customer.billing_address.city }}</v-list-item-title>
+            </v-list-item-content>
 
-            <v-list-tile-action>
+            <v-list-item-action>
               <v-icon @click="openEditAccountDialog">edit</v-icon>
-            </v-list-tile-action>
-          </v-list-tile>
+            </v-list-item-action>
+          </v-list-item>
         </v-list>
       </v-card>
       <edit-account-dialog :account="userAccount"></edit-account-dialog>
@@ -72,10 +72,10 @@
           <span class="title white--text pa-2">Usuarios</span>
         </v-card-title>
         <div>
-          <v-toolbar flat color="white">
+          <v-app-bar text color="white">
             <v-spacer></v-spacer>
             <v-btn @click="openAddUserDialog()" color="primary" dark class="mb-2">Añadir Usuario</v-btn>
-          </v-toolbar>
+          </v-app-bar>
           <v-data-table
               :headers="headers"
               :items="users"
@@ -124,7 +124,7 @@
 
         <div>
 
-          <v-toolbar flat color="white">
+          <v-app-bar text color="white">
             <v-text-field
               class="mb-4"
               v-model="search"
@@ -135,7 +135,7 @@
             ></v-text-field>
             <v-spacer></v-spacer>
             <v-btn @click="openAddUserDiscountDialog()" color="primary" dark class="mb-2">Añadir descuento</v-btn>
-          </v-toolbar>
+          </v-app-bar>
           <v-data-table
             :headers="discountHeaders"
             :items="discounts"
@@ -270,8 +270,8 @@
               case "user":
                 translation = "Usuario";
                 break;
-              case "reader":
-                translation = "Pasajero";
+              case "manager":
+                translation = "Manager";
                 break;
             }
 

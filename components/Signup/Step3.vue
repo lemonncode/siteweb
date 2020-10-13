@@ -15,7 +15,7 @@
     </v-card>
 
     <v-btn @click="cancel">Atrás</v-btn>
-    <v-btn color="primary" @click="complete" :disabled="validationCode == null || validationCode.length != 6">Continuar</v-btn>
+    <v-btn class="ml-3" color="primary" @click="complete" :disabled="validationCode == null || validationCode.length != 6">Continuar</v-btn>
   </v-stepper-content>
 </template>
 

@@ -1,6 +1,7 @@
 <template>
   <v-card style="width:400px" v-if="trip">
-    <v-card-title class=" lighten-2">
+    <v-card-text>
+      <v-card-title class=" lighten-2">
       <v-layout row wrap>
         <v-flex xs12>
           <div class="title gray--text text-md-left">
@@ -14,6 +15,7 @@
         </v-flex>
       </v-layout>
     </v-card-title>
+    </v-card-text>
     <v-tabs
         centered
         text
@@ -37,93 +39,93 @@
           :value="'tab-' + number"
           :key="number"
       >
-        <v-card flat v-if="number == 1">
-          <v-list-tile>
-            <v-list-tile-action>
+        <v-card text v-if="number == 1">
+          <v-list-item>
+            <v-list-item-action>
               <v-icon>trip_origin</v-icon>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title>{{ trip.origin_location ? trip.origin_location.formatted_address : trip.origin.autocomplete }}</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile>
-            <v-list-tile-action>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>{{ trip.origin_location ? trip.origin_location.formatted_address : trip.origin.autocomplete }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-action>
               <v-icon>pin_drop</v-icon>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title>{{ trip.destination_location ? trip.destination_location.formatted_address : trip.destination.autocomplete }}</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile>
-            <v-list-tile-action>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>{{ trip.destination_location ? trip.destination_location.formatted_address : trip.destination.autocomplete }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-action>
               <v-icon>credit_card</v-icon>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title>{{ trip.price }} €</v-list-tile-title>
-            </v-list-tile-content>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>{{ trip.price }} €</v-list-item-title>
+            </v-list-item-content>
             <v-btn v-if="trip.status !== 'done' && trip.status !== 'finalized'
-                && trip.status !== 'canceled' && trip.status !== 'pickedup'" @click="cancelTrip(trip)" round small color="#ed6363" dark>Cancelar</v-btn>
-          </v-list-tile>
+                && trip.status !== 'canceled' && trip.status !== 'pickedup'" @click="cancelTrip(trip)" rounded small color="#ed6363" dark>Cancelar</v-btn>
+          </v-list-item>
         </v-card>
-        <v-card flat v-if="number == 2">
-          <v-list-tile v-if="trip.vehicle_plate">
-            <v-list-tile-action>
+        <v-card text v-if="number == 2">
+          <v-list-item v-if="trip.vehicle_plate">
+            <v-list-item-action>
               <v-icon>local_taxi</v-icon>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title>{{ trip.vehicle_plate }}</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile v-if="trip.vehicle_model">
-            <v-list-tile-action>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>{{ trip.vehicle_plate }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item v-if="trip.vehicle_model">
+            <v-list-item-action>
               <v-icon>settings_overscan</v-icon>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title v-if="trip.vehicle_model">{{ trip.vehicle_model }}</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile v-if="trip.vehicle_color">
-            <v-list-tile-action>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title v-if="trip.vehicle_model">{{ trip.vehicle_model }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item v-if="trip.vehicle_color">
+            <v-list-item-action>
               <v-icon>invert_colors</v-icon>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title>{{ trip.vehicle_color }}</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile v-if="!trip.vehicle_plate">
-            <v-list-tile-action>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>{{ trip.vehicle_color }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item v-if="!trip.vehicle_plate">
+            <v-list-item-action>
               <v-icon>person_outline</v-icon>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title>Todavía no tiene vehículo asignado</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Todavía no tiene vehículo asignado</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
         </v-card>
-        <v-card flat v-if="number == 3">
-          <v-list-tile v-if="trip.driver_name">
-            <v-list-tile-action>
+        <v-card text v-if="number == 3">
+          <v-list-item v-if="trip.driver_name">
+            <v-list-item-action>
               <v-icon>person_outline</v-icon>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title>{{ trip.driver_name }}</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile v-if="trip.phone_number">
-            <v-list-tile-action>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>{{ trip.driver_name }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item v-if="trip.phone_number">
+            <v-list-item-action>
               <v-icon>phone_iphone</v-icon>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title><a :href="'tel:' + trip.phone_number" class="blue--text">{{ trip.phone_number }}</a></v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile v-if="!trip.driver_name">
-            <v-list-tile-action>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title><a :href="'tel:' + trip.phone_number" class="blue--text">{{ trip.phone_number }}</a></v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item v-if="!trip.driver_name">
+            <v-list-item-action>
               <v-icon>person_outline</v-icon>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title>Todavía no tiene conductor asignado</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Todavía no tiene conductor asignado</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
         </v-card>
       </v-tab-item>
     </v-tabs>
@@ -144,7 +146,7 @@
 
           <v-btn
               color="#ed6363"
-              flat="flat"
+              text="text"
               @click="cancelTrip(trip)"
           >
             Cancelar
@@ -152,7 +154,7 @@
 
           <v-btn
               color="#ed6363"
-              flat="flat"
+              text="text"
               @click="reassignTrip(trip)"
           >
             Volver a intentar

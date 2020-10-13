@@ -1,18 +1,19 @@
 <template>
-  <v-flex xs12 sm12 d-flex mb-1>
     <v-tabs
-        text
+      fixed-tabs
     >
+      <v-tabs-slider color="#ed6363"></v-tabs-slider>
+
       <v-tab href="#tab-1" class="caption" @click="resetValues">
         Para mí
       </v-tab>
 
       <v-tab href="#tab-2" class="caption" @click="resetValues">
-        Otro usuario
+        Usuario
       </v-tab>
 
       <v-tab href="#tab-3" class="caption" @click="resetValues">
-        Otro pasajero
+        Pasajero
       </v-tab>
 
       <v-tab-item
@@ -20,10 +21,10 @@
           :value="'tab-' + number"
           :key="number"
       >
-        <v-card flat v-if="number == 1">
+        <v-card text v-if="number == 1">
         </v-card>
         <v-card flat v-if="number == 2">
-          <v-flex xs12 sm12 d-flex mt-2>
+
             <v-select
                 v-model="user"
                 :items="usersAccount"
@@ -32,9 +33,8 @@
                 label="Usuarios"
                 @change="updateData"
             ></v-select>
-          </v-flex>
         </v-card>
-        <v-card flat v-if="number == 3">
+        <v-card flat text v-if="number == 3">
           <v-flex xs12 sm12>
             <v-text-field
                 v-model="riderName"
@@ -47,7 +47,6 @@
         </v-card>
       </v-tab-item>
     </v-tabs>
-  </v-flex>
 </template>
 
 <script>
@@ -57,7 +56,12 @@
     export default {
         name: "TripMoreInfo",
         props: ['currentAccount'],
-        data () {
+        created() {
+          if (this.current_account.discriminator !== 'personal') {
+            this.getCurrentUsers(this.current_account.account.id)
+          }
+        },
+      data () {
             return {
                 riderName: null,
                 riderPhone: null,
@@ -67,6 +71,7 @@
         computed: {
             ...mapGetters({
                 usersAccount: 'account/currentUsersAccount',
+              current_account: 'userAccount/currentAccount'
             }),
         },
         watch: {
@@ -78,7 +83,7 @@
         },
         methods: {
             ...mapActions({
-                getCurrentUsers: 'account/getCurrentUsers'
+              getCurrentUsers: 'account/getCurrentUsers'
             }),
             updateData () {
                 this.$emit('change', {riderName: this.riderName,  riderPhone: this.riderPhone, user: this.user})

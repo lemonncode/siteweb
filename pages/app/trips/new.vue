@@ -15,7 +15,7 @@
       @click="center=m.position"
     />
 
-    <v-container slot="visible" fluid v-if="mapLoaded">
+    <v-container slot="visible" container--fluid v-if="mapLoaded">
       <fare-estimator v-if="$vuetify.breakpoint.mdAndUp" style="width:400px" @fareEstimatorRouteSet="handleNewRoute($event)"></fare-estimator>
       <fare-estimator v-if="$vuetify.breakpoint.mdAndDown" style="width:100%" @fareEstimatorRouteSet="handleNewRoute($event)"></fare-estimator>
     </v-container>

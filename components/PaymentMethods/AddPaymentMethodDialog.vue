@@ -35,8 +35,8 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn flat @click="cancel">Cancelar</v-btn>
-        <v-btn v-if="!loading" color="primary" flat @click.native="addCard" :disabled="!complete">Añadir tarjeta
+        <v-btn text @click="cancel">Cancelar</v-btn>
+        <v-btn v-if="!loading" color="primary" text @click.native="addCard" :disabled="!complete">Añadir tarjeta
         </v-btn>
         <v-progress-circular ml-4 v-if="loading"
                              indeterminate

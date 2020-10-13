@@ -40,7 +40,7 @@
       </v-flex>
       <v-flex>
         <v-btn @click="cancel">Atrás</v-btn>
-        <v-btn color="primary" @click="complete" :disabled="$v.$invalid">Continuar</v-btn>
+        <v-btn class="ml-3" color="primary" @click="complete" :disabled="$v.$invalid">Continuar</v-btn>
       </v-flex>
     </v-layout>
   </v-stepper-content>

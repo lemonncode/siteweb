@@ -13,7 +13,7 @@
     </v-card>
     <div id="recaptcha-container"></div>
     <v-btn @click="cancel">Atrás</v-btn>
-    <v-btn id="phone-validation" color="primary" @click="complete" :disabled="phoneNumber == null">Continuar</v-btn>
+    <v-btn class="ml-3" id="phone-validation" color="primary" @click="complete" :disabled="phoneNumber == null">Continuar</v-btn>
   </v-stepper-content>
 </template>
 

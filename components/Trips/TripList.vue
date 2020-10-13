@@ -1,167 +1,297 @@
 <template>
   <v-card>
     <v-card-title>
-      <h3 class="headline mb-0">Viajes</h3>
-      <v-spacer></v-spacer>
-      <v-text-field
-        v-model="search"
-        append-icon="search"
-        label="Búsqueda"
-        single-line
-        hide-details
-      ></v-text-field>
-      <v-spacer></v-spacer>
-      <v-btn color="#ed6363" class="white--text" @click="getCsv()">Descargar</v-btn>
+      <h3 class="mr-5 headline mb-0">Viajes</h3>
+      <v-flex xs6 sm2 d-flex mt-2 ml-5 v-if="this.current_account.discriminator !== 'personal' && this.current_account.role !== 'user' && this.current_account.role !== 'manager'">
+        <v-select
+          v-model="user"
+          :items="usersAccount"
+          item-text="user.full_name"
+          item-value="user.id"
+          label="Usuario"
+          @change="loadItems"
+          clearable
+        ></v-select>
+      </v-flex>
+      <v-flex xs6 sm2 d-flex mt-2 ml-5>
+        <v-select
+          v-model="selectedMonth"
+          :items="selectMonth"
+          label="Fecha"
+        ></v-select>
+      </v-flex>
+      <v-flex xs12 sm3 d-flex mt-2 ml-5>
+        <v-menu
+          ref="menu"
+          v-model="menu"
+          :close-on-content-click="false"
+          :return-value.sync="dates"
+          transition="scale-transition"
+          offset-y
+          min-width="290px"
+          v-if="selectedMonth === 'custom'"
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-text-field
+              v-model="dates"
+              label="Rango"
+              prepend-icon="mdi-calendar"
+              readonly
+              v-bind="attrs"
+              v-on="on"
+            ></v-text-field>
+          </template>
+          <v-date-picker
+            v-model="dates"
+            range
+            :first-day-of-week="1"
+            locale="es"
+          >
+            <v-btn
+              text color="primary" @click="menu = false">Cancel
+            </v-btn>
+            <v-btn
+              text color="primary" @click="$refs.menu.save(dates)">OK
+            </v-btn>
+          </v-date-picker>
+      </v-menu>
+      </v-flex>
+      <v-flex xs12 sm3 mt-2 ml-5 class="text-right">
+        <v-btn color="#ed6363" class="white--text" @click="getCsv()">Descargar</v-btn>
+      </v-flex>
     </v-card-title>
     <v-data-table
       :headers="headers"
-      :items="trips"
-      :loading="loading"
+      :items="items"
+      :server-items-length="totalItems"
+      :footer-props="{ itemsPerPageOptions }"
       :search="search"
-      :pagination.sync="pagination"
+      :options.sync="options"
+      multi-sort
+      :sort-by="['date']"
+      :sort-desc="[true]"
       class="elevation-1"
       no-data-text="No tienes viajes"
+      @click:row="viewTrip" :style="{ cursor: 'pointer'}"
     >
-      <template slot="items" slot-scope="props">
-        <tr @click="viewTrip(props.item.id)" :style="{ cursor: 'pointer'}">
-          <td>{{ formatedDate(props.item.date) }}</td>
-          <td>{{ props.item.user_name }}</td>
-          <td>{{ props.item.origin_location ? props.item.origin_location.formatted_address : props.item.origin.autocomplete }}</td>
-          <td>{{ props.item.destination_location ? props.item.destination_location.formatted_address : props.item.destination.autocomplete }}</td>
-          <td class="text-xs-center">
-            <trip-status-label :status="props.item.status"></trip-status-label>
-          </td>
-          <td class="text-xs-right">{{ props.item.price }} €</td>
-          <td class="text-xs-right">
-            <v-tooltip bottom>
-              <v-icon color="red" v-if="props.item.status !== 'done' && props.item.status !== 'finalized'
-                && props.item.status !== 'canceled' && props.item.status !== 'pickedup'" small slot="activator" @click="cancelTrip(props.item)">cancel</v-icon>
-              <span>Cancelar</span>
-            </v-tooltip>
-            <v-tooltip bottom>
-              <v-icon v-if="props.item.invoice_item" small slot="activator" @click="printTripInvoice(props.item, $event)">print</v-icon>
-              <span>Imprimir</span>
-            </v-tooltip>
-          </td>
+      <template v-slot:item.user_name="{ item }">
+        <span><small>{{ item.user_name }}</small></span>
+      </template>
+      <template v-slot:item.date="{ item }">
+        <span><small>{{ formatedDate(item.date) }}</small></span>
+      </template>
+      <template v-slot:item.origin_location="{ item }">
+        <span><small>{{ item.origin_location ? item.origin_location.formatted_address : '-' }}</small></span>
+      </template>
+      <template v-slot:item.destination_location="{ item }">
+        <span><small>{{ item.destination_location ? item.destination_location.formatted_address : '-' }}</small></span>
+      </template>
+      <template v-slot:item.status="{ item }">
+        <trip-status-label :status="item.status"></trip-status-label>
+      </template>
+      <template v-slot:item.price="{ item }">
+        <span><small>{{item.price}} €</small></span>
+      </template>
+      <template v-slot:item.actions="{ item }">
+        <div v-if="item.status !== 'done' && item.status !== 'finalized'
+                && item.status !== 'canceled' && item.status !== 'pickedup'" small @click="cancelTrip(item)">
+          <v-icon small color="red" >cancel</v-icon>
+          <span><small>Cancelar</small></span>
+        </div>
+        <div v-if="item.invoice_item !== null" @click="printTripInvoice(item, $event)">
+          <v-icon small >print</v-icon>
+          <span><small>Imprimir</small></span>
+        </div>
+      </template>
+      <template slot="body.append">
+        <tr class="red--text">
+          <th class="title">Total</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th class="text-right title">{{ sumField('price') }} €</th>
         </tr>
       </template>
       <v-alert slot="no-results" :value="true" color="error">
         No hay viajes para la siguente búsqueda "{{ search }}".
       </v-alert>
     </v-data-table>
+    <v-dialog
+      :value="loading"
+      persistent
+      content-class="text-center"
+      width="300"
+    >
+      <v-card>
+        <v-card-text class="pt-6">
+          <v-progress-circular
+            :size="50"
+            class="mb-3"
+            color="primary"
+            indeterminate
+          />
+          <p>Cargando...</p>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </v-card>
 </template>
 
 <script>
   import moment from 'moment'
   import TripStatusLabel from './TripStatusLabel'
-  import { mapGetters } from 'vuex';
-  
+  import {mapActions, mapGetters} from 'vuex';
+  import { datatableMixin } from "~/mixins/datatable";
+
   export default {
     components: {
       TripStatusLabel
     },
-    mounted () {
-      this.loadTrips()
-    },
+    mixins: [
+      datatableMixin
+    ],
     data () {
       return {
+        menu: false,
+        user: null,
         search: '',
+        selectedMonth: 'current',
+        selectMonth: [
+          {
+            text: 'Mes actual', value: 'current'
+          },
+          {
+            text: 'Mes anterior', value: 'last'
+          },
+          {
+            text: 'Personalizado', value: 'custom'
+          }
+        ],
         headers: [
-          { text: 'Fecha', value: 'date' },
+          { text: 'Fecha', value: 'date', width: "10%" },
           {
             text: 'Usuario',
             value: 'user_name',
+            width: "10%"
           },
-          { 
-            text: 'Origen', 
-            value: 'origin.autocomplete',
+          {
+            text: 'Origen',
+            value: 'origin_location',
+            width: "15%"
           },
-          { 
-            text: 'Destino', 
-            value: 'destination.autocomplete',
+          {
+            text: 'Destino',
+            value: 'destination_location',
+            width: "15%"
           },
-          { 
-            text: 'Estado', 
+          {
+            text: 'Estado',
             value: 'status',
             align: 'center',
-            sortable: false
+            width: "10%"
           },
-          { 
-            text: 'Precio', 
+          {
+            text: 'Precio',
             value: 'price',
             align: 'right',
+            width: "10%"
           },
-          { 
+          {
             text: 'Acciones',
-            value: false, 
-            align: 'right' 
+            value: 'actions',
+            align: 'right',
+            width: "10%"
           }
         ],
-        loading: 'secondary',
-        trips: [],
-        pagination: {
-          'sortBy': 'date', 
-          'descending': true, 
-          'rowsPerPage': 15
-        }
+        options: {},
+        dates: [],
+        startDate: new Date((new Date()).getFullYear(), (new Date()).getMonth(), 2),
+        endDate: new Date((new Date()).getFullYear(), (new Date()).getMonth() + 1, 1),
+        csv: false,
+        loading: false
+      }
+    },
+    created() {
+      if (this.current_account.discriminator !== 'personal') {
+        this.getCurrentUsers(this.current_account.account.id)
       }
     },
     computed: {
       ...mapGetters({
         current_account: 'userAccount/currentAccount',
+        usersAccount: 'account/currentUsersAccount'
       }),
+      resource () {
+        return this.$api.accountTrips
+      }
     },
     watch: {
       current_account: {
-        handler: 'loadTrips'
+        handler: 'loadItems'
+      },
+      selectedMonth (value) {
+        var date = new Date();
+        if (value === 'current') {
+          this.startDate = new Date(date.getFullYear(), date.getMonth(), 1);
+          this.endDate = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+          this.loadItems()
+        } else if (value === 'last') {
+          this.startDate = new Date(date.getFullYear(), date.getMonth() -1, 1);
+          this.endDate = new Date(date.getFullYear(), date.getMonth(), 0);
+          this.loadItems()
+        }
+      },
+      dates (value) {
+        if (value.length === 2) {
+          this.startDate = new Date(value[0])
+          this.endDate = new Date(value[1])
+          this.loadItems()
+        }
       }
     },
     methods: {
-      async loadTrips () {
-        this.trips = await this.$store.dispatch('getTrips')
-        this.loading = false
-      },
+      ...mapActions({
+        getCurrentUsers: 'account/getCurrentUsers'
+      }),
       async getCsv () {
-          await this.$store.dispatch('getTripsCsv')
+          this.csv = true
+          await this.loadCsvItems()
+          this.csv = false
       },
-      async viewTrip (id) {
-        this.$router.push({ name: 'app-trips-id', params: {id: id} })
+      async viewTrip (value) {
+        this.$router.push({ name: 'app-trips-id', params: {id: value.id} })
       },
       async cancelTrip (trip) {
         let confirmation = confirm('Estas seguro que quieres cancelar este viaje ?')
         if (!confirmation) {
           return
         }
-        
+
         await this.$store.dispatch('cancelTrip', trip)
-          .then(() => { 
-            this.showCanceledTripSuccessMessage();
-          })
-          .catch(e => {
-
-          })
-        ;
-
-        /*this.$store.dispatch('cancelTrip', trip)
           .then(() => {
-            trip.status = 'canceled'
-
-            this.$store.commit('snackbar/setSnack', {
-              message: 'El viaje ha sido cancelado',
-              color: 'success'
-            })
+            this.showCanceledTripSuccessMessage();
+            this.loadItems()
           })
           .catch(e => {
-            this.$auth.redirect('app');
 
-            this.$store.commit('snackbar/setSnack', {
-              message: 'El viaje no se pudo cancelar',
-              color: 'error'
-            })
-          })*/
+          });
       },
-
+      async loadCsvItems () {
+        this.loading = true
+        try {
+          const response = await this.resource.cget(this.queryParams)
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', `viajes${moment().format('DDMMYYYYhhmm')}.csv`);
+          document.body.appendChild(link);
+          link.click();
+        } catch (e) {
+        } finally {
+          this.loading = false
+        }
+      },
       async printTripInvoice (trip, event) {
           event.stopPropagation();
           await this.$store.dispatch('printTrip', trip.id)
@@ -175,12 +305,16 @@
       },
       formatedDate (date) {
         return moment(date).locale('es').format('LLL')
+      },
+      sumField(key) {
+        let total = this.items.reduce((a, b) => a + (b[key] || 0), 0)
+        return total.toFixed(2)
       }
     },
     notifications: {
       showCanceledTripSuccessMessage: {
         message: 'Viaje privado cancelado',
-        type: 'success' 
+        type: 'success'
       },
       showPrintInvoiceSuccessMessage: {
           message: 'Factura descargada correctamente',

@@ -45,7 +45,7 @@ export const actions = {
   },
   async getTripsCsv ({ rootState }) {
     return this.$axios({
-      url: `/accounts/${rootState.userAccount.currentAccountId}/trips.csv`,
+      url: `/company-accounts/${rootState.userAccount.currentAccountId}/trips.csv`,
       method: 'GET',
       responseType: 'blob',
     }).then((response) => {
