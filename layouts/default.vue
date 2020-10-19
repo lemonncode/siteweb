@@ -94,6 +94,7 @@
       </v-footer>
 
     </v-main>
+     <div id="recaptcha-container"></div>
   </v-app>
 </template>
 

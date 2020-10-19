@@ -1,5 +1,5 @@
 <template>
-  <v-layout row justify-space-between>
+  <v-layout justify-space-between>
     <v-flex xs3 v-for="index in 6" :key="index">
       <v-text-field
           type="text"

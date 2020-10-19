@@ -54,7 +54,7 @@
         }
       }
     },
-    created(){
+    mounted(){
       if (process.client) {
         this.initReCaptcha()
       }
@@ -164,7 +164,7 @@
             });
             //
             this.appVerifier =  recaptchaVerifier;
-        },1000)
+        },2000)
       }
     },
     notifications: {
