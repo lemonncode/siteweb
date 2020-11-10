@@ -51,58 +51,59 @@
     </v-app-bar>
     <v-main>
       <nuxt></nuxt>
-      <v-footer
-        class="secondary"
-        color="#ed6363"
-        height="auto"
-      >
-        <v-row
-          justify="center"
-          no-gutters
-        >
-          <v-btn
-            color="white"
-            text
-            rounded
-            class="my-2"
-          >
-            <router-link to="politica-de-cookies">Política de cookies</router-link>
-          </v-btn>
-          <v-btn
-            color="white"
-            text
-            rounded
-            class="my-2"
-          >
-            <router-link to="politica-de-privacidad">Política de privacidad</router-link>
-          </v-btn>
-          <v-btn
-            color="white"
-            text
-            rounded
-            class="my-2"
-          >
-            <router-link to="aviso-legal">Aviso legal</router-link>
-          </v-btn>
-          <v-btn
-            color="white"
-            text
-            rounded
-            class="my-2"
-          >
-            <router-link to="politica-de-calidad">Política de calidad y medio ambiente</router-link>
-          </v-btn>
-          <v-col
-            class="secondary py-4 text-center white--text"
-            cols="12"
-          >
-            {{ new Date().getFullYear() }} — <strong>Auro Travel</strong>
-          </v-col>
-        </v-row>
-      </v-footer>
-
     </v-main>
-     <div id="recaptcha-container"></div>
+    <v-footer
+       app
+       class="secondary"
+       color="#ed6363"
+       height="auto"
+       absolute
+     >
+       <v-row
+         justify="center"
+         no-gutters
+       >
+         <v-btn
+           color="white"
+           text
+           rounded
+           class="my-2"
+         >
+           <router-link to="politica-de-cookies">Política de cookies</router-link>
+         </v-btn>
+         <v-btn
+           color="white"
+           text
+           rounded
+           class="my-2"
+         >
+           <router-link to="politica-de-privacidad">Política de privacidad</router-link>
+         </v-btn>
+         <v-btn
+           color="white"
+           text
+           rounded
+           class="my-2"
+         >
+           <router-link to="aviso-legal">Aviso legal</router-link>
+         </v-btn>
+         <v-btn
+           color="white"
+           text
+           rounded
+           class="my-2"
+         >
+           <router-link to="politica-de-calidad">Política de calidad y medio ambiente</router-link>
+         </v-btn>
+         <v-col
+           class="secondary py-4 text-center white--text"
+           cols="12"
+         >
+           {{ new Date().getFullYear() }} — <strong>Auro Travel</strong>
+         </v-col>
+       </v-row>
+     </v-footer>
+    <div id="recaptcha-container"></div>
   </v-app>
 </template>
 
