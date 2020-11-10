@@ -84,6 +84,14 @@
           >
             <router-link to="aviso-legal">Aviso legal</router-link>
           </v-btn>
+          <v-btn
+            color="white"
+            text
+            rounded
+            class="my-2"
+          >
+            <router-link to="politica-de-calidad">Política de calidad y medio ambiente</router-link>
+          </v-btn>
           <v-col
             class="secondary py-4 text-center white--text"
             cols="12"
