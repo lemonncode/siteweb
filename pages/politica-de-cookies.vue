@@ -19,28 +19,22 @@
             <v-card flat>
               <v-card-text>
                 <h3>1. ¿Qué son las cookies?</h3>
-                <p>La Web de AURO NEW TRANSPORT CONCEPT S.L. (en adelante la Web) utiliza Cookies. Las Cookies son ficheros enviados
-                a un navegador por medio de un servidor web para registrar las actividades del Usuario en una web determinada. La
-                primera finalidad de las Cookies es la de facilitar al usuario un acceso más rápido a los servicios seleccionados.
-                Además, las Cookies personalizan los servicios que ofrece la Web, facilitando y ofreciendo a cada usuario
-                información que es de su interés o que puede ser de su interés, en atención al uso que realiza de los
-                Servicios.</p>
+                <p>La Web de AURO NEW TRANSPORT CONCEPT S.L. (en adelante la Web) utiliza Cookies. Las Cookies son ficheros
+                  enviados a un navegador por medio de un servidor web para registrar las actividades del Usuario en una web determinada.
+                  La primera finalidad de las Cookies es la de facilitar al usuario un acceso más rápido a los servicios seleccionados.
+                  Además, las Cookies personalizan los servicios que ofrece la Web, facilitando y ofreciendo a cada usuario información
+                  que es de su interés o que puede ser de su interés, en atención al uso que realiza de los Servicios.</p>
 
-                <p>La Web utiliza Cookies para personalizar y facilitar al máximo la navegación del usuario. Las Cookies se asocian
-                  únicamente a un usuario anónimo y su ordenador y no proporcionan referencias que permitan deducir datos personales
-                  del usuario. El usuario podrá configurar su navegador para que notifique y rechace la instalación las Cookies
-                  enviadas por la Web, sin que ello perjudique la posibilidad del usuario de acceder a los contenidos de dicha web.
-                  Sin embargo, le hacemos notar que, en todo caso, la calidad de funcionamiento de la página Web puede
-                  disminuir.</p>
+                <p>La Web utiliza Cookies para personalizar y facilitar al máximo la navegación del usuario.
+                  Las Cookies se asocian únicamente a un usuario anónimo y su ordenador y no proporcionan referencias que
+                  permitan deducir datos personales del usuario. El usuario podrá configurar su navegador para que notifique
+                  y rechace la instalación las Cookies enviadas por la Web, sin que ello perjudique la posibilidad del usuario
+                  de acceder a los contenidos de dicha web. Sin embargo, le hacemos notar que, en todo caso, la calidad de funcionamiento de la página Web puede disminuir.</p>
 
-                <p>Los usuarios registrados, que se registren o que hayan iniciado sesión, podrán beneficiarse de unos servicios más
-                  personalizados y orientados a su perfil, gracias a la combinación de los datos almacenados en las cookies con los
-                  datos personales utilizados en el momento de su registro. Dichos usuarios autorizan expresamente el uso de esta
-                  información con la finalidad indicada, sin perjuicio de su derecho a rechazar o deshabilitar el uso de
-                  cookies.</p>
+                <p>Los usuarios registrados, que se registren o que hayan iniciado sesión, podrán beneficiarse de unos servicios más personalizados
+                  y orientados a su perfil, gracias a la combinación de los datos almacenados en las cookies con los datos personales utilizados en el momento de su registro. Dichos usuarios autorizan expresamente el uso de esta información con la finalidad indicada, sin perjuicio de su derecho a rechazar o deshabilitar el uso de cookies. </p>
 
-                <p>Asimismo, la Web podrá saber todos los servicios solicitados por los usuarios, de forma que podrán facilitar u
-                  ofrecer información adecuada a los gustos y preferencias de cada usuario.</p>
+                <p>Asimismo, la Web podrá saber todos los servicios solicitados por los usuarios, de forma que podrán facilitar u ofrecer información adecuada a los gustos y preferencias de cada usuario.</p>
               </v-card-text>
             </v-card>
           </v-flex>
@@ -52,13 +46,22 @@
                 <p>Las Cookies, en función de su Permanencia, pueden dividirse en:</p>
 
                 <ul>
-                  <li>“Cookies de sesión”: Las primeras expiran cuando el usuario cierra el navegador.</li>
+                  <li>“Cookies de sesión”: Expiran cuando el usuario cierra el navegador.</li>
 
-                  <li>“Cookies persistentes”. Las segundas expiran en función de cuando se cumpla el objetivo para el que sirven
+                  <li>“Cookies persistentes”. Expiran en función de cuando se cumpla el objetivo para el que sirven
                     (por ejemplo, para que el usuario se mantenga identificado en los Servicios) o bien cuando se borran
                     manualmente.
                   </li>
 
+                </ul>
+                <p>En función de su Propietario, pueden dividirse en:</p>
+
+                <ul>
+                  <li>Cookies propias: Son aquéllas que se envían al equipo terminal del usuario desde un equipo o dominio gestionado por el propio editor y desde el que se presta el servicio solicitado por el usuario.
+                  </li>
+                  <li>
+                    Cookies de terceros: Son aquéllas que se envían al equipo terminal del usuario desde un equipo o dominio que no es gestionado por el editor, sino por otra entidad que trata los datos obtenidos través de las cookies.
+                  </li>
                 </ul>
                 <p>Adicionalmente, en función de su Objetivo, las Cookies pueden clasificarse de la siguiente forma:</p>
 
@@ -172,6 +175,16 @@
 
                   <li>Safari: Preferencias - > Seguridad.</li>
                   <li>Para más información, puede consultar el soporte de Apple o la Ayuda del navegador.</li>
+                </ul>
+              </v-card-text>
+            </v-card>
+          </v-flex>
+          <v-flex>
+            <v-card flat>
+              <v-card-text>
+                <h3>5. ¿Se pueden producir modificaciones de la Política de Cookies?</h3>
+                <p>La Web puede modificar esta Política de Cookies en función de las exigencias legislativas, reglamentarias, o con la finalidad de adaptar dicha política a las instrucciones dictadas por la Agencia Española de Protección de Datos, por ello se aconseja a los usuarios que la visiten periódicamente.</p>
+                <p>Cuando se produzcan cambios significativos en esta Política de Cookies, se comunicarán a los usuarios bien mediante la web o a través de correo electrónico a los usuarios registrados. </p>
                 </ul>
               </v-card-text>
             </v-card>
