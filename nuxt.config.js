@@ -65,7 +65,7 @@ export default {
   modules: [
     // Doc: https://github.com/nuxt-community/axios-module#usage
     '@nuxtjs/axios',
-    '@nuxtjs/auth',
+    '@nuxtjs/auth-next',
     '@nuxtjs/toast',
     '@nuxtjs/dotenv',
     'cookie-universal-nuxt',
@@ -80,21 +80,34 @@ export default {
   },
 
   auth: {
-    // See https://auth.nuxtjs.org/options.html
-    redirect: {
-      home: '/app'
-    },
     strategies: {
       local: {
-        endpoints: {
-          login: { url: '/login', method: 'post', propertyName: 'token' },
-          logout: false,
-          user: { url: '/user', method: 'get', propertyName: 'user' },
+        scheme: 'refresh',
+        refreshToken: {
+          property: 'refresh_token'
         },
-        //tokenType: 'Jwt',
-        resetOnError: true,
-        rewriteRedirects: false
+        user: {
+          property: 'user'
+        },
+        endpoints: {
+          login: {
+            url: '/login',
+            method: 'post'
+          },
+          refresh: {
+            url: '/token/refresh',
+            method: 'post'
+          },
+          user: {
+            url: '/user',
+            method: 'get'
+          },
+          logout: false
+        }
       }
+    },
+    redirect: {
+      home: '/app'
     }
   },
 
