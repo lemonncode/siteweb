@@ -81,25 +81,24 @@
               :items="users"
               class="elevation-1"
           >
-            <template slot="items" slot-scope="props">
-              <td>{{ props.item.user.full_name }}</td>
-              <td class="text-left">{{ props.item.role | roleTranslation }}</td>
-              <td class="justify-center layout px-0">
-                <v-icon
-                    v-if="!isOwner(props.item)"
-                    small
-                    class="mr-2"
-                    @click="openEditUserDialog(props.item)"
-                >
-                  edit
-                </v-icon>
-                <v-icon v-if="!isOwner(props.item) && !isCurrentUser(props.item)"
-                    small
-                    @click="deleteItem(props.item)"
-                >
-                  delete
-                </v-icon>
-              </td>
+            <template slot="item.actions" slot-scope="{ item }">
+              <v-icon
+                v-if="!isOwner(item)"
+                small
+                class="mr-2"
+                @click="openEditUserDialog(item)"
+              >
+                edit
+              </v-icon>
+              <v-icon v-if="!isOwner(item) && !isCurrentUser(item)"
+                      small
+                      @click="deleteItem(item)"
+              >
+                delete
+              </v-icon>
+            </template>
+            <template slot="item.role" slot-scope="{item}">
+              {{ item.role | roleTranslation }}
             </template>
 
             <template slot="no-data">
@@ -142,13 +141,11 @@
             :search="search"
             class="elevation-1"
           >
-            <template slot="items" slot-scope="props">
-              <td>{{ props.item.account.name }}</td>
-              <td class="text-left">{{ props.item.account.document_number }}</td>
+            <template slot="item.actions" slot-scope="{ item }">
               <td class="justify-center layout px-0">
                 <v-icon
                         small
-                        @click="deleteUserDiscount(props.item)"
+                        @click="deleteUserDiscount(item)"
                 >
                   delete
                 </v-icon>
@@ -183,15 +180,15 @@
             search: '',
             dialog: false,
             headers: [
-                { text: 'Nombre', sortable: false, align: 'left', value: 'full_name', width: '50%' },
+                { text: 'Nombre', sortable: false, align: 'left', value: 'user.full_name', width: '50%' },
                 { text: 'Rol', value: 'role', width: '30%' },
-                { text: 'Acciones', value: 'full_name', sortable: false }
+                { text: 'Acciones', value: 'actions', sortable: false }
 
             ],
             discountHeaders: [
-              { text: 'Nombre', sortable: false, align: 'left', value: 'name', width: '70%' },
-              { text: 'DNI', value: 'role', width: '20%' },
-              { text: 'Acciones', value: 'name', sortable: false }
+              { text: 'Nombre', sortable: false, align: 'left', value: 'account.name', width: '70%' },
+              { text: 'DNI', value: 'account.document_number', width: '20%' },
+              { text: 'Acciones', value: 'actions', sortable: false }
             ],
             users: [],
             discounts: [],
