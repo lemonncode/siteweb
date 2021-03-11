@@ -23,7 +23,7 @@
                 <p>CIF: B86654233</p>
                 <p>Calle Dehesa Vieja, 55 - 28052 Madrid</p>
                 <p>Teléfono: 666 663 036 </p>
-                <p>Email: privados@auro-group.com</p>
+                <p>Email: info@auro-group.com</p>
                 <p>Datos de inscripción en el registro mercantil: inscrita en el registro Mercantil de Madrid al tomo 31020, folio 79, hoja M-558357</p>
               </v-card-text>
             </v-card>
