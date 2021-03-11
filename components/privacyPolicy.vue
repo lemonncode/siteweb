@@ -16,7 +16,7 @@
 
                 <p>Calle Dehesa Vieja, 55 - 28052 Madrid</p>
                 <p>Teléfono: 666 663 036 </p>
-                <p>Email: privados@auro-group.com</p>
+                <p>Email: info@auro-group.com</p>
               </v-card-text>
             </v-card>
           </v-flex>
@@ -64,7 +64,7 @@
                   <li>Derecho a solicitar la limitación de su tratamiento </li>
                   <li>Derecho a la portabilidad de los datos</li>
                 </ul>
-                <p>Los titulares de los datos personales obtenidos, podrán ejercer sus derechos de protección de datos personales dirigiendo una comunicación por escrito al domicilio social de AURO NEW TRANSPORT CONCEPT S.L. o al correo electrónico habilitado a tal efecto, privados@auro-group.com, incluyendo en ambos casos fotocopia de su DNI u otro documento de identificación equivalente.</p>
+                <p>Los titulares de los datos personales obtenidos, podrán ejercer sus derechos de protección de datos personales dirigiendo una comunicación por escrito al domicilio social de AURO NEW TRANSPORT CONCEPT S.L. o al correo electrónico habilitado a tal efecto, info@auro-group.com, incluyendo en ambos casos fotocopia de su DNI u otro documento de identificación equivalente.</p>
                 <p>Modelos, formularios y más información disponible sobre sus derechos en la página web de la autoridad de control nacional, Agencia Española de Protección de Datos, en adelante, AEPD, www.agpd.es.</p>
               </v-card-text>
             </v-card>
@@ -81,7 +81,7 @@
             <v-card text>
               <v-card-text>
                 <h3>¿Dónde puedo reclamar en caso de que considere que no se tratan mis datos correctamente?</h3>
-                <p>Si algún interesado considera que sus datos no son tratados correctamente por AURO NEW TRANSPORT CONCEPT S.L. puede dirigir sus reclamaciones al correo privados@auro-group.com o a la autoridad de protección de datos que corresponda, siendo la AEPD la indicada en el territorio nacional, www.agpd.es </p>
+                <p>Si algún interesado considera que sus datos no son tratados correctamente por AURO NEW TRANSPORT CONCEPT S.L. puede dirigir sus reclamaciones al correo info@auro-group.com o a la autoridad de protección de datos que corresponda, siendo la AEPD la indicada en el territorio nacional, www.agpd.es </p>
               </v-card-text>
             </v-card>
           </v-flex>

@@ -18,7 +18,7 @@
           <v-flex>
             <v-card flat>
               <v-card-text>
-                <p>Estas condiciones de contratación de los servicios de transporte (las “Condiciones de Contratación”) establecen los términos y condiciones para acceder y utilizar la aplicación denominada AURO (en adelante, la "Aplicación") que el Grupo Auro y el Grupo Cibeles, tal y como se definen en las Condiciones de Uso de la Aplicación privados@auro-group.com, ponen, gratuitamente, a disposición de sus usuarios (los “Usuarios”).</p>
+                <p>Estas condiciones de contratación de los servicios de transporte (las “Condiciones de Contratación”) establecen los términos y condiciones para acceder y utilizar la aplicación denominada AURO (en adelante, la "Aplicación") que el Grupo Auro y el Grupo Cibeles, tal y como se definen en las Condiciones de Uso de la Aplicación info@auro-group.com, ponen, gratuitamente, a disposición de sus usuarios (los “Usuarios”).</p>
                 <p>El mero acceso a la Aplicación implica el conocimiento, comprensión y aceptación, necesariamente y sin reserva alguna, de los términos y condiciones estipulados en las presentes Condiciones de Contratación. Por lo tanto, se recomienda que los Usuarios lean cuidadosamente las presentes Condiciones de Contratación, así como los mensajes, instrucciones o advertencias que les sean comunicadas mientras navegan o hacen uso de la Aplicación, en tanto que deberán cumplir con todos ellos. Si los Usuarios están en desacuerdo con estas estipulaciones, no deberán utilizar la Aplicación.</p>
                 <p>El Grupo Auro y el Grupo Cibeles se reservan el derecho de modificar o actualizar las Condiciones de Contratación en cualquier momento y sin previo aviso, por exigencias normativas, por motivos técnicos, por cambios en los servicios ofrecidos por el Grupo Auro y/o el Grupo Cibeles o por decisiones estratégicas de las compañías que forman parte del Grupo Cibeles y/o el Grupo Auro, mediante la modificación o actualización del texto accesible a los Usuarios en las presentes Condiciones de Contratación, por lo que se recomienda a los Usuarios que periódicamente lo revisen.</p>
                 <p>Si el Usuario no está conforme con los cambios, deberá dejar de utilizar la Aplicación y, en su caso, darse de baja de cualquier registro asociado a la Aplicación. La utilización de la Aplicación tras la realización de los cambios supondrá la aceptación de los mismos.</p>
@@ -131,67 +131,67 @@
                 <p>Calle Dehesa Vieja, 55 - 28052 Madrid</p>
                 <p>Inscripción.- Registro Mercantil de Madrid, Tomo 37.854, Folio 84, Hoja M-674215, Inscripción 2ª.</p>
                 <p>CIF.- B-19643071.</p>
-                <p>Correo: privados@auro-group.com</p>
+                <p>Correo: info@auro-group.com</p>
                 <br>
                 <p>(ii) - PROINVERTIA MADRID, S.L.U.</p>
                 <p>Calle Dehesa Vieja, 55 - 28052 Madrid</p>
                 <p>Inscripción.- Registro Mercantil de Madrid, Tomo 26.543, Folio 40, Hoja M-478.352, Inscripción 2ª.</p>
                 <p>CIF.- B-85642304.</p>
-                <p>Correo: privados@auro-group.com</p>
+                <p>Correo: info@auro-group.com</p>
                 <br>
                 <p>(iii) - FREETOWN BUSINESS, S.L.U.</p>
                 <p>Calle Dehesa Vieja, 55 - 28052 Madrid</p>
                 <p>Inscripción.- Registro Mercantil de Madrid, Tomo 33.519, Folio 23, Hoja M-603.311, Inscripción 6ª.</p>
                 <p>CIF.- B-98734122.</p>
-                <p>Correo: privados@auro-group.com</p>
+                <p>Correo: info@auro-group.com</p>
                 <br>
                 <p>(iv) - RADIO TAXI BARCELONA, S.L.U.</p>
                 <p>Calle Dehesa Vieja, 55 - 28052 Madrid</p>
                 <p>Inscripción.- Registro Mercantil de Madrid, Tomo 36.815, Folio 32, Hoja M-659.183, Inscripción 3ª.</p>
                 <p>CIF.- B-64818354.</p>
-                <p>Correo: privados@auro-group.com</p>
+                <p>Correo: info@auro-group.com</p>
                 <br>
                 <p>(v) - AUTOS PUERTA DEL SOL, S.L.U.</p>
                 <p>Calle Dehesa Vieja, 55 - 28052 Madrid</p>
                 <p>Inscripción.- Registro Mercantil de Madrid, Tomo 35.046, Folio 33, Hoja M-630.293, Inscripción 2ª.</p>
                 <p>CIF.- B-87618476.</p>
-                <p>Correo: privados@auro-group.com</p>
+                <p>Correo: info@auro-group.com</p>
                 <br>
                 <p>(vi) - AUTOS LAVAPIÉS, S.L.U.</p>
                 <p>Calle Dehesa Vieja, 55 - 28052 Madrid</p>
                 <p>Inscripción.- Registro Mercantil de Madrid, Tomo 37.524, Folio 32, Hoja M-668.913, Inscripción 2ª.</p>
                 <p>CIF.- B-66864984.</p>
-                <p>Correo: privados@auro-group.com</p>
+                <p>Correo: info@auro-group.com</p>
                 <br>
                 <p>(vii) - AUTOMOVILES TITANIO, S.L.U.</p>
                 <p>Calle Dehesa Vieja, 55 - 28052 Madrid</p>
                 <p>Inscripción.- Registro Mercantil de Madrid, Tomo 37.107, Folio 60, Hoja M-662.330, Inscripción 6ª.</p>
                 <p>CIF.- B-66805672.</p>
-                <p>Correo: privados@auro-group.com</p>
+                <p>Correo: info@auro-group.com</p>
                 <br>
                 <p>(viii) - AUTOMOVILES ZIRCONIO, S.L.U.</p>
                 <p>Calle Dehesa Vieja, 55 - 28052 Madrid</p>
                 <p>Inscripción.- Registro Mercantil de Madrid, Tomo 36.851, Folio 151, Hoja M-659.569, Inscripción 2ª.</p>
                 <p>CIF.- B-66805664.</p>
-                <p>Correo: privados@auro-group.com</p>
+                <p>Correo: info@auro-group.com</p>
                 <br>
                 <p>(ix) - LIBRECOUPADO, S.L.U.</p>
                 <p>Calle Dehesa Vieja, 55 - 28052 Madrid</p>
                 <p>Inscripción.- Registro Mercantil de Madrid, Tomo 37.114, Folio 70, Hoja M-662.448, Inscripción 6ª.</p>
                 <p>CIF.- B-63919179.</p>
-                <p>Correo: privados@auro-group.com</p>
+                <p>Correo: info@auro-group.com</p>
                 <br>
                 <p>(x) - NEXTBAND, S.L.U.</p>
                 <p>Calle Dehesa Vieja, 55 - 28052 Madrid</p>
                 <p>Inscripción.- Registro Mercantil de Madrid, Tomo 33.608, Folio 195, Hoja M-604.937, Inscripción 1ª.</p>
                 <p>CIF.- B-87261046.</p>
-                <p>Correo: privados@auro-group.com</p>
+                <p>Correo: info@auro-group.com</p>
                 <br>
                 <p>(xi) - SERVIGRALLAR DE CERDENYA, S.L.</p>
                 <p>Calle Dehesa Vieja, 55 - 28052 Madrid</p>
                 <p>Inscripción.- Registro Mercantil de Madrid, Tomo 37.072, Folio 103, Hoja M-661920, Inscripción 2ª.</p>
                 <p>CIF.- B-55097273.</p>
-                <p>Correo: privados@auro-group.com</p>
+                <p>Correo: info@auro-group.com</p>
                 <br>
               </v-card-text>
             </v-card>
@@ -206,79 +206,79 @@
                 <p>Dirección.- Calle Dehesa Vieja nº 55, Madrid.</p>
                 <p>Inscripción.- Registro Mercantil de Madrid, Tomo 36.879, Folio 100, Hoja M-659.869, Inscripción 1ª.</p>
                 <p>CIF.- B-87985487.</p>
-                <p>Correo.- privados@auro-group.com</p>
+                <p>Correo.- info@auro-group.com</p>
                 <br>
                 <p>(iii) AUTOS AGRIMONY BACH TRASNPORTATION, S.L.U.</p>
                 <p>Dirección.- Calle Dehesa Vieja nº 55, Madrid.</p>
                 <p>Inscripción.- Registro Mercantil de Madrid, Tomo 36.879, Folio 120, Hoja M-659.871, Inscripción 1ª.</p>
                 <p>CIF.- B-87985453.</p>
-                <p>Correo.- privados@auro-group.com</p>
+                <p>Correo.- info@auro-group.com</p>
                 <br>
                 <p>(iv) AUTOS ARARAT TRANSPORTATION SERVICES, S.L.U.</p>
                 <p>Dirección.- Calle Dehesa Vieja nº 55, Madrid.</p>
                 <p>Inscripción.- Registro Mercantil de Madrid, Tomo 36.879, Folio 94, Hoja M-659.868, Inscripción 5ª.</p>
                 <p>CIF.- B-87985529.</p>
-                <p>Correo.- privados@auro-group.com</p>
+                <p>Correo.- info@auro-group.com</p>
                 <br>
                 <p>(v) CLEMATIS BACH TRANSPORTATION SERVIES, S.L.U.</p>
                 <p>Dirección.- Calle Dehesa Vieja nº 55, Madrid.</p>
                 <p>Inscripción.- Registro Mercantil de Madrid, Tomo 36.879, Folio 114, Hoja M-659.870, Inscripción 4ª.</p>
                 <p>CIF.- B-87985479.</p>
-                <p>Correo.- privados@auro-group.com</p>
+                <p>Correo.- info@auro-group.com</p>
                 <br>
                 <p>(vi) AUTOS LA MARUCA DA SERPE, S.L.U.</p>
                 <p>Dirección.- Calle Dehesa Vieja nº 55, Madrid.</p>
                 <p>Inscripción.- Registro Mercantil de Madrid, Tomo 36.879, Folio 134, Hoja M-659.872, Inscripción 5ª.</p>
                 <p>CIF.- B-87985461.</p>
-                <p>Correo.- privados@auro-group.com</p>
+                <p>Correo.- info@auro-group.com</p>
                 <br>
                 <p>(vii) ZATER TRANSPORTATION SERVICES 1525, S.L.U.</p>
                 <p>Dirección.- Calle Dehesa Vieja nº 55, Madrid.</p>
                 <p>Inscripción.- Registro Mercantil de Madrid, Tomo 36.879, Folio 144, Hoja M-659.873, Inscripción 5ª.</p>
                 <p>CIF.- B-87985446.</p>
-                <p>Correo.- privados@auro-group.com</p>
+                <p>Correo.- info@auro-group.com</p>
                 <br>
                 <p>(viii) VTC FELP TRANSFER, S.L.U.</p>
                 <p>Dirección.- Calle Dehesa Vieja nº 55, Madrid.</p>
                 <p>Inscripción.- Registro Mercantil de Madrid, Tomo 36.346, Folio 121, Hoja M-653.024, Inscripción 2ª.</p>
                 <p>CIF.- B-87878153.</p>
-                <p>Correo.- privados@auro-group.com</p>
+                <p>Correo.- info@auro-group.com</p>
                 <br>
                 <p>(ix) AFM PORTAL DEL TRANSPORTE, S.L.U.</p>
                 <p>Dirección.- Calle Dehesa Vieja nº 55, Madrid.</p>
                 <p>Inscripción.- Registro Mercantil de Madrid, Tomo 36.353, Folio 11, Hoja M-653.134, Inscripción 3ª.</p>
                 <p>CIF.- B-87881413.</p>
-                <p>Correo.- privados@auro-group.com</p>
+                <p>Correo.- info@auro-group.com</p>
                 <br>
                 <p>(x) DO THE RIGHT THING CARS, S.L.U.</p>
                 <p>Dirección.- Calle Dehesa Vieja nº 55, Madrid.</p>
                 <p>Inscripción.- Registro Mercantil de Madrid, Tomo 36.355, Folio 76, Hoja M-653.184, Inscripción 1ª.</p>
                 <p>CIF.- B-87886735.</p>
-                <p>Correo.- privados@auro-group.com</p>
+                <p>Correo.- info@auro-group.com</p>
                 <br>
                 <p>(xi) GEST VTC SERVICES, S.L.U.</p>
                 <p>Dirección.- Calle Dehesa Vieja nº 55, Madrid.</p>
                 <p>Inscripción.- Registro Mercantil de Madrid, Tomo 36.355, Folio 83, Hoja M-653.185, Inscripción 1ª.</p>
                 <p>CIF.- B-87878146.</p>
-                <p>Correo.- privados@auro-group.com</p>
+                <p>Correo.- info@auro-group.com</p>
                 <br>
                 <p>(xii) VTC KICO CARS, S.L.U.</p>
                 <p>Dirección.- Calle Dehesa Vieja nº 55, Madrid.</p>
                 <p>Inscripción.- Registro Mercantil de Madrid, Tomo 36.346, Folio 150, Hoja M-653.027, Inscripción 1ª.</p>
                 <p>CIF.- B-87878161.</p>
-                <p>Correo.- privados@auro-group.com</p>
+                <p>Correo.- info@auro-group.com</p>
                 <br>
                 <p>(xiii) VTC TRANSFER SOCIALITY, S.L.U.</p>
                 <p>Dirección.- Calle Dehesa Vieja nº 55, Madrid.</p>
                 <p>Inscripción.- Registro Mercantil de Madrid, Tomo 36.346, Folio 130, Hoja M-653.025, Inscripción 1ª.</p>
                 <p>CIF.- B-87877882.</p>
-                <p>Correo.- privados@auro-group.com</p>
+                <p>Correo.- info@auro-group.com</p>
                 <br>
                 <p>(xiv) ICEBERG SMART CAB, S.L.U.</p>
                 <p>Dirección.- Calle Dehesa Vieja nº 55, Madrid.</p>
                 <p>Inscripción.- Registro Mercantil de Madrid, Tomo 36.338, Folio 120, Hoja M-652.885, Inscripción 1ª.</p>
                 <p>CIF.- B-87886727.</p>
-                <p>Correo.- privados@auro-group.com</p>
+                <p>Correo.- info@auro-group.com</p>
               </v-card-text>
             </v-card>
           </v-flex>
