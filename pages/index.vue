@@ -369,7 +369,7 @@
                     <v-icon class="primary--text text--lighten-2">email</v-icon>
                   </v-list-item-action>
                   <v-list-item-content>
-                    <v-list-item-title>privados@auro-group.com</v-list-item-title>
+                    <v-list-item-title>info@auro-group.com</v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
               </v-list>
