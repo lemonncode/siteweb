@@ -353,7 +353,9 @@
                     <v-icon class="primary--text text--lighten-2">phone</v-icon>
                   </v-list-item-action>
                   <v-list-item-content>
-                    <v-list-item-title>671-100-037</v-list-item-title>
+                    <v-list-item-title>
+                      <a href="tel:+34671100037">671 100 037</a>
+                    </v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
                 <v-list-item>
@@ -369,7 +371,9 @@
                     <v-icon class="primary--text text--lighten-2">email</v-icon>
                   </v-list-item-action>
                   <v-list-item-content>
-                    <v-list-item-title>info@auro-group.com</v-list-item-title>
+                    <v-list-item-title>
+                      <a href="mailto:info@auro-group.com" target=“_blank”>info@auro-group.com</a>
+                    </v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
               </v-list>
@@ -409,7 +413,9 @@
                     <v-icon class="primary--text text--lighten-2">web</v-icon>
                   </v-list-item-action>
                   <v-list-item-content>
-                    <v-list-item-title>https://www.auro.travel/conductores</v-list-item-title>
+                    <v-list-item-title>
+                      <a href="https://www.auro.travel/conductores" target=“_blank”>https://www.auro.travel/conductores</a>
+                    </v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
                 <v-list-item>
@@ -417,7 +423,9 @@
                     <v-icon class="primary--text text--lighten-2">phone</v-icon>
                   </v-list-item-action>
                   <v-list-item-content>
-                    <v-list-item-title>666-663-036</v-list-item-title>
+                    <v-list-item-title>
+                      <a href="tel:+34666663036">666 663 036</a>
+                    </v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
                 <v-list-item>
@@ -425,7 +433,9 @@
                     <v-icon class="primary--text text--lighten-2">email</v-icon>
                   </v-list-item-action>
                   <v-list-item-content>
-                    <v-list-item-title>seleccion@auro-group.com</v-list-item-title>
+                    <v-list-item-title>
+                      <a href="mailto:seleccion@auro-group.com" target=“_blank”>seleccion@auro-group.com</a>
+                    </v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
               </v-list>
