@@ -66,7 +66,7 @@
           <v-text-field
               v-model="reference"
               type="text"
-              label="Referencia (optativo)"
+              label="Referencia"
               required
           ></v-text-field>
         </v-flex>
