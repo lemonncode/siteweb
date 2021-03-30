@@ -169,7 +169,7 @@
       >
         <v-flex xs12 sm4 class="my-5">
           <div class="text-center mt-5">
-            <h2 class="headline">Un servicio acorde a sus necesidades</h2>
+            <h2 class="headline">Un servicio acorde a tus necesidades</h2>
             <span class="subheading">
               La comodidad y lujo de moverse en coche con conductor y a un precio asequible
             </span>
@@ -266,7 +266,7 @@
                   <v-card-text style="min-height: 100px; color: white;">
                     Visite ciudades cercanas a Madrid como Toledo, Ávila o Segovia.
                     Sabemos que este es un servicio muy personal y por ello nos adaptamos a sus necesidades sean
-                    las que sean. Nunca hacer turismo había sido tan fácil y cómodo. Nuestros conductores
+                    las quesean. Nunca hacer turismo había sido tan fácil y cómodo. Nuestros conductores
                     son grandes profesionales que hablan diferentes idiomas extranjeros.
                   </v-card-text>
                 </v-card>
@@ -382,15 +382,15 @@
           <v-flex xs12 sm4>
             <v-card class="elevation-0 transparent">
               <v-card-title primary-title class="layout justify-center">
-                <div class="headline">Quiénes somos ?</div>
+                <div class="headline">¿Quiénes somos?</div>
               </v-card-title>
               <v-card-text>
                 <p>
-                  La mayor flota de vehículos privados de España. Le ofrecemos un servicio de coches con
-                  conductor, legal, profesional, serio, discreto y a su medida.
+                  La mayor flota de vehículos privados de España. Te ofrecemos un servicio de coches con
+                  conductor, legal, profesional, serio, discreto y a tu medida.
                 </p>
                 <p>
-                  Sabemos que este es un servicio muy personal y por ello nos adaptamos a sus necesidades
+                  Sabemos que este es un servicio muy personal y por ello nos adaptamos a tus necesidades
                   sean las quesean. Reservar con nosotros es tener la garantía de que todo va a ir bien.
                 </p>
                 <p>
@@ -402,7 +402,7 @@
           <v-flex xs12 sm4>
             <v-card class="elevation-0 transparent">
               <v-card-title primary-title class="layout justify-center">
-                <div class="headline">Quieres trabajar con nosotros ?</div>
+                <div class="headline">¿Quieres trabajar con nosotros?</div>
               </v-card-title>
               <v-card-text>
                 Si quieres trabajar en nuestra empresa puedes contactar a través de:
