@@ -275,7 +275,6 @@
             shortestRoute = routes[i]
           }
         }
-
         return shortestRoute
       },
       priceCalculator () {
