@@ -25,7 +25,14 @@ export const actions = {
     async getTripFromFirestore ({ commit }, id) {
         firestore.collection('trips').doc(id.toString()).onSnapshot(docSnapshot  => {
             if (docSnapshot.exists) {
-                commit('setTrip', docSnapshot.data())
+                let trip = docSnapshot.data()
+                if (trip.client_literal_origin) {
+                    trip.origin_location = trip.client_literal_origin
+                }
+                if (trip.client_literal_destination) {
+                    trip.destination_location = trip.client_literal_destination
+                }
+                commit('setTrip', trip)
             }
         })
     },
