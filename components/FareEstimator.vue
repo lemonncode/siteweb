@@ -281,9 +281,9 @@
         this.tripDetail({
           account: this.currentAccount.id,
           origin: this.pickupPlace.location,
-          clientLiteralOrigin: this.pickupPlace.address,
+          clientLiteralOrigin: this.pickupPlace.description,
           destination: this.destinationPlace.location, 
-          clientLiteralDestination: this.destinationPlace.address,
+          clientLiteralDestination: this.destinationPlace.description,
           startType: this.serviceType,
           date: this.date && this.time ? `${this.date} ${this.time}` : null
         })
