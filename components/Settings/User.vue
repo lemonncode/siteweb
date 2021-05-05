@@ -224,7 +224,6 @@
                 this.userPlaces = this.places;
             },
             submit() {
-              return
                 if (!this.$refs.form.validate()) {
                     return
                 }
